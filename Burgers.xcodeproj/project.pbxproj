@@ -16,6 +16,13 @@
 		6F79A0522223DB260030AAD4 /* BurgersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A0512223DB260030AAD4 /* BurgersTests.swift */; };
 		6F79A0682223E1360030AAD4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A0672223E1360030AAD4 /* ViewModelType.swift */; };
 		6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A0692223E14E0030AAD4 /* ViewType.swift */; };
+		6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */; };
+		6F8C8F152223FB6D005B76F9 /* SuggestedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */; };
+		6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */; };
+		6F941C00222400B3009E326F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941BFF222400B3009E326F /* UserViewController.swift */; };
+		6F941C02222400CD009E326F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C01222400CD009E326F /* UserViewModel.swift */; };
+		6F941C04222400E1009E326F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C03222400E1009E326F /* MapViewModel.swift */; };
+		6F941C06222400EB009E326F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C05222400EB009E326F /* MapViewController.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +53,13 @@
 		6F79A0532223DB260030AAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F79A0672223E1360030AAD4 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		6F79A0692223E14E0030AAD4 /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
+		6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
+		6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedViewController.swift; sourceTree = "<group>"; };
+		6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedViewModel.swift; sourceTree = "<group>"; };
+		6F941BFF222400B3009E326F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		6F941C01222400CD009E326F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		6F941C03222400E1009E326F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		6F941C05222400EB009E326F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC87D158B838582532254CA /* Pods-BurgersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,8 +177,8 @@
 			children = (
 				6F79A0632223DD8B0030AAD4 /* Base */,
 				6F79A0642223DD900030AAD4 /* Suggested */,
-				6F79A0652223DF650030AAD4 /* User */,
 				6F79A0662223DF730030AAD4 /* Map */,
+				6F79A0652223DF650030AAD4 /* User */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -172,6 +186,7 @@
 		6F79A0622223DD5D0030AAD4 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -188,6 +203,8 @@
 		6F79A0642223DD900030AAD4 /* Suggested */ = {
 			isa = PBXGroup;
 			children = (
+				6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */,
+				6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */,
 			);
 			path = Suggested;
 			sourceTree = "<group>";
@@ -195,6 +212,8 @@
 		6F79A0652223DF650030AAD4 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				6F941BFF222400B3009E326F /* UserViewController.swift */,
+				6F941C01222400CD009E326F /* UserViewModel.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -202,6 +221,8 @@
 		6F79A0662223DF730030AAD4 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				6F941C05222400EB009E326F /* MapViewController.swift */,
+				6F941C03222400E1009E326F /* MapViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -316,6 +337,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ReusableKit/ReusableKit.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -326,6 +348,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReusableKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -379,9 +402,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F941C06222400EB009E326F /* MapViewController.swift in Sources */,
+				6F8C8F152223FB6D005B76F9 /* SuggestedViewController.swift in Sources */,
+				6F941C04222400E1009E326F /* MapViewModel.swift in Sources */,
+				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
+				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,
 				6F79A03F2223DB250030AAD4 /* ViewController.swift in Sources */,
 				6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */,
 				6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */,
+				6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */,
+				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
 				6F79A0682223E1360030AAD4 /* ViewModelType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,7 +577,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 775V28HZUA;
-				INFOPLIST_FILE = Burgers/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -567,7 +597,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 775V28HZUA;
-				INFOPLIST_FILE = Burgers/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

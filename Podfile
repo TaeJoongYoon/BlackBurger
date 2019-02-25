@@ -10,7 +10,7 @@ target 'Burgers' do
   pod 'RxCocoa'
 
   # UI
-  pod 'SnapKit'
+  pod 'SnapKit', '~> 4.0.0'
 
   # Networking
   pod 'Alamofire'
