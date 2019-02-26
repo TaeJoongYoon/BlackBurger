@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2A70C1996CF85EF171BC7DC2 /* Pods_BurgersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */; };
+		6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3C50D022257C5700F1D465 /* String+Localized.swift */; };
 		6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03C2223DB250030AAD4 /* AppDelegate.swift */; };
-		6F79A03F2223DB250030AAD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03E2223DB250030AAD4 /* ViewController.swift */; };
+		6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */; };
 		6F79A0422223DB250030AAD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F79A0402223DB250030AAD4 /* Main.storyboard */; };
 		6F79A0442223DB260030AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F79A0432223DB260030AAD4 /* Assets.xcassets */; };
 		6F79A0472223DB260030AAD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F79A0452223DB260030AAD4 /* LaunchScreen.storyboard */; };
@@ -23,6 +24,8 @@
 		6F941C02222400CD009E326F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C01222400CD009E326F /* UserViewModel.swift */; };
 		6F941C04222400E1009E326F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C03222400E1009E326F /* MapViewModel.swift */; };
 		6F941C06222400EB009E326F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C05222400EB009E326F /* MapViewController.swift */; };
+		6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */; };
+		6FEB8B37222563090064166E /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B36222563090064166E /* MainTabViewModel.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,9 +44,10 @@
 		4A6ABEBCB65CF7671608D432 /* Pods-BurgersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.release.xcconfig"; sourceTree = "<group>"; };
 		51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Burgers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D286A01AC7F45F622D37F92 /* Pods-Burgers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Burgers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Burgers/Pods-Burgers.debug.xcconfig"; sourceTree = "<group>"; };
+		6F3C50D022257C5700F1D465 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
 		6F79A0392223DB250030AAD4 /* Burgers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Burgers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F79A03C2223DB250030AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6F79A03E2223DB250030AAD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		6F79A0412223DB250030AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6F79A0432223DB260030AAD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F79A0462223DB260030AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 		6F941C01222400CD009E326F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6F941C03222400E1009E326F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		6F941C05222400EB009E326F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		6FEB8B36222563090064166E /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC87D158B838582532254CA /* Pods-BurgersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,7 +139,6 @@
 				6F79A0602223DD150030AAD4 /* Service */,
 				6F79A0622223DD5D0030AAD4 /* Utility */,
 				6F79A03C2223DB250030AAD4 /* AppDelegate.swift */,
-				6F79A03E2223DB250030AAD4 /* ViewController.swift */,
 			);
 			path = Burgers;
 			sourceTree = "<group>";
@@ -176,9 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				6F79A0632223DD8B0030AAD4 /* Base */,
-				6F79A0642223DD900030AAD4 /* Suggested */,
-				6F79A0662223DF730030AAD4 /* Map */,
-				6F79A0652223DF650030AAD4 /* User */,
+				6FEB8B35222562E10064166E /* MainTab */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -187,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */,
+				6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */,
+				6F3C50D022257C5700F1D465 /* String+Localized.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -225,6 +230,18 @@
 				6F941C03222400E1009E326F /* MapViewModel.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		6FEB8B35222562E10064166E /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */,
+				6FEB8B36222563090064166E /* MainTabViewModel.swift */,
+				6F79A0642223DD900030AAD4 /* Suggested */,
+				6F79A0662223DF730030AAD4 /* Map */,
+				6F79A0652223DF650030AAD4 /* User */,
+			);
+			path = MainTab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,13 +423,16 @@
 				6F8C8F152223FB6D005B76F9 /* SuggestedViewController.swift in Sources */,
 				6F941C04222400E1009E326F /* MapViewModel.swift in Sources */,
 				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
+				6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */,
 				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,
-				6F79A03F2223DB250030AAD4 /* ViewController.swift in Sources */,
+				6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */,
 				6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */,
 				6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */,
 				6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */,
+				6FEB8B37222563090064166E /* MainTabViewModel.swift in Sources */,
 				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
 				6F79A0682223E1360030AAD4 /* ViewModelType.swift in Sources */,
+				6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  SuggestedViewController.swift
+//  MapViewController.swift
 //  Burgers
 //
 //  Created by Tae joong Yoon on 25/02/2019.
@@ -9,8 +9,8 @@
 import RxCocoa
 import RxSwift
 
-class SuggestedViewController: UIViewController, ViewType {
-  
+class MapViewController: UIViewController, ViewType {
+
   // MARK: Constants
   
   struct Reusable {
@@ -31,11 +31,18 @@ class SuggestedViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: SuggestedViewModelType!
-
+  var viewModel: MapViewModelType!
+  
   // MARK: Setup UI
   
   func setupUI() {
+    self.title = "Map"
+    self.view.backgroundColor = .white
+  }
+  
+  // MARK: Setup Constraints
+  
+  func setupConstraints() {
     
   }
   

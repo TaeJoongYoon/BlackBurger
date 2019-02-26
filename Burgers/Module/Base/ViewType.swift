@@ -15,6 +15,7 @@ protocol ViewType: class {
   var disposeBag: DisposeBag! { get set }
   
   func setupUI()
+  func setupConstraints()
   func setupEventBinding()
   func setupUIBinding()
 }
@@ -26,6 +27,7 @@ extension ViewType where Self: UIViewController {
     self.disposeBag = DisposeBag()
     self.loadViewIfNeeded()
     self.setupUI()
+    self.setupConstraints()
     self.setupEventBinding()
     self.setupUIBinding()
     return self

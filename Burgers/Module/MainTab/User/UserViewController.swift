@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  UserViewController.swift
 //  Burgers
 //
 //  Created by Tae joong Yoon on 25/02/2019.
@@ -9,8 +9,8 @@
 import RxCocoa
 import RxSwift
 
-class MapViewController: UIViewController, ViewType {
-
+class UserViewController: UIViewController, ViewType {
+  
   // MARK: Constants
   
   struct Reusable {
@@ -31,11 +31,18 @@ class MapViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: MapViewModelType!
+  var viewModel: UserViewModelType!
   
   // MARK: Setup UI
   
   func setupUI() {
+    self.title = "User"
+    self.view.backgroundColor = .white
+  }
+  
+  // MARK: Setup Constraints
+  
+  func setupConstraints() {
     
   }
   
