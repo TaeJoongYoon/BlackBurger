@@ -9,12 +9,12 @@
 import RxCocoa
 import RxSwift
 
-protocol Top20ViewModelType: ViewModelType {
+protocol PopularViewModelType: ViewModelType {
   // Event
   
   // UI
 }
 
-struct Top20ViewModel: Top20ViewModelType {
+struct PopularViewModel: PopularViewModelType {
   
 }

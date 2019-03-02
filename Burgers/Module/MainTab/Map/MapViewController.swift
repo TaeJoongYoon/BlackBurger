@@ -36,7 +36,7 @@ class MapViewController: UIViewController, ViewType {
   // MARK: Setup UI
   
   func setupUI() {
-    self.title = "Map"
+    self.title = "Map".localized
     self.view.backgroundColor = .white
   }
   

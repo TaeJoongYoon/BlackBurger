@@ -11,7 +11,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class Top20ViewController: UIViewController, ViewType {
+class PopularViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -33,7 +33,7 @@ class Top20ViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: Top20ViewModelType!
+  var viewModel: PopularViewModelType!
   
   // MARK: UI
   

@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import UIKit
 
-class SuggestedTableViewCell: UITableViewCell {
+class BurgerPostCell: UITableViewCell {
   
   // MARK: - Properties
   
@@ -42,13 +42,13 @@ class SuggestedTableViewCell: UITableViewCell {
   
   private func setupConstraints() {
     label.snp.makeConstraints { make in
-      make.edges.equalTo(self.contentView)
+      make.center.equalTo(self.contentView.center)
     }
   }
   
   // MARK: - Cell Contents
   
-  func configureWith() {
-    
+  func configureWith(name: String) {
+    label.text = name
   }
 }

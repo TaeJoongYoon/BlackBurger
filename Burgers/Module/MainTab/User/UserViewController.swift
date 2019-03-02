@@ -36,7 +36,7 @@ class UserViewController: UIViewController, ViewType {
   // MARK: Setup UI
   
   func setupUI() {
-    self.title = "User"
+    self.title = "User".localized
     self.view.backgroundColor = .white
   }
   

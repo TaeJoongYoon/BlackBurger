@@ -12,6 +12,8 @@ class MainTabViewController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    // Hide Tabbar Line
     self.tabBar.shadowImage = UIImage()
     self.tabBar.backgroundImage = UIImage()
     self.tabBar.clipsToBounds = true

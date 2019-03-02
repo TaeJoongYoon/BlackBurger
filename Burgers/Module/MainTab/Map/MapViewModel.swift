@@ -10,9 +10,12 @@ import RxCocoa
 import RxSwift
 
 protocol MapViewModelType: ViewModelType {
-  
+
 }
 
 struct MapViewModel: MapViewModelType {
   
+  init() {
+    
+  }
 }

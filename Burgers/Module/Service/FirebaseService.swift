@@ -30,12 +30,11 @@ struct FirebaseService: FirebaseServiceType {
         ps.append(Post(name: String(i)))
       }
       
-      print(ps)
-      
       observer.onNext(ps)
       observer.onCompleted()
       
       return Disposables.create()
     }
   }
+  
 }

@@ -24,6 +24,7 @@ class SuggestedViewController: UIViewController, ViewType {
   }
   
   private struct Metric {
+    static let segmentedHeight = 45
     static let segmentedBorderWidth = CGFloat(5.0)
   }
   
@@ -37,7 +38,7 @@ class SuggestedViewController: UIViewController, ViewType {
   
   // MARK: UI
   
-  let segmentedControl = UISegmentedControl(items: ["New", "Popular"]).then {
+  let segmentedControl = UISegmentedControl(items: ["Recent".localized, "Popular".localized]).then {
     $0.backgroundColor = .white
     $0.tintColor = .mainColor
     $0.layer.borderColor = UIColor.white.cgColor
@@ -45,28 +46,34 @@ class SuggestedViewController: UIViewController, ViewType {
     $0.selectedSegmentIndex = 0
   }
   
+  let containerView = UIView(frame: .zero)
+  
   let scrollView = UIScrollView(frame: .zero).then {
     $0.isPagingEnabled = true
     $0.isDirectionalLockEnabled = true
     $0.backgroundColor = .white
   }
   
-  let newView = NewViewController.create(with: NewViewModel())
+  let recentView = RecentViewController.create(with: RecentViewModel())
   
-  let top20View = Top20ViewController.create(with: Top20ViewModel())
+  let popularView = PopularViewController.create(with: PopularViewModel())
   
   // MARK: Setup UI
   
   func setupUI() {
-    self.title = "Suggested"
+    
+    self.title = "Burgers".localized
     self.view.backgroundColor = .white
     self.view.addSubview(self.segmentedControl)
     
-    self.scrollView.addSubview(self.newView.view)
-    self.scrollView.addSubview(self.top20View.view)
+    // Use ContainerView for UIViewController in UIScrollView
+    add(viewControllers: [self.recentView, self.popularView], to: self.containerView)
     
+    self.scrollView.addSubview(self.containerView)
     self.scrollView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.scrollView.bounds.height)
+    
     self.view.addSubview(self.scrollView)
+    
   }
   
   // MARK: Setup Constraints
@@ -77,7 +84,11 @@ class SuggestedViewController: UIViewController, ViewType {
       make.top.equalTo(self.view.safeArea.top)
       make.left.right.equalTo(self.view)
       make.width.equalTo(self.view)
-      make.height.equalTo(45)
+      make.height.equalTo(Metric.segmentedHeight)
+    }
+    
+    self.containerView.snp.makeConstraints { make in
+      make.edges.equalTo(self.view)
     }
     
     self.scrollView.snp.makeConstraints { make in
@@ -86,18 +97,18 @@ class SuggestedViewController: UIViewController, ViewType {
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
     }
     
-    self.newView.view.snp.makeConstraints { make in
+    self.recentView.view.snp.makeConstraints { make in
       make.width.equalTo(self.view.frame.width)
       make.height.equalTo(self.view.frame.height)
       make.top.left.bottom.equalTo(self.scrollView)
-      make.right.equalTo(self.top20View.view.snp.left)
+      make.right.equalTo(self.popularView.view.snp.left)
     }
     
-    self.top20View.view.snp.makeConstraints { make in
+    self.popularView.view.snp.makeConstraints { make in
       make.width.equalTo(self.view.frame.width)
       make.height.equalTo(self.view.frame.height)
       make.top.bottom.right.equalTo(self.scrollView)
-      make.left.equalTo(self.newView.view.snp.right)
+      make.left.equalTo(self.recentView.view.snp.right)
     }
     
   }
@@ -105,8 +116,6 @@ class SuggestedViewController: UIViewController, ViewType {
   // MARK: - -> Rx Event Binding
   
   func setupEventBinding() {
-    
-    rx.viewWillAppear.bind(to: viewModel.willAppear).disposed(by: disposeBag)
     
     self.segmentedControl.rx.selectedSegmentIndex
       .bind(to: viewModel.selectedSegmentIndex)
@@ -134,9 +143,14 @@ class SuggestedViewController: UIViewController, ViewType {
       })
       .disposed(by: disposeBag)
     
-    viewModel.s.drive(onNext: {
-      print($0)
-    }).disposed(by: disposeBag)
+  }
+  
+  private func add(viewControllers: [UIViewController], to containerView: UIView) {
+    for vc in viewControllers {
+      containerView.addSubview(vc.view)
+      self.addChild(vc)
+      vc.didMove(toParent: self)
+    }
   }
   
 }

@@ -12,7 +12,8 @@ import RxSwift
 
 typealias PostsData = SectionModel<String, Post>
 
-protocol NewViewModelType: ViewModelType {
+protocol RecentViewModelType: ViewModelType {
+  
   // Event
   var viewWillAppear: PublishSubject<Void> { get }
   var didPulltoRefresh: PublishSubject<Void> { get }
@@ -22,10 +23,10 @@ protocol NewViewModelType: ViewModelType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[PostsData]> { get }
   var showPost: Driver<String> { get }
-
+  
 }
 
-struct NewViewModel: NewViewModelType {
+struct RecentViewModel: RecentViewModelType {
   
   // MARK: Properties
   // MARK: -> Event
@@ -39,7 +40,6 @@ struct NewViewModel: NewViewModelType {
   let isNetworking: Driver<Bool>
   let posts: Driver<[PostsData]>
   let showPost: Driver<String>
-  
   
   // MARK: - Initialize
   
@@ -64,10 +64,11 @@ struct NewViewModel: NewViewModelType {
       }
       .map { [PostsData(model: "", items: $0)] }
       .asDriver(onErrorJustReturn: [])
-    
+   
     showPost = didCellSelected
       .map { $0.name }
       .asDriver(onErrorJustReturn: "")
+  
   }
   
 }

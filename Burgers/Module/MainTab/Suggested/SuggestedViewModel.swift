@@ -13,11 +13,10 @@ protocol SuggestedViewModelType: ViewModelType {
   // Event
   var swipePage: PublishSubject<Int> { get }
   var selectedSegmentIndex: PublishSubject<Int> { get }
-  var willAppear: PublishSubject<Void> { get }
   
   // UI
   var showView: Driver<Int> { get }
-  var s: Driver<Bool> { get }
+  
 }
 
 struct SuggestedViewModel: SuggestedViewModelType {
@@ -27,12 +26,10 @@ struct SuggestedViewModel: SuggestedViewModelType {
   
   let swipePage =  PublishSubject<Int>()
   let selectedSegmentIndex = PublishSubject<Int>()
-  let willAppear = PublishSubject<Void>()
   
   // MARK: <- UI
   
   let showView: Driver<Int>
-  let s: Driver<Bool>
   
   // MARK: - Initialize
   
@@ -44,7 +41,6 @@ struct SuggestedViewModel: SuggestedViewModelType {
       .map { $0 }
       .asDriver(onErrorJustReturn: 0)
     
-    s = Observable<Void>.merge([willAppear]).map {true}.asDriver(onErrorJustReturn: false)
   }
   
 }

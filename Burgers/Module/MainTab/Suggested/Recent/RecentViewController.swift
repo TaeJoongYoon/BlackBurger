@@ -13,12 +13,12 @@ import RxSwift
 import SnapKit
 import Then
 
-class NewViewController: UIViewController, ViewType {
+class RecentViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
   struct Reusable {
-    static let suggestedCell = ReusableCell<SuggestedTableViewCell>()
+    static let suggestedCell = ReusableCell<BurgerPostCell>()
   }
   
   struct Constant {
@@ -28,7 +28,7 @@ class NewViewController: UIViewController, ViewType {
   private struct Metric {
     static let baseMargin = CGFloat(8)
     static let tableViewFrame = UIScreen.main.bounds
-    static let rowHeight = CGFloat(250)
+    static let rowHeight = CGFloat(100)
   }
   
   // MARK: Rx
@@ -37,7 +37,7 @@ class NewViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: NewViewModelType!
+  var viewModel: RecentViewModelType!
   
   // MARK: UI
   
@@ -45,7 +45,7 @@ class NewViewController: UIViewController, ViewType {
     $0.refreshControl = UIRefreshControl()
     $0.refreshControl?.tintColor = .mainColor
     $0.rowHeight = Metric.rowHeight
-    $0.separatorInset = UIEdgeInsets(top: Metric.baseMargin, left: Metric.baseMargin, bottom: Metric.baseMargin, right: Metric.baseMargin)
+    $0.separatorInset = UIEdgeInsets(top: 0, left: Metric.baseMargin, bottom: 0, right: Metric.baseMargin)
     $0.register(Reusable.suggestedCell)
   }
   
@@ -59,7 +59,7 @@ class NewViewController: UIViewController, ViewType {
     self.view.addSubview(self.tableView)
     self.view.addSubview(self.indicator)
   }
-  
+
   // MARK: Setup Constraints
   
   func setupConstraints() {
@@ -76,6 +76,7 @@ class NewViewController: UIViewController, ViewType {
   // MARK: - -> Rx Event Binding
   
   func setupEventBinding() {
+    
     rx.viewWillAppear
       .bind(to: viewModel.viewWillAppear)
       .disposed(by: disposeBag)
@@ -87,22 +88,24 @@ class NewViewController: UIViewController, ViewType {
     tableView.rx.modelSelected(PostsData.Item.self)
       .bind(to: viewModel.didCellSelected)
       .disposed(by: disposeBag)
+    
   }
   
   // MARK: - <- Rx UI Binding
   
   func setupUIBinding() {
+    
     let dataSource = RxTableViewSectionedReloadDataSource<PostsData>(
       configureCell: { (_, tableView, indexPath, item) -> UITableViewCell in
         let cell = tableView.dequeue(Reusable.suggestedCell)!
         
-        cell.configureWith()
+        cell.configureWith(name: item.name)
         return cell
     })
     
     viewModel.posts
       .drive(tableView.rx.items(dataSource: dataSource))
-      .dispose()
+      .disposed(by: disposeBag)
     
     viewModel.showPost
       .drive(onNext: {
@@ -110,6 +113,20 @@ class NewViewController: UIViewController, ViewType {
       })
       .disposed(by: disposeBag)
     
+    viewModel.isNetworking
+      .drive(onNext: { [weak self] isNetworking in
+        self?.showNetworkingAnimation(isNetworking)
+      }).disposed(by: disposeBag)
+    
+  }
+  
+  private func showNetworkingAnimation(_ isNetworking: Bool) {
+    if !isNetworking {
+      indicator.stopAnimating()
+      tableView.refreshControl?.endRefreshing()
+    } else if !tableView.refreshControl!.isRefreshing {
+      indicator.startAnimating()
+    }
   }
   
 }
