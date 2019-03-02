@@ -37,17 +37,9 @@ class SuggestedViewController: UIViewController, ViewType {
   
   // MARK: UI
   
-  let v1 = UIView(frame: .zero).then {
-    $0.backgroundColor = .red
-  }
-  
-  let v2 = UIView(frame: .zero).then {
-    $0.backgroundColor = .blue
-  }
-  
   let segmentedControl = UISegmentedControl(items: ["New", "Popular"]).then {
     $0.backgroundColor = .white
-    $0.tintColor = .orange
+    $0.tintColor = .mainColor
     $0.layer.borderColor = UIColor.white.cgColor
     $0.layer.borderWidth = Metric.segmentedBorderWidth
     $0.selectedSegmentIndex = 0
@@ -59,6 +51,10 @@ class SuggestedViewController: UIViewController, ViewType {
     $0.backgroundColor = .white
   }
   
+  let newView = NewViewController.create(with: NewViewModel())
+  
+  let top20View = Top20ViewController.create(with: Top20ViewModel())
+  
   // MARK: Setup UI
   
   func setupUI() {
@@ -66,14 +62,10 @@ class SuggestedViewController: UIViewController, ViewType {
     self.view.backgroundColor = .white
     self.view.addSubview(self.segmentedControl)
     
-    self.v1.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: view.frame.height)
-    self.scrollView.addSubview(self.v1)
-    
-    self.v2.frame = CGRect(x: self.view.frame.width, y: 0, width: self.view.frame.width, height: view.frame.height)
-    self.scrollView.addSubview(self.v2)
+    self.scrollView.addSubview(self.newView.view)
+    self.scrollView.addSubview(self.top20View.view)
     
     self.scrollView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.scrollView.bounds.height)
-    
     self.view.addSubview(self.scrollView)
   }
   
@@ -94,17 +86,31 @@ class SuggestedViewController: UIViewController, ViewType {
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
     }
     
+    self.newView.view.snp.makeConstraints { make in
+      make.width.equalTo(self.view.frame.width)
+      make.height.equalTo(self.view.frame.height)
+      make.top.left.bottom.equalTo(self.scrollView)
+      make.right.equalTo(self.top20View.view.snp.left)
+    }
+    
+    self.top20View.view.snp.makeConstraints { make in
+      make.width.equalTo(self.view.frame.width)
+      make.height.equalTo(self.view.frame.height)
+      make.top.bottom.right.equalTo(self.scrollView)
+      make.left.equalTo(self.newView.view.snp.right)
+    }
+    
   }
   
   // MARK: - -> Rx Event Binding
   
   func setupEventBinding() {
     
+    rx.viewWillAppear.bind(to: viewModel.willAppear).disposed(by: disposeBag)
+    
     self.segmentedControl.rx.selectedSegmentIndex
       .bind(to: viewModel.selectedSegmentIndex)
       .disposed(by: disposeBag)
-    
-    self.scrollView.rx.setDelegate(self).disposed(by: disposeBag)
     
     self.scrollView.rx.contentOffset
       .map { [weak self] in
@@ -113,8 +119,6 @@ class SuggestedViewController: UIViewController, ViewType {
       .distinctUntilChanged()
       .bind(to: viewModel.swipePage)
       .disposed(by: disposeBag)
-    
-
   }
   
   // MARK: - <- Rx UI Binding
@@ -129,10 +133,10 @@ class SuggestedViewController: UIViewController, ViewType {
         self?.segmentedControl.selectedSegmentIndex = index
       })
       .disposed(by: disposeBag)
+    
+    viewModel.s.drive(onNext: {
+      print($0)
+    }).disposed(by: disposeBag)
   }
-  
-}
-
-extension SuggestedViewController: UIScrollViewDelegate {
   
 }

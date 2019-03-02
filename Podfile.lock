@@ -1,11 +1,16 @@
 PODS:
   - Alamofire (4.8.1)
+  - Differentiator (3.1.0)
   - Kingfisher (5.1.1)
   - ReusableKit (2.1.0):
     - ReusableKit/Core (= 2.1.0)
   - ReusableKit/Core (2.1.0)
   - RxAtomic (4.4.1)
   - RxCocoa (4.4.1):
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
@@ -17,6 +22,7 @@ DEPENDENCIES:
   - Kingfisher
   - ReusableKit
   - RxCocoa
+  - RxDataSources
   - RxSwift
   - SnapKit (~> 4.0.0)
   - Then
@@ -24,24 +30,28 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Differentiator
     - Kingfisher
     - ReusableKit
     - RxAtomic
     - RxCocoa
+    - RxDataSources
     - RxSwift
     - SnapKit
     - Then
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   ReusableKit: d0b040de03b293288b0ca27a78602691d3346d9b
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
 
-PODFILE CHECKSUM: 01af05189513398fc08f08be0c25cd37bd3c4807
+PODFILE CHECKSUM: 1c6c21fde66a600c8b51392611425d0965aa7cbb
 
 COCOAPODS: 1.5.3

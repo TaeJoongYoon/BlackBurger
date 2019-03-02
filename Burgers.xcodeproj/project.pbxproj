@@ -24,8 +24,17 @@
 		6F941C02222400CD009E326F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C01222400CD009E326F /* UserViewModel.swift */; };
 		6F941C04222400E1009E326F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C03222400E1009E326F /* MapViewModel.swift */; };
 		6F941C06222400EB009E326F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C05222400EB009E326F /* MapViewController.swift */; };
+		6FD7D2E0222A3327005BBFEC /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2DF222A3327005BBFEC /* NewViewController.swift */; };
+		6FD7D2E2222A3335005BBFEC /* NewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2E1222A3335005BBFEC /* NewViewModel.swift */; };
+		6FD7D2E5222A3347005BBFEC /* Top20ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2E4222A3347005BBFEC /* Top20ViewModel.swift */; };
+		6FD7D2E7222A3351005BBFEC /* Top20ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2E6222A3351005BBFEC /* Top20ViewController.swift */; };
+		6FD7D2E9222A37AF005BBFEC /* SuggestedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2E8222A37AF005BBFEC /* SuggestedTableViewCell.swift */; };
+		6FD7D2EB222A39F2005BBFEC /* UIColor+BaseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2EA222A39F2005BBFEC /* UIColor+BaseColor.swift */; };
+		6FD7D2ED222A41D2005BBFEC /* Reactive+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2EC222A41D2005BBFEC /* Reactive+UIViewController.swift */; };
+		6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2EE222A55DF005BBFEC /* Post.swift */; };
+		6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */; };
+		6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */; };
 		6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */; };
-		6FEB8B37222563090064166E /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B36222563090064166E /* MainTabViewModel.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,8 +73,17 @@
 		6F941C01222400CD009E326F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6F941C03222400E1009E326F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		6F941C05222400EB009E326F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6FD7D2DF222A3327005BBFEC /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
+		6FD7D2E1222A3335005BBFEC /* NewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewModel.swift; sourceTree = "<group>"; };
+		6FD7D2E4222A3347005BBFEC /* Top20ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top20ViewModel.swift; sourceTree = "<group>"; };
+		6FD7D2E6222A3351005BBFEC /* Top20ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top20ViewController.swift; sourceTree = "<group>"; };
+		6FD7D2E8222A37AF005BBFEC /* SuggestedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedTableViewCell.swift; sourceTree = "<group>"; };
+		6FD7D2EA222A39F2005BBFEC /* UIColor+BaseColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BaseColor.swift"; sourceTree = "<group>"; };
+		6FD7D2EC222A41D2005BBFEC /* Reactive+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UIViewController.swift"; sourceTree = "<group>"; };
+		6FD7D2EE222A55DF005BBFEC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServiceType.swift; sourceTree = "<group>"; };
 		6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
-		6FEB8B36222563090064166E /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC87D158B838582532254CA /* Pods-BurgersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +184,7 @@
 		6F79A05F2223DD0E0030AAD4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6FD7D2EE222A55DF005BBFEC /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,6 +199,7 @@
 		6F79A0612223DD1C0030AAD4 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				6FD7D2F0222A72F5005BBFEC /* Service */,
 				6F79A0632223DD8B0030AAD4 /* Base */,
 				6FEB8B35222562E10064166E /* MainTab */,
 			);
@@ -192,6 +212,8 @@
 				6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */,
 				6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */,
 				6F3C50D022257C5700F1D465 /* String+Localized.swift */,
+				6FD7D2EA222A39F2005BBFEC /* UIColor+BaseColor.swift */,
+				6FD7D2EC222A41D2005BBFEC /* Reactive+UIViewController.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -208,8 +230,11 @@
 		6F79A0642223DD900030AAD4 /* Suggested */ = {
 			isa = PBXGroup;
 			children = (
+				6FD7D2DE222A3311005BBFEC /* Top20 */,
+				6FD7D2DD222A32FF005BBFEC /* New */,
 				6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */,
 				6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */,
+				6FD7D2E8222A37AF005BBFEC /* SuggestedTableViewCell.swift */,
 			);
 			path = Suggested;
 			sourceTree = "<group>";
@@ -232,11 +257,37 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		6FD7D2DD222A32FF005BBFEC /* New */ = {
+			isa = PBXGroup;
+			children = (
+				6FD7D2DF222A3327005BBFEC /* NewViewController.swift */,
+				6FD7D2E1222A3335005BBFEC /* NewViewModel.swift */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		6FD7D2DE222A3311005BBFEC /* Top20 */ = {
+			isa = PBXGroup;
+			children = (
+				6FD7D2E4222A3347005BBFEC /* Top20ViewModel.swift */,
+				6FD7D2E6222A3351005BBFEC /* Top20ViewController.swift */,
+			);
+			path = Top20;
+			sourceTree = "<group>";
+		};
+		6FD7D2F0222A72F5005BBFEC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */,
+				6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		6FEB8B35222562E10064166E /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
 				6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */,
-				6FEB8B36222563090064166E /* MainTabViewModel.swift */,
 				6F79A0642223DD900030AAD4 /* Suggested */,
 				6F79A0662223DF730030AAD4 /* Map */,
 				6F79A0652223DF650030AAD4 /* User */,
@@ -352,10 +403,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Burgers/Pods-Burgers-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ReusableKit/ReusableKit.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Then/Then.framework",
@@ -363,10 +416,12 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReusableKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Then.framework",
@@ -419,19 +474,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FD7D2E5222A3347005BBFEC /* Top20ViewModel.swift in Sources */,
+				6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */,
 				6F941C06222400EB009E326F /* MapViewController.swift in Sources */,
+				6FD7D2E7222A3351005BBFEC /* Top20ViewController.swift in Sources */,
 				6F8C8F152223FB6D005B76F9 /* SuggestedViewController.swift in Sources */,
 				6F941C04222400E1009E326F /* MapViewModel.swift in Sources */,
+				6FD7D2E2222A3335005BBFEC /* NewViewModel.swift in Sources */,
 				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
+				6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */,
 				6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */,
 				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,
+				6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */,
 				6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */,
 				6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */,
 				6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */,
 				6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */,
-				6FEB8B37222563090064166E /* MainTabViewModel.swift in Sources */,
+				6FD7D2E9222A37AF005BBFEC /* SuggestedTableViewCell.swift in Sources */,
 				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
+				6FD7D2EB222A39F2005BBFEC /* UIColor+BaseColor.swift in Sources */,
+				6FD7D2E0222A3327005BBFEC /* NewViewController.swift in Sources */,
 				6F79A0682223E1360030AAD4 /* ViewModelType.swift in Sources */,
+				6FD7D2ED222A41D2005BBFEC /* Reactive+UIViewController.swift in Sources */,
 				6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
