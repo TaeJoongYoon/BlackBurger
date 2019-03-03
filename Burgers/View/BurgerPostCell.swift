@@ -36,13 +36,13 @@ class BurgerPostCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.contentView.backgroundColor = .black
+    self.contentView.backgroundColor = .white
     contentView.addSubview(label)
   }
   
   private func setupConstraints() {
     label.snp.makeConstraints { make in
-      make.center.equalTo(self.contentView.center)
+      make.center.equalTo(self.contentView)
     }
   }
   

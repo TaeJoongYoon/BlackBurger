@@ -30,6 +30,7 @@ extension ViewType where Self: UIViewController {
     self.setupConstraints()
     self.setupEventBinding()
     self.setupUIBinding()
+    
     return self
   }
 }

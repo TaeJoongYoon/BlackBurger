@@ -26,7 +26,7 @@ struct FirebaseService: FirebaseServiceType {
       
       var ps = [Post]()
       
-      for i in 0..<50 {
+      for i in 1...20 {
         ps.append(Post(name: String(i)))
       }
       

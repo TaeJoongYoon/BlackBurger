@@ -51,7 +51,7 @@ class SuggestedViewController: UIViewController, ViewType {
   let scrollView = UIScrollView(frame: .zero).then {
     $0.isPagingEnabled = true
     $0.isDirectionalLockEnabled = true
-    $0.backgroundColor = .white
+    $0.contentInsetAdjustmentBehavior = .never
   }
   
   let recentView = RecentViewController.create(with: RecentViewModel())
@@ -67,11 +67,10 @@ class SuggestedViewController: UIViewController, ViewType {
     self.view.addSubview(self.segmentedControl)
     
     // Use ContainerView for UIViewController in UIScrollView
-    add(viewControllers: [self.recentView, self.popularView], to: self.containerView)
+    add([self.recentView, self.popularView], to: self.containerView)
     
     self.scrollView.addSubview(self.containerView)
-    self.scrollView.contentSize = CGSize(width: self.view.bounds.width * 2, height: self.scrollView.bounds.height)
-    
+
     self.view.addSubview(self.scrollView)
     
   }
@@ -83,34 +82,38 @@ class SuggestedViewController: UIViewController, ViewType {
     self.segmentedControl.snp.makeConstraints { make in
       make.top.equalTo(self.view.safeArea.top)
       make.left.right.equalTo(self.view)
-      make.width.equalTo(self.view)
       make.height.equalTo(Metric.segmentedHeight)
     }
-    
-    self.containerView.snp.makeConstraints { make in
-      make.edges.equalTo(self.view)
-    }
-    
+
     self.scrollView.snp.makeConstraints { make in
       make.top.equalTo(self.segmentedControl.snp.bottom)
       make.left.right.equalTo(self.view)
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
     }
+
+    self.containerView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    
+    self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 2, height: self.scrollView.frame.height)
     
     self.recentView.view.snp.makeConstraints { make in
       make.width.equalTo(self.view.frame.width)
-      make.height.equalTo(self.view.frame.height)
-      make.top.left.bottom.equalTo(self.scrollView)
+      make.height.equalTo(self.scrollView.frame.height)
+      make.top.left.equalTo(self.containerView)
       make.right.equalTo(self.popularView.view.snp.left)
     }
-    
+
     self.popularView.view.snp.makeConstraints { make in
       make.width.equalTo(self.view.frame.width)
-      make.height.equalTo(self.view.frame.height)
-      make.top.bottom.right.equalTo(self.scrollView)
+      make.height.equalTo(self.scrollView.frame.height)
+      make.top.bottom.right.equalTo(self.containerView)
       make.left.equalTo(self.recentView.view.snp.right)
     }
-    
+  
   }
   
   // MARK: - -> Rx Event Binding
@@ -145,7 +148,8 @@ class SuggestedViewController: UIViewController, ViewType {
     
   }
   
-  private func add(viewControllers: [UIViewController], to containerView: UIView) {
+  private func add(_ viewControllers: [UIViewController], to containerView: UIView) {
+    
     for vc in viewControllers {
       containerView.addSubview(vc.view)
       self.addChild(vc)

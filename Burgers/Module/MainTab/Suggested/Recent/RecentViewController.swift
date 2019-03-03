@@ -18,7 +18,7 @@ class RecentViewController: UIViewController, ViewType {
   // MARK: Constants
   
   struct Reusable {
-    static let suggestedCell = ReusableCell<BurgerPostCell>()
+    static let burgerPostCell = ReusableCell<BurgerPostCell>()
   }
   
   struct Constant {
@@ -26,9 +26,9 @@ class RecentViewController: UIViewController, ViewType {
   }
   
   private struct Metric {
-    static let baseMargin = CGFloat(8)
+    static let baseMargin = CGFloat(20)
     static let tableViewFrame = UIScreen.main.bounds
-    static let rowHeight = CGFloat(100)
+    static let rowHeight = CGFloat(250)
   }
   
   // MARK: Rx
@@ -42,11 +42,13 @@ class RecentViewController: UIViewController, ViewType {
   // MARK: UI
   
   let tableView = UITableView(frame: .zero, style: .plain).then {
+    $0.backgroundColor = .white
+    $0.contentInsetAdjustmentBehavior = .never
     $0.refreshControl = UIRefreshControl()
     $0.refreshControl?.tintColor = .mainColor
     $0.rowHeight = Metric.rowHeight
-    $0.separatorInset = UIEdgeInsets(top: 0, left: Metric.baseMargin, bottom: 0, right: Metric.baseMargin)
-    $0.register(Reusable.suggestedCell)
+    //$0.separatorInset = UIEdgeInsets(top: 0, left: Metric.baseMargin, bottom: 0, right: Metric.baseMargin)
+    $0.register(Reusable.burgerPostCell)
   }
   
   let indicator = UIActivityIndicatorView(style: .whiteLarge).then {
@@ -78,6 +80,7 @@ class RecentViewController: UIViewController, ViewType {
   func setupEventBinding() {
     
     rx.viewWillAppear
+      .take(1)
       .bind(to: viewModel.viewWillAppear)
       .disposed(by: disposeBag)
     
@@ -97,7 +100,7 @@ class RecentViewController: UIViewController, ViewType {
     
     let dataSource = RxTableViewSectionedReloadDataSource<PostsData>(
       configureCell: { (_, tableView, indexPath, item) -> UITableViewCell in
-        let cell = tableView.dequeue(Reusable.suggestedCell)!
+        let cell = tableView.dequeue(Reusable.burgerPostCell)!
         
         cell.configureWith(name: item.name)
         return cell
