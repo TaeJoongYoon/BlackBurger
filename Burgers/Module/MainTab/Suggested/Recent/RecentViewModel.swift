@@ -18,6 +18,7 @@ protocol RecentViewModelType: ViewModelType {
   var viewWillAppear: PublishSubject<Void> { get }
   var didPulltoRefresh: PublishSubject<Void> { get }
   var didCellSelected: PublishSubject<Post> { get }
+  var isReachedBottom: PublishSubject<Void> { get }
   
   // UI
   var isNetworking: Driver<Bool> { get }
@@ -34,6 +35,7 @@ struct RecentViewModel: RecentViewModelType {
   let viewWillAppear = PublishSubject<Void>()
   let didPulltoRefresh = PublishSubject<Void>()
   let didCellSelected = PublishSubject<Post>()
+  let isReachedBottom = PublishSubject<Void>()
   
   // MART: <- UI
   
@@ -55,7 +57,7 @@ struct RecentViewModel: RecentViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return firebaseService.fetchRecentPosts()
+        return firebaseService.fetchRecentPosts(20)
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)
@@ -68,7 +70,6 @@ struct RecentViewModel: RecentViewModelType {
     showPost = didCellSelected
       .map { $0.name }
       .asDriver(onErrorJustReturn: "")
-  
   }
   
 }

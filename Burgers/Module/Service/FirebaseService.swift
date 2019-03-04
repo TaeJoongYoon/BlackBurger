@@ -21,7 +21,23 @@ struct FirebaseService: FirebaseServiceType {
   
   // MARK: DataTask
   
-  func fetchRecentPosts() -> Observable<[Post]> {
+  func fetchRecentPosts(_ count: Int) -> Observable<[Post]> {
+    return Observable.create { observer -> Disposable in
+      
+      var ps = [Post]()
+      
+      for i in 1...count {
+        ps.append(Post(name: String(i)))
+      }
+      
+      observer.onNext(ps)
+      observer.onCompleted()
+      
+      return Disposables.create()
+    }
+  }
+  
+  func fetchPopularPosts() -> Observable<[Post]> {
     return Observable.create { observer -> Disposable in
       
       var ps = [Post]()

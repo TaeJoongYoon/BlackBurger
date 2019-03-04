@@ -94,26 +94,32 @@ class SuggestedViewController: UIViewController, ViewType {
     self.containerView.snp.makeConstraints { make in
       make.edges.equalToSuperview()
     }
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    
-    self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 2, height: self.scrollView.frame.height)
     
     self.recentView.view.snp.makeConstraints { make in
-      make.width.equalTo(self.view.frame.width)
-      make.height.equalTo(self.scrollView.frame.height)
       make.top.left.equalTo(self.containerView)
-      make.right.equalTo(self.popularView.view.snp.left)
     }
-
+    
     self.popularView.view.snp.makeConstraints { make in
-      make.width.equalTo(self.view.frame.width)
-      make.height.equalTo(self.scrollView.frame.height)
       make.top.bottom.right.equalTo(self.containerView)
       make.left.equalTo(self.recentView.view.snp.right)
     }
+    
+  }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+   
+    self.recentView.view.snp.makeConstraints { make in
+      make.width.equalTo(self.view.frame.width)
+      make.height.equalTo(self.scrollView.frame.height)
+    }
+    
+    self.popularView.view.snp.makeConstraints { make in
+      make.width.equalTo(self.view.frame.width)
+      make.height.equalTo(self.scrollView.frame.height)
+    }
+    
+    self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 2, height: self.scrollView.frame.height)
   }
   
   // MARK: - -> Rx Event Binding

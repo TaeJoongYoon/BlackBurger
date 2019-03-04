@@ -67,12 +67,13 @@ class RecentViewController: UIViewController, ViewType {
   func setupConstraints() {
     
     self.tableView.snp.makeConstraints { make in
-      make.edges.equalTo(self.view)
+      make.edges.equalToSuperview()
     }
     
     self.indicator.snp.makeConstraints { make in
       make.center.equalTo(self.view.center)
     }
+    
   }
   
   // MARK: - -> Rx Event Binding
@@ -92,6 +93,9 @@ class RecentViewController: UIViewController, ViewType {
       .bind(to: viewModel.didCellSelected)
       .disposed(by: disposeBag)
     
+    tableView.rx.isReachedBottom
+      .bind(to: viewModel.isReachedBottom)
+      .disposed(by: disposeBag)
   }
   
   // MARK: - <- Rx UI Binding

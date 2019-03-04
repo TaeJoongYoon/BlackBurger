@@ -9,5 +9,6 @@
 import RxSwift
 
 protocol FirebaseServiceType {
-  func fetchRecentPosts() -> Observable<[Post]>
+  func fetchRecentPosts(_: Int) -> Observable<[Post]>
+  func fetchPopularPosts() -> Observable<[Post]>
 }
