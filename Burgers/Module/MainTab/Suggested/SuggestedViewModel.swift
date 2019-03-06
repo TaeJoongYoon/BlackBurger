@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol SuggestedViewModelType: ViewModelType {
+  
   // Event
   var swipePage: PublishSubject<Int> { get }
   var selectedSegmentIndex: PublishSubject<Int> { get }

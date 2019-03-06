@@ -20,8 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
     
-    let mainTabView = MainTabViewController()
-    window?.rootViewController = mainTabView
+    let splashViewModel = SplashViewModel()
+    let splashViewController = SplashViewController.create(with: splashViewModel)
+    window?.rootViewController = splashViewController
     
     return true
   }

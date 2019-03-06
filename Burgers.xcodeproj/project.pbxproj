@@ -20,6 +20,10 @@
 		6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */; };
 		6F8C8F152223FB6D005B76F9 /* SuggestedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */; };
 		6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */; };
+		6F8DCCF02230148C00C5B90E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DCCEF2230148C00C5B90E /* SplashViewController.swift */; };
+		6F8DCCF22230149A00C5B90E /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DCCF12230149A00C5B90E /* SplashViewModel.swift */; };
+		6F8DCCF4223014A500C5B90E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DCCF3223014A500C5B90E /* LoginViewModel.swift */; };
+		6F8DCCF6223014B200C5B90E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DCCF5223014B200C5B90E /* LoginViewController.swift */; };
 		6F941C00222400B3009E326F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941BFF222400B3009E326F /* UserViewController.swift */; };
 		6F941C02222400CD009E326F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C01222400CD009E326F /* UserViewModel.swift */; };
 		6F941C04222400E1009E326F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C03222400E1009E326F /* MapViewModel.swift */; };
@@ -71,6 +75,10 @@
 		6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SafeArea.swift"; sourceTree = "<group>"; };
 		6F8C8F142223FB6D005B76F9 /* SuggestedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedViewController.swift; sourceTree = "<group>"; };
 		6F8C8F162223FB91005B76F9 /* SuggestedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedViewModel.swift; sourceTree = "<group>"; };
+		6F8DCCEF2230148C00C5B90E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		6F8DCCF12230149A00C5B90E /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		6F8DCCF3223014A500C5B90E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		6F8DCCF5223014B200C5B90E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6F941BFF222400B3009E326F /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		6F941C01222400CD009E326F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6F941C03222400E1009E326F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -267,6 +275,8 @@
 		6F8DCCED2230138800C5B90E /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				6F8DCCEF2230148C00C5B90E /* SplashViewController.swift */,
+				6F8DCCF12230149A00C5B90E /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -274,6 +284,8 @@
 		6F8DCCEE2230139000C5B90E /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				6F8DCCF3223014A500C5B90E /* LoginViewModel.swift */,
+				6F8DCCF5223014B200C5B90E /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -505,7 +517,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F8DCCF6223014B200C5B90E /* LoginViewController.swift in Sources */,
 				6FD7D2E5222A3347005BBFEC /* PopularViewModel.swift in Sources */,
+				6F8DCCF4223014A500C5B90E /* LoginViewModel.swift in Sources */,
 				6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */,
 				6F941C06222400EB009E326F /* MapViewController.swift in Sources */,
 				6FD7D2E7222A3351005BBFEC /* PopularViewController.swift in Sources */,
@@ -514,6 +528,7 @@
 				6FD7D2E2222A3335005BBFEC /* RecentViewModel.swift in Sources */,
 				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
 				6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */,
+				6F8DCCF02230148C00C5B90E /* SplashViewController.swift in Sources */,
 				6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */,
 				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,
 				6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */,
@@ -525,6 +540,7 @@
 				6FD6D62C222D703F006D5F7D /* UIScrollView+Rx.swift in Sources */,
 				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
 				6FD7D2EB222A39F2005BBFEC /* UIColor+BaseColor.swift in Sources */,
+				6F8DCCF22230149A00C5B90E /* SplashViewModel.swift in Sources */,
 				6FD7D2E0222A3327005BBFEC /* RecentViewController.swift in Sources */,
 				6F79A0682223E1360030AAD4 /* ViewModelType.swift in Sources */,
 				6FD7D2ED222A41D2005BBFEC /* Reactive+UIViewController.swift in Sources */,

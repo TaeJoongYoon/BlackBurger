@@ -1,15 +1,15 @@
 //
-//  UserViewController.swift
+//  LoginViewController.swift
 //  Burgers
 //
-//  Created by Tae joong Yoon on 25/02/2019.
+//  Created by Tae joong Yoon on 06/03/2019.
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
 import RxCocoa
 import RxSwift
 
-class UserViewController: UIViewController, ViewType {
+class LoginViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -31,13 +31,12 @@ class UserViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: UserViewModelType!
+  var viewModel: LoginViewModelType!
   
   // MARK: Setup UI
   
   func setupUI() {
-    self.title = "User".localized
-    self.view.backgroundColor = .white
+    self.view.backgroundColor = .black
   }
   
   // MARK: Setup Constraints
