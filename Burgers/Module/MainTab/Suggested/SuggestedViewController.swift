@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import Then
 
-class SuggestedViewController: UIViewController, ViewType {
+final class SuggestedViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -88,7 +88,7 @@ class SuggestedViewController: UIViewController, ViewType {
     self.scrollView.snp.makeConstraints { make in
       make.top.equalTo(self.segmentedControl.snp.bottom)
       make.left.right.equalTo(self.view)
-      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+      make.bottom.equalTo(self.view.safeArea.bottom)
     }
 
     self.containerView.snp.makeConstraints { make in

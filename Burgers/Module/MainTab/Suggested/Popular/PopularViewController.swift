@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class PopularViewController: UIViewController, ViewType {
+final class PopularViewController: UIViewController, ViewType {
   
   // MARK: Constants
   

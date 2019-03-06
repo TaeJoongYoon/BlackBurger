@@ -24,6 +24,7 @@
 		6F941C02222400CD009E326F /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C01222400CD009E326F /* UserViewModel.swift */; };
 		6F941C04222400E1009E326F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C03222400E1009E326F /* MapViewModel.swift */; };
 		6F941C06222400EB009E326F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C05222400EB009E326F /* MapViewController.swift */; };
+		6FC48F37222EBA44007E0B3A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC48F36222EBA44007E0B3A /* MapKit.framework */; };
 		6FD6D62C222D703F006D5F7D /* UIScrollView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6D62B222D703F006D5F7D /* UIScrollView+Rx.swift */; };
 		6FD7D2E0222A3327005BBFEC /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2DF222A3327005BBFEC /* RecentViewController.swift */; };
 		6FD7D2E2222A3335005BBFEC /* RecentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2E1222A3335005BBFEC /* RecentViewModel.swift */; };
@@ -74,6 +75,7 @@
 		6F941C01222400CD009E326F /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6F941C03222400E1009E326F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		6F941C05222400EB009E326F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6FC48F36222EBA44007E0B3A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6FD6D62B222D703F006D5F7D /* UIScrollView+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Rx.swift"; sourceTree = "<group>"; };
 		6FD7D2DF222A3327005BBFEC /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		6FD7D2E1222A3335005BBFEC /* RecentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewModel.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FC48F37222EBA44007E0B3A /* MapKit.framework in Frameworks */,
 				A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +127,7 @@
 		19C393064188463A788BBD0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6FC48F36222EBA44007E0B3A /* MapKit.framework */,
 				51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */,
 				B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */,
 			);
@@ -260,6 +264,20 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		6F8DCCED2230138800C5B90E /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		6F8DCCEE2230139000C5B90E /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		6FD7D2DD222A32FF005BBFEC /* Recent */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +309,8 @@
 		6FEB8B35222562E10064166E /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
+				6F8DCCEE2230139000C5B90E /* Login */,
+				6F8DCCED2230138800C5B90E /* Splash */,
 				6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */,
 				6F79A0642223DD900030AAD4 /* Suggested */,
 				6F79A0662223DF730030AAD4 /* Map */,
@@ -352,6 +372,11 @@
 				TargetAttributes = {
 					6F79A0382223DB250030AAD4 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					6F79A04C2223DB260030AAD4 = {
 						CreatedOnToolsVersion = 10.0;
@@ -413,6 +438,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxMKMapView/RxMKMapView.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Then/Then.framework",
@@ -426,6 +452,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxMKMapView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Then.framework",

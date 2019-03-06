@@ -9,6 +9,7 @@ target 'Burgers' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
+  pod 'RxMKMapView'
 
   # UI
   pod 'SnapKit', '~> 4.0.0'

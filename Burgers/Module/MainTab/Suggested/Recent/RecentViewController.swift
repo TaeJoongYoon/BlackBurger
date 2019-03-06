@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class RecentViewController: UIViewController, ViewType {
+final class RecentViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
