@@ -12,6 +12,7 @@ final class MainTabViewController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    UIApplication.shared.keyWindow?.rootViewController = self
     
     // Hide Tabbar Line
     self.tabBar.shadowImage = UIImage()

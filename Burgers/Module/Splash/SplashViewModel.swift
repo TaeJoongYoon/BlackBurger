@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
+import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -31,7 +32,7 @@ struct SplashViewModel: SplashViewModelType {
   init() {
     
     isAuthenticated = checkIfAuthenticated.map {
-      false
+      return Auth.auth().currentUser != nil
     }.asDriver(onErrorJustReturn: false)
     
   }

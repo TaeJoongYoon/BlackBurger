@@ -40,6 +40,8 @@
 		6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2EE222A55DF005BBFEC /* Post.swift */; };
 		6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */; };
 		6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */; };
+		6FE9E43D22313B2900D961ED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */; };
+		6FE9E440223145E100D961ED /* Window+SetRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9E43F223145E100D961ED /* Window+SetRootView.swift */; };
 		6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
 /* End PBXBuildFile section */
@@ -95,6 +97,9 @@
 		6FD7D2EE222A55DF005BBFEC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServiceType.swift; sourceTree = "<group>"; };
+		6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6FE9E43E22313B2B00D961ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6FE9E43F223145E100D961ED /* Window+SetRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Window+SetRootView.swift"; sourceTree = "<group>"; };
 		6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC87D158B838582532254CA /* Pods-BurgersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,6 +178,7 @@
 		6F79A03B2223DB250030AAD4 /* Burgers */ = {
 			isa = PBXGroup;
 			children = (
+				6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */,
 				6F79A05F2223DD0E0030AAD4 /* Model */,
 				6FD7D2F0222A72F5005BBFEC /* Service */,
 				6F79A0612223DD1C0030AAD4 /* Module */,
@@ -196,6 +202,7 @@
 		6F79A05C2223DB480030AAD4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6FE9E43E22313B2B00D961ED /* GoogleService-Info.plist */,
 				6F79A0482223DB260030AAD4 /* Info.plist */,
 				6F79A0432223DB260030AAD4 /* Assets.xcassets */,
 				6F79A0452223DB260030AAD4 /* LaunchScreen.storyboard */,
@@ -216,6 +223,8 @@
 			isa = PBXGroup;
 			children = (
 				6F79A0632223DD8B0030AAD4 /* Base */,
+				6F8DCCED2230138800C5B90E /* Splash */,
+				6F8DCCEE2230139000C5B90E /* Login */,
 				6FEB8B35222562E10064166E /* MainTab */,
 			);
 			path = Module;
@@ -230,6 +239,7 @@
 				6FD7D2EA222A39F2005BBFEC /* UIColor+BaseColor.swift */,
 				6FD7D2EC222A41D2005BBFEC /* Reactive+UIViewController.swift */,
 				6FD6D62B222D703F006D5F7D /* UIScrollView+Rx.swift */,
+				6FE9E43F223145E100D961ED /* Window+SetRootView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -284,8 +294,8 @@
 		6F8DCCEE2230139000C5B90E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				6F8DCCF3223014A500C5B90E /* LoginViewModel.swift */,
 				6F8DCCF5223014B200C5B90E /* LoginViewController.swift */,
+				6F8DCCF3223014A500C5B90E /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -321,8 +331,6 @@
 		6FEB8B35222562E10064166E /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
-				6F8DCCEE2230139000C5B90E /* Login */,
-				6F8DCCED2230138800C5B90E /* Splash */,
 				6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */,
 				6F79A0642223DD900030AAD4 /* Suggested */,
 				6F79A0662223DF730030AAD4 /* Map */,
@@ -421,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F79A0472223DB260030AAD4 /* LaunchScreen.storyboard in Resources */,
+				6FE9E43D22313B2900D961ED /* GoogleService-Info.plist in Resources */,
 				6F107FB5222BD01F00AF7489 /* Main.storyboard in Resources */,
 				6F79A0442223DB260030AAD4 /* Assets.xcassets in Resources */,
 			);
@@ -445,6 +454,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Burgers/Pods-Burgers-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/ReusableKit/ReusableKit.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
@@ -454,11 +465,14 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Then/Then.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReusableKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
@@ -468,6 +482,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Then.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -528,6 +543,7 @@
 				6FD7D2E2222A3335005BBFEC /* RecentViewModel.swift in Sources */,
 				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
 				6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */,
+				6FE9E440223145E100D961ED /* Window+SetRootView.swift in Sources */,
 				6F8DCCF02230148C00C5B90E /* SplashViewController.swift in Sources */,
 				6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */,
 				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,

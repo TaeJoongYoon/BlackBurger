@@ -82,32 +82,32 @@ final class MapViewController: UIViewController, ViewType {
   
   func setupEventBinding(){
     
-    mapView.rx.didFinishRenderingMap
-      .asDriver()
-      .drive(onNext: {
-        print($0)
-      })
-      .disposed(by: disposeBag)
-    
-    mapView.rx.willStartLoadingMap
-      .asDriver()
-      .drive(onNext: {
-        print("map started loadedloading")
-      })
-      .disposed(by: disposeBag)
-
-    mapView.rx.didFinishLoadingMap
-      .asDriver()
-      .drive(onNext: {
-        print("map finished loading")
-      })
-      .disposed(by: disposeBag)
-
-    mapView.rx.didFailLoadingMap
-      .subscribe({
-        print($0.debugDescription)
-      })
-      .disposed(by: disposeBag)
+//    mapView.rx.didFinishRenderingMap
+//      .asDriver()
+//      .drive(onNext: {
+//        print($0)
+//      })
+//      .disposed(by: disposeBag)
+//
+//    mapView.rx.willStartLoadingMap
+//      .asDriver()
+//      .drive(onNext: {
+//        print("map started loadedloading")
+//      })
+//      .disposed(by: disposeBag)
+//
+//    mapView.rx.didFinishLoadingMap
+//      .asDriver()
+//      .drive(onNext: {
+//        print("map finished loading")
+//      })
+//      .disposed(by: disposeBag)
+//
+//    mapView.rx.didFailLoadingMap
+//      .subscribe({
+//        print($0.debugDescription)
+//      })
+//      .disposed(by: disposeBag)
   }
   
   // MARK: - <- Rx UI Binding

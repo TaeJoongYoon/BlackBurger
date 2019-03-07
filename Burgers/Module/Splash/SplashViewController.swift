@@ -61,7 +61,6 @@ class SplashViewController: UIViewController, ViewType {
     
     viewModel.isAuthenticated
       .drive(onNext: { [weak self] in
-        print("Splash -> isAuthenticated : \($0)")
         $0 ? self?.presentMainScreen() : self?.presentLoginScreen()
       })
       .disposed(by: disposeBag)
@@ -73,20 +72,21 @@ class SplashViewController: UIViewController, ViewType {
   private func presentLoginScreen() {
     let loginViewModel = LoginViewModel()
     let loginViewController = LoginViewController.create(with: loginViewModel)
-    self.present(loginViewController, animated: true) {
-      UIApplication.shared.keyWindow?.rootViewController = loginViewController
-      
-      print("Now rootView : \(String(describing: UIApplication.shared.keyWindow?.rootViewController))")
-    }
+    
+    UIApplication.shared.keyWindow?
+      .setRootViewController(loginViewController,
+                             options: UIWindow.TransitionOptions.init(
+                              direction: .toTop,
+                              style: .easeInOut))
   }
   
   private func presentMainScreen() {
     let mainTabView = MainTabViewController()
-    self.present(mainTabView, animated: true) {
-      UIApplication.shared.keyWindow?.rootViewController = mainTabView
-      
-      print("Now rootView : \(String(describing: UIApplication.shared.keyWindow?.rootViewController))")
-    }
+    
+    UIApplication.shared.keyWindow?
+      .setRootViewController(mainTabView,
+                             options: UIWindow.TransitionOptions.init(
+                              direction: .toTop,
+                              style: .easeInOut))
   }
-  
 }

@@ -33,6 +33,10 @@ class UserViewController: UIViewController, ViewType {
   
   var viewModel: UserViewModelType!
   
+  // MARK: UI
+  
+  
+  
   // MARK: Setup UI
   
   func setupUI() {

@@ -10,6 +10,10 @@ import UIKit
 
 extension UIColor {
   static var mainColor: UIColor {
+    return .black
+  }
+  
+  static var tintColor: UIColor {
     return .orange
   }
 }

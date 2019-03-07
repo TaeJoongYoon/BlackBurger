@@ -18,6 +18,10 @@ target 'Burgers' do
   pod 'Alamofire'
   pod 'Kingfisher'
 
+  # Firebase
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+
   # Misc.
   pod 'ReusableKit'
   pod 'Then'
