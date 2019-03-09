@@ -6,12 +6,10 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
-import Firebase
-import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-class SplashViewController: UIViewController, ViewType {
+final class SplashViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -48,15 +46,6 @@ class SplashViewController: UIViewController, ViewType {
   func setupUI() {
     self.view.backgroundColor = .white
     self.view.addSubview(logo)
-    
-    let firebaseAuth = Auth.auth()
-    do {
-      try firebaseAuth.signOut()
-    } catch let signOutError as NSError {
-      print ("Error signing out: %@", signOutError)
-    }
-    
-    
   }
   
   // MARK: Setup Constraints

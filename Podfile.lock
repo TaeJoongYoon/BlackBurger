@@ -1,12 +1,20 @@
 PODS:
-  - Alamofire (4.8.1)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
   - CocoaLumberjack/Core (3.5.1)
   - CocoaLumberjack/Swift (3.5.1):
     - CocoaLumberjack/Core
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
-  - Differentiator (3.1.0)
   - Fabric (1.9.0)
+  - FBSDKCoreKit (4.40.0):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.40.0):
+    - FBSDKCoreKit
   - Firebase/Auth (5.17.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.3.1)
@@ -73,45 +81,33 @@ PODS:
   - RxAtomic (4.4.1)
   - RxCocoa (4.4.1):
     - RxSwift (~> 4.0)
-  - RxDataSources (3.1.0):
-    - Differentiator (~> 3.0)
-    - RxCocoa (~> 4.0)
-    - RxSwift (~> 4.0)
-  - RxGesture (2.1.0):
-    - RxCocoa (~> 4.4.0)
-    - RxSwift (~> 4.4.0)
-  - RxMKMapView (4.4.0):
-    - RxCocoa (~> 4.4)
-    - RxSwift (~> 4.4)
   - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
   - SnapKit (4.0.1)
   - Then (2.4.0)
 
 DEPENDENCIES:
-  - Alamofire
   - CocoaLumberjack/Swift
   - Crashlytics
   - Fabric
+  - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Core
   - Kingfisher
   - ReusableKit
   - RxCocoa
-  - RxDataSources
-  - RxGesture
-  - RxMKMapView
   - RxSwift
-  - SnapKit (~> 4.0.0)
+  - SnapKit
   - Then
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
+    - Bolts
     - CocoaLumberjack
     - Crashlytics
-    - Differentiator
     - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -126,19 +122,17 @@ SPEC REPOS:
     - ReusableKit
     - RxAtomic
     - RxCocoa
-    - RxDataSources
-    - RxGesture
-    - RxMKMapView
     - RxSwift
     - SnapKit
     - Then
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   CocoaLumberjack: 2101f8a5508197a305e737d16c5c2e9e2157628c
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
+  FBSDKLoginKit: 7a1e411d46acc8834588eca437daf34de42e1d52
   Firebase: 59d557e064217fab6a03ff00baa73c06e73832e6
   FirebaseAnalytics: 75e4bbc6417d190cc98ec1f17c41a4fad4c2c976
   FirebaseAuth: 0f61e1329237da5682c49c9abd135e8f9d07a151
@@ -153,13 +147,10 @@ SPEC CHECKSUMS:
   ReusableKit: d0b040de03b293288b0ca27a78602691d3346d9b
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
-  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
-  RxGesture: 7f6dfb45dbde06e618c24442d38493e3144f2c95
-  RxMKMapView: e413c9f349df894254ed6b15fccee3952ac86dc6
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
 
-PODFILE CHECKSUM: 7c3605a11f578266cb29be661737f58ecf106358
+PODFILE CHECKSUM: c47f3ca66645017380769ea01e42814c4f94f19c
 
 COCOAPODS: 1.5.3

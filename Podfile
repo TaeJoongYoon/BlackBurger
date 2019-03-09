@@ -8,15 +8,11 @@ target 'Burgers' do
   # Rx
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'RxDataSources'
-  pod 'RxMKMapView'
-  pod 'RxGesture'
 
   # UI
-  pod 'SnapKit', '~> 4.0.0'
+  pod 'SnapKit'
 
   # Networking
-  pod 'Alamofire'
   pod 'Kingfisher'
 
   # Logging
@@ -27,6 +23,7 @@ target 'Burgers' do
   pod 'Crashlytics'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'FBSDKLoginKit'   
 
   # Misc.
   pod 'ReusableKit'

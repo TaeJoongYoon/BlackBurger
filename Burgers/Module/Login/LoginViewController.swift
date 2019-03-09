@@ -6,11 +6,15 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
+import FBSDKCoreKit
+import FBSDKLoginKit
+import FirebaseAuth
 import RxCocoa
-import RxGesture
 import RxSwift
 
-class LoginViewController: UIViewController, ViewType {
+// loginButton.readPermissions = @[@"public_profile", @"email"];
+
+final class LoginViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -24,9 +28,10 @@ class LoginViewController: UIViewController, ViewType {
   
   struct Metric {
     static let height = 35
-    static let textfieldOffset = 30
-    static let textfieldInset = 10
-    static let buttonInset = 20
+    static let leftRightOffset = 30
+    static let topBottomOffset = 10
+    static let buttonOffset = 20
+    static let fbOffset = 60
   }
   
   // MARK: Rx
@@ -72,6 +77,12 @@ class LoginViewController: UIViewController, ViewType {
     $0.tintColor = .tintColor
   }
   
+  let orLabel = UILabel(frame: .zero).then {
+    $0.text = "or"
+    $0.textColor = .white
+    $0.font = UIFont.systemFont(ofSize: 20)
+  }
+  
   let loginButton = UIButton(type: .system).then {
     $0.setTitle("Log in".localized, for: .normal)
     $0.backgroundColor = .disabledColor
@@ -80,6 +91,8 @@ class LoginViewController: UIViewController, ViewType {
     $0.clipsToBounds = true
     $0.isEnabled = false
   }
+  
+  let fbloginButton = FBSDKLoginButton()
   
   // MARK: Setup UI
   
@@ -91,7 +104,11 @@ class LoginViewController: UIViewController, ViewType {
     self.view.addSubview(passwordTextField)
     self.view.addSubview(signupButton)
     self.view.addSubview(loginButton)
+    self.view.addSubview(orLabel)
+    self.view.addSubview(fbloginButton)
     
+    fbloginButton.readPermissions = ["email"]
+    fbloginButton.delegate = self
   }
   
   // MARK: Setup Constraints
@@ -106,30 +123,42 @@ class LoginViewController: UIViewController, ViewType {
     self.emailTextField.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.top.equalTo(self.logo.snp.bottom).offset(60)
-      make.left.equalTo(self.view).offset(Metric.textfieldOffset)
-      make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
+      make.left.equalTo(self.view).offset(Metric.leftRightOffset)
+      make.right.equalTo(self.view).offset(-Metric.leftRightOffset)
       make.height.equalTo(Metric.height)
     }
     
     self.passwordTextField.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(self.emailTextField.snp.bottom).offset(Metric.textfieldInset)
-      make.left.equalTo(self.view).offset(Metric.textfieldOffset)
-      make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
+      make.top.equalTo(self.emailTextField.snp.bottom).offset(Metric.topBottomOffset)
+      make.left.equalTo(self.view).offset(Metric.leftRightOffset)
+      make.right.equalTo(self.view).offset(-Metric.leftRightOffset)
       make.height.equalTo(Metric.height)
     }
     
     self.signupButton.snp.makeConstraints { make in
-      make.top.equalTo(self.passwordTextField.snp.bottom).offset(Metric.buttonInset)
-      make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
+      make.top.equalTo(self.passwordTextField.snp.bottom).offset(Metric.buttonOffset)
+      make.right.equalTo(self.view).offset(-Metric.leftRightOffset)
     }
     
     self.loginButton.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(self.signupButton.snp.bottom).offset(Metric.buttonInset)
-      make.left.equalTo(self.view).offset(Metric.textfieldOffset)
-      make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
+      make.top.equalTo(self.signupButton.snp.bottom).offset(Metric.buttonOffset)
+      make.left.equalTo(self.view).offset(Metric.leftRightOffset)
+      make.right.equalTo(self.view).offset(-Metric.leftRightOffset)
       make.height.equalTo(Metric.height)
+    }
+    
+    self.orLabel.snp.makeConstraints { make in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(self.loginButton.snp.bottom).offset(Metric.fbOffset)
+    }
+    
+    self.fbloginButton.snp.makeConstraints { make in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(self.orLabel.snp.bottom).offset(Metric.fbOffset)
+      make.left.equalTo(self.view).offset(Metric.leftRightOffset)
+      make.right.equalTo(self.view).offset(-Metric.leftRightOffset)
     }
     
   }
@@ -234,3 +263,28 @@ class LoginViewController: UIViewController, ViewType {
   
 }
 
+
+extension LoginViewController: FBSDKLoginButtonDelegate {
+  func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+    log.verbose("Facebook loginButton Did LogOut")
+  }
+  
+  func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+    if let error = error {
+      log.error(error.localizedDescription)
+      return
+    }
+    
+    if let token = FBSDKAccessToken.current()?.tokenString {
+      let credential = FacebookAuthProvider.credential(withAccessToken: token)
+      
+      Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+        if let error = error {
+          log.error(error.localizedDescription)
+          return
+        }
+        self.presentMainScreen()
+      }
+    }
+  }
+}

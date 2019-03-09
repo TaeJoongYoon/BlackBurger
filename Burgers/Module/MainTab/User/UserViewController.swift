@@ -9,7 +9,7 @@
 import RxCocoa
 import RxSwift
 
-class UserViewController: UIViewController, ViewType {
+final class UserViewController: UIViewController, ViewType {
   
   // MARK: Constants
   

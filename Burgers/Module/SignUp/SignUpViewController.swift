@@ -9,7 +9,7 @@
 import RxCocoa
 import RxSwift
 
-class SignUpViewController: UIViewController, ViewType {
+final class SignUpViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
