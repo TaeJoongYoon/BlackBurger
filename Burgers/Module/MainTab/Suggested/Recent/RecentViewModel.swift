@@ -20,7 +20,7 @@ protocol RecentViewModelType: ViewModelType {
   // UI
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
-  var postss: Driver<[Post]> { get }
+  var loadMore: Driver<[Post]> { get }
   var showPost: Driver<String> { get }
   
 }
@@ -39,7 +39,7 @@ struct RecentViewModel: RecentViewModelType {
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>
-  let postss: Driver<[Post]>
+  let loadMore: Driver<[Post]>
   let showPost: Driver<String>
   
   // MARK: - Initialize
@@ -65,7 +65,7 @@ struct RecentViewModel: RecentViewModelType {
       }
       .asDriver(onErrorJustReturn: [])
     
-    postss = isReachedBottom
+    loadMore = isReachedBottom
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: { _ in onNetworking.onNext(true)})
       .flatMapLatest { _ in

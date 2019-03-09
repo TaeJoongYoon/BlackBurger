@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
+import Firebase
 import FirebaseAuth
 import RxCocoa
 import RxSwift
@@ -71,7 +72,7 @@ class SplashViewController: UIViewController, ViewType {
   func setupEventBinding() {
     
     rx.viewDidAppear
-      .delay(1.0, scheduler: MainScheduler.instance)
+      .delay(0.5, scheduler: MainScheduler.instance)
       .bind(to:viewModel.checkIfAuthenticated)
       .disposed(by: disposeBag)
     

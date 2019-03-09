@@ -121,7 +121,7 @@ final class RecentViewController: UIViewController, ViewType {
       })
       .disposed(by: disposeBag)
     
-    viewModel.postss
+    viewModel.loadMore
       .drive(onNext: { [weak self] in
         self?.posts.accept((self?.posts.value)! + $0)
       })

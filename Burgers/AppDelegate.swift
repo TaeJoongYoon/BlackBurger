@@ -8,6 +8,8 @@
 
 import UIKit
 
+import Crashlytics
+import Fabric
 import Firebase
 
 @UIApplicationMain
@@ -21,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Firebase config
     FirebaseApp.configure()
+    
+    // Crashlytics config
+    Fabric.with([Crashlytics.self])
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
