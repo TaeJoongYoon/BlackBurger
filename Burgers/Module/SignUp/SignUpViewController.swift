@@ -1,16 +1,15 @@
 //
-//  LoginViewController.swift
+//  SignUpViewController.swift
 //  Burgers
 //
-//  Created by Tae joong Yoon on 06/03/2019.
+//  Created by Tae joong Yoon on 09/03/2019.
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
 import RxCocoa
-import RxGesture
 import RxSwift
 
-class LoginViewController: UIViewController, ViewType {
+class SignUpViewController: UIViewController, ViewType {
   
   // MARK: Constants
   
@@ -26,7 +25,6 @@ class LoginViewController: UIViewController, ViewType {
     static let height = 35
     static let textfieldOffset = 30
     static let textfieldInset = 10
-    static let buttonInset = 20
   }
   
   // MARK: Rx
@@ -35,15 +33,9 @@ class LoginViewController: UIViewController, ViewType {
   
   // MARK: Properties
   
-  var viewModel: LoginViewModelType!
+  var viewModel: SignUpViewModelType!
   
   // MARK: UI
-  
-  let logo = UILabel(frame: .zero).then {
-    $0.text = "BURGERS"
-    $0.textColor = .white
-    $0.font = UIFont.systemFont(ofSize: 30)
-  }
   
   let emailTextField = UITextField(frame: .zero).then {
     $0.keyboardType = .emailAddress
@@ -58,7 +50,7 @@ class LoginViewController: UIViewController, ViewType {
   let passwordTextField = UITextField(frame: .zero).then {
     $0.isSecureTextEntry = true
     $0.returnKeyType = .done
-    $0.placeholder = "password".localized
+    $0.placeholder = "password (more than 8)".localized
     $0.backgroundColor = .textfieldColor
     $0.borderStyle = .roundedRect
     $0.adjustsFontSizeToFitWidth = true
@@ -68,12 +60,7 @@ class LoginViewController: UIViewController, ViewType {
   }
   
   let signupButton = UIButton(type: .system).then {
-    $0.setTitle("Don't you have an account?".localized, for: .normal)
-    $0.tintColor = .tintColor
-  }
-  
-  let loginButton = UIButton(type: .system).then {
-    $0.setTitle("Log in".localized, for: .normal)
+    $0.setTitle("Sign Up".localized, for: .normal)
     $0.backgroundColor = .disabledColor
     $0.setTitleColor(.white, for: .normal)
     $0.layer.cornerRadius = 5
@@ -86,26 +73,18 @@ class LoginViewController: UIViewController, ViewType {
   func setupUI() {
     self.view.backgroundColor = .black
     
-    self.view.addSubview(logo)
     self.view.addSubview(emailTextField)
     self.view.addSubview(passwordTextField)
     self.view.addSubview(signupButton)
-    self.view.addSubview(loginButton)
-    
   }
   
   // MARK: Setup Constraints
   
   func setupConstraints() {
     
-    self.logo.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(self.view.safeArea.top).offset(40)
-    }
-    
     self.emailTextField.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(self.logo.snp.bottom).offset(60)
+      make.top.equalTo(self.view.safeArea.top).offset(100)
       make.left.equalTo(self.view).offset(Metric.textfieldOffset)
       make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
       make.height.equalTo(Metric.height)
@@ -120,13 +99,8 @@ class LoginViewController: UIViewController, ViewType {
     }
     
     self.signupButton.snp.makeConstraints { make in
-      make.top.equalTo(self.passwordTextField.snp.bottom).offset(Metric.buttonInset)
-      make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
-    }
-    
-    self.loginButton.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(self.signupButton.snp.bottom).offset(Metric.buttonInset)
+      make.top.equalTo(self.passwordTextField.snp.bottom).offset(Metric.textfieldOffset)
       make.left.equalTo(self.view).offset(Metric.textfieldOffset)
       make.right.equalTo(self.view).offset(-Metric.textfieldOffset)
       make.height.equalTo(Metric.height)
@@ -159,16 +133,13 @@ class LoginViewController: UIViewController, ViewType {
       .disposed(by: disposeBag)
     
     self.signupButton.rx.tap
+      .do(onNext: { [weak self] in
+        self?.signupButton.setTitle("", for: .normal)
+        self?.signupButton.loadingIndicator(show: true)
+      })
       .bind(to: viewModel.tappedSignUpButton)
       .disposed(by: disposeBag)
     
-    self.loginButton.rx.tap
-      .do(onNext: { [weak self] in
-        self?.loginButton.setTitle("", for: .normal)
-        self?.loginButton.loadingIndicator(show: true)
-      })
-      .bind(to: viewModel.tappedLoginButton)
-      .disposed(by: disposeBag)
     
   }
   
@@ -176,28 +147,19 @@ class LoginViewController: UIViewController, ViewType {
   
   func setupUIBinding() {
     
-    viewModel.isLoginEnabled
+    viewModel.isSignedUpEnabled
       .drive(onNext: { [weak self] in
-        self?.loginButton.isEnabled = $0
-        self?.loginButton.backgroundColor = $0 ? .tintColor : .disabledColor
+        self?.signupButton.isEnabled = $0
+        self?.signupButton.backgroundColor = $0 ? .tintColor : .disabledColor
       })
       .disposed(by: disposeBag)
     
-    viewModel.pushSignup
-      .drive(onNext: { [weak self] in
+    viewModel.isSignedUp
+      .drive(onNext: { [weak self] signed in
+        self?.signupButton.setTitle("Sign Up".localized, for: .normal)
+        self?.signupButton.loadingIndicator(show: false)
         
-        let signUpViewModel = SignUpViewModel()
-        let signUpViewController = SignUpViewController.create(with: signUpViewModel)
-        self?.navigationController?.pushViewController(signUpViewController, animated: true)
-      })
-      .disposed(by: disposeBag)
-    
-    viewModel.isLogined
-      .drive(onNext: { [weak self] logined in
-        self?.loginButton.setTitle("Log in".localized, for: .normal)
-        self?.loginButton.loadingIndicator(show: false)
-        
-        if logined {
+        if signed {
           self?.presentMainScreen()
         } else {
           self?.showAlert()
@@ -225,7 +187,7 @@ class LoginViewController: UIViewController, ViewType {
   
   private func showAlert() {
     let alert = UIAlertController(title: "Burgers",
-                                  message: "The account is invalid, please check it",
+                                  message: "The email address is already in use by another account",
                                   preferredStyle: .alert)
     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
     alert.addAction(defaultAction)
@@ -233,4 +195,3 @@ class LoginViewController: UIViewController, ViewType {
   }
   
 }
-

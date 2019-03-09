@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
+import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -33,16 +34,36 @@ class SplashViewController: UIViewController, ViewType {
   
   var viewModel: SplashViewModelType!
   
+  // MARK: UI
+  
+  let logo = UILabel(frame: .zero).then {
+    $0.text = "BURGERS"
+    $0.textColor = .black
+    $0.font = UIFont.systemFont(ofSize: 30)
+  }
+  
   // MARK: Setup UI
   
   func setupUI() {
     self.view.backgroundColor = .white
+    self.view.addSubview(logo)
+    
+    let firebaseAuth = Auth.auth()
+    do {
+      try firebaseAuth.signOut()
+    } catch let signOutError as NSError {
+      print ("Error signing out: %@", signOutError)
+    }
+    
+    
   }
   
   // MARK: Setup Constraints
   
   func setupConstraints() {
-    
+    self.logo.snp.makeConstraints { make in
+      make.center.equalTo(self.view)
+    }
   }
   
   // MARK: - -> Rx Event Binding
@@ -50,6 +71,7 @@ class SplashViewController: UIViewController, ViewType {
   func setupEventBinding() {
     
     rx.viewDidAppear
+      .delay(1.0, scheduler: MainScheduler.instance)
       .bind(to:viewModel.checkIfAuthenticated)
       .disposed(by: disposeBag)
     
@@ -72,9 +94,13 @@ class SplashViewController: UIViewController, ViewType {
   private func presentLoginScreen() {
     let loginViewModel = LoginViewModel()
     let loginViewController = LoginViewController.create(with: loginViewModel)
+    let navi = UINavigationController(rootViewController: loginViewController)
+    navi.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navi.navigationBar.clipsToBounds = true
+    navi.navigationBar.tintColor = .tintColor
     
     UIApplication.shared.keyWindow?
-      .setRootViewController(loginViewController,
+      .setRootViewController(navi,
                              options: UIWindow.TransitionOptions.init(
                               direction: .toTop,
                               style: .easeInOut))

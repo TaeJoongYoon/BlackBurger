@@ -10,6 +10,9 @@
 		2A70C1996CF85EF171BC7DC2 /* Pods_BurgersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */; };
 		6F107FB5222BD01F00AF7489 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F107FB4222BD01F00AF7489 /* Main.storyboard */; };
 		6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3C50D022257C5700F1D465 /* String+Localized.swift */; };
+		6F48FC142233E03800A9AA33 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F48FC132233E03800A9AA33 /* Logger.swift */; };
+		6F48FC162233E2E200A9AA33 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F48FC152233E2E200A9AA33 /* GoogleService-Info.plist */; };
+		6F48FC182233E91300A9AA33 /* UIButton+Indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F48FC172233E91300A9AA33 /* UIButton+Indicator.swift */; };
 		6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03C2223DB250030AAD4 /* AppDelegate.swift */; };
 		6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */; };
 		6F79A0442223DB260030AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F79A0432223DB260030AAD4 /* Assets.xcassets */; };
@@ -40,7 +43,10 @@
 		6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2EE222A55DF005BBFEC /* Post.swift */; };
 		6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */; };
 		6FD7D2F4222A7321005BBFEC /* FirebaseServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */; };
-		6FE9E43D22313B2900D961ED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */; };
+		6FE3CBCC22338C0C00F45C23 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBCB22338C0C00F45C23 /* UIImage+Color.swift */; };
+		6FE3CBCF223396C200F45C23 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBCE223396C200F45C23 /* SignUpViewController.swift */; };
+		6FE3CBD1223396D700F45C23 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */; };
+		6FE3CBD32233A0D800F45C23 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBD22233A0D800F45C23 /* String+Validation.swift */; };
 		6FE9E440223145E100D961ED /* Window+SetRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9E43F223145E100D961ED /* Window+SetRootView.swift */; };
 		6FEB8B34222513C80064166E /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
@@ -63,6 +69,9 @@
 		6D286A01AC7F45F622D37F92 /* Pods-Burgers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Burgers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Burgers/Pods-Burgers.debug.xcconfig"; sourceTree = "<group>"; };
 		6F107FB4222BD01F00AF7489 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6F3C50D022257C5700F1D465 /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
+		6F48FC132233E03800A9AA33 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		6F48FC152233E2E200A9AA33 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6F48FC172233E91300A9AA33 /* UIButton+Indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Indicator.swift"; sourceTree = "<group>"; };
 		6F79A0392223DB250030AAD4 /* Burgers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Burgers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F79A03C2223DB250030AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -97,8 +106,10 @@
 		6FD7D2EE222A55DF005BBFEC /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6FD7D2F1222A7307005BBFEC /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		6FD7D2F3222A7321005BBFEC /* FirebaseServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServiceType.swift; sourceTree = "<group>"; };
-		6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6FE9E43E22313B2B00D961ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6FE3CBCB22338C0C00F45C23 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
+		6FE3CBCE223396C200F45C23 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		6FE3CBD22233A0D800F45C23 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		6FE9E43F223145E100D961ED /* Window+SetRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Window+SetRootView.swift"; sourceTree = "<group>"; };
 		6FEB8B33222513C80064166E /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +166,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		6F48FC102233DFB700A9AA33 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				6F48FC132233E03800A9AA33 /* Logger.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
 		6F79A0302223DB250030AAD4 = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +197,7 @@
 		6F79A03B2223DB250030AAD4 /* Burgers */ = {
 			isa = PBXGroup;
 			children = (
-				6FE9E43C22313B2900D961ED /* GoogleService-Info.plist */,
+				6F48FC102233DFB700A9AA33 /* Logging */,
 				6F79A05F2223DD0E0030AAD4 /* Model */,
 				6FD7D2F0222A72F5005BBFEC /* Service */,
 				6F79A0612223DD1C0030AAD4 /* Module */,
@@ -202,7 +221,7 @@
 		6F79A05C2223DB480030AAD4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6FE9E43E22313B2B00D961ED /* GoogleService-Info.plist */,
+				6F48FC152233E2E200A9AA33 /* GoogleService-Info.plist */,
 				6F79A0482223DB260030AAD4 /* Info.plist */,
 				6F79A0432223DB260030AAD4 /* Assets.xcassets */,
 				6F79A0452223DB260030AAD4 /* LaunchScreen.storyboard */,
@@ -222,6 +241,7 @@
 		6F79A0612223DD1C0030AAD4 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				6FE3CBCD223396B200F45C23 /* SignUp */,
 				6F79A0632223DD8B0030AAD4 /* Base */,
 				6F8DCCED2230138800C5B90E /* Splash */,
 				6F8DCCEE2230139000C5B90E /* Login */,
@@ -240,6 +260,9 @@
 				6FD7D2EC222A41D2005BBFEC /* Reactive+UIViewController.swift */,
 				6FD6D62B222D703F006D5F7D /* UIScrollView+Rx.swift */,
 				6FE9E43F223145E100D961ED /* Window+SetRootView.swift */,
+				6FE3CBCB22338C0C00F45C23 /* UIImage+Color.swift */,
+				6FE3CBD22233A0D800F45C23 /* String+Validation.swift */,
+				6F48FC172233E91300A9AA33 /* UIButton+Indicator.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -326,6 +349,15 @@
 			);
 			name = Service;
 			path = Module/Service;
+			sourceTree = "<group>";
+		};
+		6FE3CBCD223396B200F45C23 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				6FE3CBCE223396C200F45C23 /* SignUpViewController.swift */,
+				6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		6FEB8B35222562E10064166E /* MainTab */ = {
@@ -429,7 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F79A0472223DB260030AAD4 /* LaunchScreen.storyboard in Resources */,
-				6FE9E43D22313B2900D961ED /* GoogleService-Info.plist in Resources */,
+				6F48FC162233E2E200A9AA33 /* GoogleService-Info.plist in Resources */,
 				6F107FB5222BD01F00AF7489 /* Main.storyboard in Resources */,
 				6F79A0442223DB260030AAD4 /* Assets.xcassets in Resources */,
 			);
@@ -453,6 +485,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Burgers/Pods-Burgers-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -461,6 +494,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxMKMapView/RxMKMapView.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -470,6 +504,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -478,6 +513,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxMKMapView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -535,6 +571,7 @@
 				6F8DCCF6223014B200C5B90E /* LoginViewController.swift in Sources */,
 				6FD7D2E5222A3347005BBFEC /* PopularViewModel.swift in Sources */,
 				6F8DCCF4223014A500C5B90E /* LoginViewModel.swift in Sources */,
+				6FE3CBD32233A0D800F45C23 /* String+Validation.swift in Sources */,
 				6FD7D2EF222A55DF005BBFEC /* Post.swift in Sources */,
 				6F941C06222400EB009E326F /* MapViewController.swift in Sources */,
 				6FD7D2E7222A3351005BBFEC /* PopularViewController.swift in Sources */,
@@ -546,13 +583,18 @@
 				6FE9E440223145E100D961ED /* Window+SetRootView.swift in Sources */,
 				6F8DCCF02230148C00C5B90E /* SplashViewController.swift in Sources */,
 				6F3C50D122257C5700F1D465 /* String+Localized.swift in Sources */,
+				6F48FC182233E91300A9AA33 /* UIButton+Indicator.swift in Sources */,
 				6F79A06C2223E6D30030AAD4 /* UIView+SafeArea.swift in Sources */,
 				6FD7D2F2222A7307005BBFEC /* FirebaseService.swift in Sources */,
+				6FE3CBCF223396C200F45C23 /* SignUpViewController.swift in Sources */,
 				6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */,
+				6FE3CBD1223396D700F45C23 /* SignUpViewModel.swift in Sources */,
+				6FE3CBCC22338C0C00F45C23 /* UIImage+Color.swift in Sources */,
 				6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */,
 				6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */,
 				6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */,
 				6FD7D2E9222A37AF005BBFEC /* BurgerPostCell.swift in Sources */,
+				6F48FC142233E03800A9AA33 /* Logger.swift in Sources */,
 				6FD6D62C222D703F006D5F7D /* UIScrollView+Rx.swift in Sources */,
 				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
 				6FD7D2EB222A39F2005BBFEC /* UIColor+BaseColor.swift in Sources */,

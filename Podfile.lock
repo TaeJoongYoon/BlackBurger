@@ -1,6 +1,12 @@
 PODS:
   - Alamofire (4.8.1)
+  - CocoaLumberjack/Core (3.5.1)
+  - CocoaLumberjack/Swift (3.5.1):
+    - CocoaLumberjack/Core
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - Differentiator (3.1.0)
+  - Fabric (1.9.0)
   - Firebase/Auth (5.17.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.3.1)
@@ -71,6 +77,9 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxGesture (2.1.0):
+    - RxCocoa (~> 4.4.0)
+    - RxSwift (~> 4.4.0)
   - RxMKMapView (4.4.0):
     - RxCocoa (~> 4.4)
     - RxSwift (~> 4.4)
@@ -81,12 +90,16 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - CocoaLumberjack/Swift
+  - Crashlytics
+  - Fabric
   - Firebase/Auth
   - Firebase/Core
   - Kingfisher
   - ReusableKit
   - RxCocoa
   - RxDataSources
+  - RxGesture
   - RxMKMapView
   - RxSwift
   - SnapKit (~> 4.0.0)
@@ -95,7 +108,10 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - CocoaLumberjack
+    - Crashlytics
     - Differentiator
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -111,6 +127,7 @@ SPEC REPOS:
     - RxAtomic
     - RxCocoa
     - RxDataSources
+    - RxGesture
     - RxMKMapView
     - RxSwift
     - SnapKit
@@ -118,7 +135,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  CocoaLumberjack: 2101f8a5508197a305e737d16c5c2e9e2157628c
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 59d557e064217fab6a03ff00baa73c06e73832e6
   FirebaseAnalytics: 75e4bbc6417d190cc98ec1f17c41a4fad4c2c976
   FirebaseAuth: 0f61e1329237da5682c49c9abd135e8f9d07a151
@@ -134,11 +154,12 @@ SPEC CHECKSUMS:
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxGesture: 7f6dfb45dbde06e618c24442d38493e3144f2c95
   RxMKMapView: e413c9f349df894254ed6b15fccee3952ac86dc6
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
 
-PODFILE CHECKSUM: d40e9dd349585f00b0cacc31ee533b1a6eb65e61
+PODFILE CHECKSUM: 7c3605a11f578266cb29be661737f58ecf106358
 
 COCOAPODS: 1.5.3

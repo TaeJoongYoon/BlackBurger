@@ -41,7 +41,7 @@ struct PopularViewModel: PopularViewModelType {
   
   // MARK: - Initialize
   
-  init(firebaseService: FirebaseService = FirebaseService()) {
+  init() {
     
     let onNetworking = PublishSubject<Bool>()
     isNetworking = onNetworking.asDriver(onErrorJustReturn: false)
@@ -53,7 +53,7 @@ struct PopularViewModel: PopularViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return firebaseService.fetchPopularPosts()
+        return FirebaseService.shared.fetchPopularPosts()
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)

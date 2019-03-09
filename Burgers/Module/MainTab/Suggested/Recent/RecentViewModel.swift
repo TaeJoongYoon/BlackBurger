@@ -45,7 +45,7 @@ struct RecentViewModel: RecentViewModelType {
   
   // MARK: - Initialize
   
-  init(firebaseService: FirebaseService = FirebaseService()) {
+  init() {
     
     let onNetworking = PublishSubject<Bool>()
     isNetworking = onNetworking.asDriver(onErrorJustReturn: false)
@@ -57,7 +57,7 @@ struct RecentViewModel: RecentViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return firebaseService.fetchRecentPosts(20)
+        return FirebaseService.shared.fetchRecentPosts(20)
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)
