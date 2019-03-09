@@ -1,0 +1,21 @@
+/* 
+  File.strings
+  Burgers
+
+  Created by Tae joong Yoon on 10/03/2019.
+  Copyright © 2019 Tae joong Yoon. All rights reserved.
+*/
+
+"Burgers" = "Burgers";
+"email" = "이메일을 입력해주세요";
+"password" = "비밀번호를 입력해주세요";
+"Don't you have an account?" = "아직 회원이 아니신가요?";
+"Log in" = "Log in";
+"The account is invalid, please check it" = "계정정보가 올바르지 않습니다";
+"password (more than 8)" = "비밀번호를 입력해주세요 (8자 이상)";
+"Sign Up" = "Sign Up";
+"The email address is already in use by another account" = "이미 사용중인 이메일입니다";
+"Recent" = "Recent";
+"Popular" = "Popular";
+"Map" = "Map";
+"User" = "User";

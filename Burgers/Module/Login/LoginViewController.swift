@@ -225,7 +225,7 @@ class LoginViewController: UIViewController, ViewType {
   
   private func showAlert() {
     let alert = UIAlertController(title: "Burgers",
-                                  message: "The account is invalid, please check it",
+                                  message: "The account is invalid, please check it".localized,
                                   preferredStyle: .alert)
     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
     alert.addAction(defaultAction)
