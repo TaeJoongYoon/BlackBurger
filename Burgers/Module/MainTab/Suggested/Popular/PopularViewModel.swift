@@ -7,7 +7,6 @@
 //
 
 import RxCocoa
-import RxDataSources
 import RxSwift
 
 protocol PopularViewModelType: ViewModelType {
@@ -19,7 +18,7 @@ protocol PopularViewModelType: ViewModelType {
   
   // UI
   var isNetworking: Driver<Bool> { get }
-  var posts: Driver<[PostsData]> { get }
+  var posts: Driver<[Post]> { get }
   var showPost: Driver<String> { get }
   
 }
@@ -36,7 +35,7 @@ struct PopularViewModel: PopularViewModelType {
   // MART: <- UI
   
   let isNetworking: Driver<Bool>
-  let posts: Driver<[PostsData]>
+  let posts: Driver<[Post]>
   let showPost: Driver<String>
   
   // MARK: - Initialize
@@ -60,7 +59,6 @@ struct PopularViewModel: PopularViewModelType {
             return .never()
           })
       }
-      .map { [PostsData(model: "", items: $0)] }
       .asDriver(onErrorJustReturn: [])
     
     showPost = didCellSelected

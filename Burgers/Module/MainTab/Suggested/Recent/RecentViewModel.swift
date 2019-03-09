@@ -7,10 +7,7 @@
 //
 
 import RxCocoa
-import RxDataSources
 import RxSwift
-
-typealias PostsData = SectionModel<String, Post>
 
 protocol RecentViewModelType: ViewModelType {
   
@@ -18,11 +15,12 @@ protocol RecentViewModelType: ViewModelType {
   var viewWillAppear: PublishSubject<Void> { get }
   var didPulltoRefresh: PublishSubject<Void> { get }
   var didCellSelected: PublishSubject<Post> { get }
-  var isReachedBottom: PublishSubject<Void> { get }
+  var isReachedBottom: PublishSubject<Bool> { get }
   
   // UI
   var isNetworking: Driver<Bool> { get }
-  var posts: Driver<[PostsData]> { get }
+  var posts: Driver<[Post]> { get }
+  var postss: Driver<[Post]> { get }
   var showPost: Driver<String> { get }
   
 }
@@ -35,12 +33,13 @@ struct RecentViewModel: RecentViewModelType {
   let viewWillAppear = PublishSubject<Void>()
   let didPulltoRefresh = PublishSubject<Void>()
   let didCellSelected = PublishSubject<Post>()
-  let isReachedBottom = PublishSubject<Void>()
+  let isReachedBottom = PublishSubject<Bool>()
   
   // MART: <- UI
   
   let isNetworking: Driver<Bool>
-  let posts: Driver<[PostsData]>
+  let posts: Driver<[Post]>
+  let postss: Driver<[Post]>
   let showPost: Driver<String>
   
   // MARK: - Initialize
@@ -57,14 +56,26 @@ struct RecentViewModel: RecentViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return FirebaseService.shared.fetchRecentPosts(20)
+        return FirebaseService.shared.fetchRecentPosts(loading: .refresh)
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)
             return .never()
           })
       }
-      .map { [PostsData(model: "", items: $0)] }
+      .asDriver(onErrorJustReturn: [])
+    
+    postss = isReachedBottom
+      .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+      .do(onNext: { _ in onNetworking.onNext(true)})
+      .flatMapLatest { _ in
+        return FirebaseService.shared.fetchRecentPosts(loading: .loadMore)
+          .do { onNetworking.onNext(false) }
+          .catchError({ error -> Observable<[Post]> in
+            onError.onNext(error)
+            return .never()
+          })
+      }
       .asDriver(onErrorJustReturn: [])
    
     showPost = didCellSelected

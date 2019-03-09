@@ -15,6 +15,7 @@ class FirebaseService: FirebaseServiceType {
   // MARK: Properties
   
   static let shared = FirebaseService()
+  var from = 0
   
   // MARK: Initialize
   
@@ -56,12 +57,20 @@ class FirebaseService: FirebaseServiceType {
     }
   }
   
-  func fetchRecentPosts(_ count: Int) -> Observable<[Post]> {
+  func fetchRecentPosts(loading: Loading) -> Observable<[Post]> {
+    
+    switch loading {
+    case .refresh:
+      from = 0
+    case .loadMore:
+      from += 20
+    }
+    
     return Observable.create { observer -> Disposable in
       
       var ps = [Post]()
       
-      for i in 1...count {
+      for i in self.from..<self.from+20 {
         ps.append(Post(name: String(i)))
       }
       

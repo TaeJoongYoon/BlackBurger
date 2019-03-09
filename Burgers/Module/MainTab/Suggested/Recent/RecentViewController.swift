@@ -8,7 +8,6 @@
 
 import ReusableKit
 import RxCocoa
-import RxDataSources
 import RxSwift
 import SnapKit
 import Then
@@ -38,6 +37,7 @@ final class RecentViewController: UIViewController, ViewType {
   // MARK: Properties
   
   var viewModel: RecentViewModelType!
+  var posts = BehaviorRelay<[Post]>(value: [])
   
   // MARK: UI
   
@@ -89,29 +89,42 @@ final class RecentViewController: UIViewController, ViewType {
       .bind(to: viewModel.didPulltoRefresh)
       .disposed(by: disposeBag)
     
-    tableView.rx.modelSelected(PostsData.Item.self)
+    tableView.rx.modelSelected(Post.self)
       .bind(to: viewModel.didCellSelected)
       .disposed(by: disposeBag)
     
-    tableView.rx.isReachedBottom
+    tableView.rx.willDisplayCell
+      .map { [weak self] in
+        $1.row + 1 == self?.posts.value.count
+      }
+      .filter { $0 }
       .bind(to: viewModel.isReachedBottom)
       .disposed(by: disposeBag)
+    
   }
   
   // MARK: - <- Rx UI Binding
   
   func setupUIBinding() {
     
-    let dataSource = RxTableViewSectionedReloadDataSource<PostsData>(
-      configureCell: { (_, tableView, indexPath, item) -> UITableViewCell in
-        let cell = tableView.dequeue(Reusable.burgerPostCell)!
+    posts.asObservable()
+      .bind(to: tableView.rx.items(cellIdentifier: Reusable.burgerPostCell.identifier,
+                                   cellType: BurgerPostCell.self)) { row, element, cell in
         
-        cell.configureWith(name: item.name)
-        return cell
-    })
+        cell.configureWith(name: element.name)
+        
+    }.disposed(by: disposeBag)
     
     viewModel.posts
-      .drive(tableView.rx.items(dataSource: dataSource))
+      .drive(onNext: { [weak self] in
+        self?.posts.accept($0)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.postss
+      .drive(onNext: { [weak self] in
+        self?.posts.accept((self?.posts.value)! + $0)
+      })
       .disposed(by: disposeBag)
     
     viewModel.showPost
