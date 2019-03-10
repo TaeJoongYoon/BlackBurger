@@ -1,61 +1,43 @@
 //
-//  FirebaseService.swift
+//  FirebaseDatabase.swift
 //  Burgers
 //
-//  Created by Tae joong Yoon on 02/03/2019.
+//  Created by Tae joong Yoon on 10/03/2019.
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
-import FirebaseAuth
+import FirebaseFirestore
 import RxCocoa
 import RxSwift
 
-class FirebaseService: FirebaseServiceType {
+class DatabaseService: DatabaseServiceType {
   
   // MARK: Properties
   
-  static let shared = FirebaseService()
+  static let shared = DatabaseService()
+  
+  var db = Firestore.firestore()
+  
   var from = 0
   
   // MARK: Initialize
   
   private init() { }
   
-  // MARK: DataTask
+  // MARK: Datatask
   
-  func login(email: String, password: String) -> Observable<Bool> {
-    return Observable.create { observer in
-      Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-        
-        if user != nil {
-          observer.onNext(true)
-        } else {
-          observer.onNext(false)
-        }
-        
-        observer.onCompleted()
+  func writePost(name: String, completion: @escaping () -> Void) {
+    db.collection("posts").addDocument(data: [
+      "name": name
+    ]) { err in
+      if let err = err {
+        log.error(err)
+      } else {
+        completion()
       }
-      
-      return Disposables.create()
     }
   }
   
-  func signup(email: String, password: String) -> Observable<Bool> {
-    return Observable.create { observer in
-      Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
-        
-        if authResult?.user != nil {
-          observer.onNext(true)
-        } else {
-          observer.onNext(false)
-        }
-        
-        observer.onCompleted()
-      }
-      
-      return Disposables.create()
-    }
-  }
   
   func fetchRecentPosts(loading: Loading) -> Observable<[Post]> {
     
@@ -98,3 +80,4 @@ class FirebaseService: FirebaseServiceType {
   }
   
 }
+

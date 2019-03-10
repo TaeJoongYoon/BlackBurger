@@ -12,6 +12,16 @@ import FirebaseAuth
 import RxCocoa
 import RxSwift
 
+struct Postss {
+  var name: String
+  var date: String
+  
+  init(name: String, date: String) {
+    self.name = name
+    self.date = date
+  }
+}
+
 // loginButton.readPermissions = @[@"public_profile", @"email"];
 
 final class LoginViewController: UIViewController, ViewType {
@@ -27,7 +37,7 @@ final class LoginViewController: UIViewController, ViewType {
   }
   
   struct Metric {
-    static let height = 35
+    static let height = 40
     static let leftRightOffset = 30
     static let topBottomOffset = 10
     static let buttonOffset = 20
@@ -98,6 +108,9 @@ final class LoginViewController: UIViewController, ViewType {
   
   func setupUI() {
     self.view.backgroundColor = .black
+    
+    let backBarButtton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    self.navigationItem.backBarButtonItem = backBarButtton
     
     self.view.addSubview(logo)
     self.view.addSubview(emailTextField)
@@ -256,8 +269,9 @@ final class LoginViewController: UIViewController, ViewType {
     let alert = UIAlertController(title: "Burgers",
                                   message: "The account is invalid, please check it".localized,
                                   preferredStyle: .alert)
-    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    let defaultAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
     alert.addAction(defaultAction)
+    
     self.present(alert, animated: true, completion: nil)
   }
   

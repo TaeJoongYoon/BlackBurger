@@ -56,7 +56,7 @@ struct RecentViewModel: RecentViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return FirebaseService.shared.fetchRecentPosts(loading: .refresh)
+        return DatabaseService.shared.fetchRecentPosts(loading: .refresh)
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)
@@ -69,7 +69,7 @@ struct RecentViewModel: RecentViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: { _ in onNetworking.onNext(true)})
       .flatMapLatest { _ in
-        return FirebaseService.shared.fetchRecentPosts(loading: .loadMore)
+        return DatabaseService.shared.fetchRecentPosts(loading: .loadMore)
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)

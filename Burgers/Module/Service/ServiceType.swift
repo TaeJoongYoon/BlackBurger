@@ -8,9 +8,12 @@
 
 import RxSwift
 
-protocol FirebaseServiceType {
+protocol AuthServiceType {
   func login(email: String, password: String) -> Observable<Bool>
   func signup(email: String, password: String) -> Observable<Bool>
+}
+
+protocol DatabaseServiceType {
   func fetchRecentPosts(loading: Loading) -> Observable<[Post]>
   func fetchPopularPosts() -> Observable<[Post]>
 }

@@ -10,7 +10,6 @@ import CoreLocation
 import MapKit
 
 import RxCocoa
-import RxMKMapView
 import RxSwift
 import Then
 

@@ -52,7 +52,7 @@ struct PopularViewModel: PopularViewModelType {
       .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
       .do(onNext: {_ in onNetworking.onNext(true)})
       .flatMapLatest {
-        return FirebaseService.shared.fetchPopularPosts()
+        return DatabaseService.shared.fetchPopularPosts()
           .do { onNetworking.onNext(false) }
           .catchError({ error -> Observable<[Post]> in
             onError.onNext(error)

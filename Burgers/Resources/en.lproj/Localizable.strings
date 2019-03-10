@@ -7,6 +7,10 @@
 */
 
 "Burgers" = "Burgers";
+"Update" = "Update";
+"forceUpdate" = "There are required updates. Do you want to update?";
+"optionalUpdate" = "You have the latest updates. Do you want to update?";
+"OK" = "OK";
 "email" = "email";
 "password" = "password";
 "Don't you have an account?" = "Don't you have an account?";

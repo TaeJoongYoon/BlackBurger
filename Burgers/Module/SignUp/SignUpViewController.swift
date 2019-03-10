@@ -22,7 +22,7 @@ final class SignUpViewController: UIViewController, ViewType {
   }
   
   struct Metric {
-    static let height = 35
+    static let height = 40
     static let textfieldOffset = 30
     static let textfieldInset = 10
   }
@@ -189,8 +189,9 @@ final class SignUpViewController: UIViewController, ViewType {
     let alert = UIAlertController(title: "Burgers",
                                   message: "The email address is already in use by another account".localized,
                                   preferredStyle: .alert)
-    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    let defaultAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
     alert.addAction(defaultAction)
+    
     self.present(alert, animated: true, completion: nil)
   }
   

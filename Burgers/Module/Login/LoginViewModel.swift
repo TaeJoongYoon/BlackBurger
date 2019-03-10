@@ -55,7 +55,7 @@ struct LoginViewModel: LoginViewModelType {
       .merge([tappedDoneButton, tappedLoginButton])
       .withLatestFrom(credential)
       .flatMapLatest{
-        return FirebaseService.shared.login(email: $0.0, password: $0.1)
+        return AuthService.shared.login(email: $0.0, password: $0.1)
       }
       .asDriver(onErrorJustReturn: false)
     

@@ -31,13 +31,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Facebook config
     FBSDKApplicationDelegate.sharedInstance()?
       .application(application,didFinishLaunchingWithOptions: launchOptions)
-    
+
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
     
     let splashViewModel = SplashViewModel()
     let splashViewController = SplashViewController.create(with: splashViewModel)
     window?.rootViewController = splashViewController
+    
+    // Version Check
+    RemoteConfigManager.shared.launching(completionHandler: { (config) in
+    }, forceUpdate: { (forceUpdate) in
+      if !forceUpdate {
+        log.verbose("Update checked")
+      }
+    })
     
     return true
   }

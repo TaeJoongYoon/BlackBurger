@@ -7,15 +7,19 @@
 */
 
 "Burgers" = "Burgers";
+"Update" = "업데이트";
+"forceUpdate" = "필수 업데이트가 있습니다. 업데이트하시겠습니까?";
+"optionalUpdate" = "최신 업데이트가 있습니다. 업데이트하시겠습니까?";
+"OK" = "확인";
 "email" = "이메일을 입력해주세요";
 "password" = "비밀번호를 입력해주세요";
 "Don't you have an account?" = "아직 회원이 아니신가요?";
-"Log in" = "Log in";
+"Log in" = "로그인하기";
 "The account is invalid, please check it" = "계정정보가 올바르지 않습니다";
 "password (more than 8)" = "비밀번호를 입력해주세요 (8자 이상)";
-"Sign Up" = "Sign Up";
+"Sign Up" = "회원가입하기";
 "The email address is already in use by another account" = "이미 사용중인 이메일입니다";
-"Recent" = "Recent";
-"Popular" = "Popular";
-"Map" = "Map";
-"User" = "User";
+"Recent" = "최신 버거";
+"Popular" = "인기 버거";
+"Map" = "맛집 찾기";
+"User" = "내 정보";

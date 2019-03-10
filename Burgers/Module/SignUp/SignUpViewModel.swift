@@ -53,7 +53,7 @@ struct SignUpViewModel: SignUpViewModelType {
       .merge([tappedDoneButton, tappedSignUpButton])
       .withLatestFrom(credential)
       .flatMapLatest{
-        return FirebaseService.shared.signup(email: $0.0, password: $0.1)
+        return AuthService.shared.signup(email: $0.0, password: $0.1)
       }
       .asDriver(onErrorJustReturn: false)
     
