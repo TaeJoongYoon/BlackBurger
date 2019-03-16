@@ -48,12 +48,12 @@ final class SplashViewController: UIViewController, ViewType {
     self.view.backgroundColor = .white
     self.view.addSubview(logo)
     
-    let firebaseAuth = Auth.auth()
-    do {
-      try firebaseAuth.signOut()
-    } catch let signOutError as NSError {
-      print ("Error signing out: %@", signOutError)
-    }
+//    let firebaseAuth = Auth.auth()
+//    do {
+//      try firebaseAuth.signOut()
+//    } catch let signOutError as NSError {
+//      print ("Error signing out: %@", signOutError)
+//    }
   }
   
   // MARK: Setup Constraints

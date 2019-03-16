@@ -12,10 +12,12 @@ import RxSwift
 protocol SuggestedViewModelType: ViewModelType {
   
   // Event
+  var didTappedAddButton: PublishSubject<Void> { get }
   var swipePage: PublishSubject<Int> { get }
   var selectedSegmentIndex: PublishSubject<Int> { get }
   
   // UI
+  var add: Driver<Void> { get }
   var showView: Driver<Int> { get }
   
 }
@@ -25,16 +27,21 @@ struct SuggestedViewModel: SuggestedViewModelType {
   // MARK: Properties
   // MARK: -> Event
   
+  let didTappedAddButton = PublishSubject<Void>()
   let swipePage =  PublishSubject<Int>()
   let selectedSegmentIndex = PublishSubject<Int>()
   
   // MARK: <- UI
   
+  let add: Driver<Void>
   let showView: Driver<Int>
   
   // MARK: - Initialize
   
   init() {
+    
+    add = didTappedAddButton
+      .asDriver(onErrorJustReturn: ())
     
     // Paging
     showView = Observable<Int>

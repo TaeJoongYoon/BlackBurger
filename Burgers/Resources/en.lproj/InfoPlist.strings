@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  Burgers
+
+  Created by Tae joong Yoon on 16/03/2019.
+  Copyright © 2019 Tae joong Yoon. All rights reserved.
+*/
+
+CFBundleDisplayName = "Burgers";
+NSLocationWhenInUseUsageDescription = "Burgers needs your location to write a post and find places.";
+NSPhotoLibraryUsageDescription = "Burgers needs your photos library to write a post.";
+NSCameraUsageDescription = "Burgers needs your camera to write a post.";

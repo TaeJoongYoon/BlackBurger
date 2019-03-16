@@ -11,6 +11,7 @@ target 'Burgers' do
 
   # UI
   pod 'SnapKit'
+  pod 'Fusuma'
 
   # Networking
   pod 'Kingfisher'
@@ -27,6 +28,7 @@ target 'Burgers' do
   pod 'Firebase/Storage'
   pod 'Firebase/RemoteConfig'
   pod 'FBSDKLoginKit'   
+  pod 'NMapsMap'
 
   # Misc.
   pod 'ReusableKit'

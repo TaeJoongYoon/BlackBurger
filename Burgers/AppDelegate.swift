@@ -12,6 +12,7 @@ import Crashlytics
 import Fabric
 import FBSDKCoreKit
 import Firebase
+import NMapsMap
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Facebook config
     FBSDKApplicationDelegate.sharedInstance()?
       .application(application,didFinishLaunchingWithOptions: launchOptions)
+    
+    // NaverMaps config
+    NMFAuthManager.shared().clientId = "0hvz2ykiw6"
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()

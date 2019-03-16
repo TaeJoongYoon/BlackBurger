@@ -6,6 +6,7 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
+import Fusuma
 import Kingfisher
 import RxCocoa
 import RxSwift
@@ -38,6 +39,10 @@ final class SuggestedViewController: UIViewController, ViewType {
   
   // MARK: UI
   
+  let addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil).then {
+    $0.tintColor = .tintColor
+  }
+  
   let segmentedControl = UISegmentedControl(items: ["Recent".localized, "Popular".localized]).then {
     $0.backgroundColor = .white
     $0.tintColor = .mainColor
@@ -64,6 +69,7 @@ final class SuggestedViewController: UIViewController, ViewType {
     
     self.title = "Burgers".localized
     self.view.backgroundColor = .white
+    self.navigationItem.rightBarButtonItem = self.addButton
     self.view.addSubview(self.segmentedControl)
     
     // Use ContainerView for UIViewController in UIScrollView
@@ -126,6 +132,11 @@ final class SuggestedViewController: UIViewController, ViewType {
   
   func setupEventBinding() {
     
+    self.addButton.rx.tap
+      .debounce(0.3, scheduler: MainScheduler.instance)
+      .bind(to: viewModel.didTappedAddButton)
+      .disposed(by: disposeBag)
+    
     self.segmentedControl.rx.selectedSegmentIndex
       .bind(to: viewModel.selectedSegmentIndex)
       .disposed(by: disposeBag)
@@ -142,6 +153,19 @@ final class SuggestedViewController: UIViewController, ViewType {
   // MARK: - <- Rx UI Binding
   
   func setupUIBinding() {
+    
+    viewModel.add
+      .drive(onNext: { [weak self] in
+        let fusuma = FusumaViewController()
+        fusuma.delegate = self
+        fusumaCameraRollTitle = "Library".localized
+        fusumaCameraTitle = "Camera".localized
+        
+        fusuma.availableModes = [FusumaMode.library, FusumaMode.camera]
+        fusuma.allowMultipleSelection = true
+        self?.present(fusuma, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
     
     viewModel.showView
       .drive(onNext: { [weak self] index in
@@ -161,6 +185,33 @@ final class SuggestedViewController: UIViewController, ViewType {
       self.addChild(vc)
       vc.didMove(toParent: self)
     }
+  }
+  
+}
+
+extension SuggestedViewController: FusumaDelegate {
+  func fusumaVideoCompleted(withFileURL fileURL: URL) {
+    log.verbose(fileURL)
+  }
+  
+  func fusumaMultipleImageSelected(_ images: [UIImage], source: FusumaMode) {
+    log.verbose(images)
+  }
+  
+  func fusumaImageSelected(_ image: UIImage, source: FusumaMode) {
+    log.verbose(image)
+  }
+  
+  func fusumaCameraRollUnauthorized() {
+    log.verbose("unauthor")
+  }
+  
+  func fusumaDismissedWithImage(image: UIImage, source: FusumaMode) {
+    print("Called just after FusumaViewController is dismissed.")
+  }
+  
+  func fusumaImageSelected(_ image: UIImage, source: FusumaMode, metaData: ImageMetadata) {
+    log.verbose(image)
   }
   
 }

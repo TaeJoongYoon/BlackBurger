@@ -7,8 +7,8 @@
 //
 
 import CoreLocation
-import MapKit
 
+import NMapsMap
 import RxCocoa
 import RxSwift
 import Then
@@ -38,10 +38,15 @@ final class MapViewController: UIViewController, ViewType {
   var viewModel: MapViewModelType!
   
   // MARK: UI
-  
-  let mapView = MKMapView(frame: .zero).then {
-    $0.showsUserLocation = true
+
+  let mapView = NMFNaverMapView(frame: .zero).then {
+    $0.showCompass = true
+    $0.showZoomControls = true
+    $0.showLocationButton = true
+    $0.mapView.locationOverlay.hidden = false
   }
+  
+  var cameraPosition = NMFCameraUpdate()
   
   var locationManager: CLLocationManager!
   
@@ -63,6 +68,8 @@ final class MapViewController: UIViewController, ViewType {
       locationManager.startUpdatingLocation()
     }
     
+    
+    
   }
   
   // MARK: Setup Constraints
@@ -74,39 +81,13 @@ final class MapViewController: UIViewController, ViewType {
       make.bottom.equalTo(self.view.safeArea.bottom)
       make.left.right.equalTo(self.view)
     }
-    
+  
   }
   
   // MARK: - -> Rx Event Binding
   
   func setupEventBinding(){
     
-//    mapView.rx.didFinishRenderingMap
-//      .asDriver()
-//      .drive(onNext: {
-//        print($0)
-//      })
-//      .disposed(by: disposeBag)
-//
-//    mapView.rx.willStartLoadingMap
-//      .asDriver()
-//      .drive(onNext: {
-//        print("map started loadedloading")
-//      })
-//      .disposed(by: disposeBag)
-//
-//    mapView.rx.didFinishLoadingMap
-//      .asDriver()
-//      .drive(onNext: {
-//        print("map finished loading")
-//      })
-//      .disposed(by: disposeBag)
-//
-//    mapView.rx.didFailLoadingMap
-//      .subscribe({
-//        print($0.debugDescription)
-//      })
-//      .disposed(by: disposeBag)
   }
   
   // MARK: - <- Rx UI Binding
@@ -120,9 +101,14 @@ extension MapViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let location = locations.last{
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-      print("locations = \(center.latitude) \(center.longitude)")
-      let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-      mapView.setRegion(region, animated: true)
+      
+      mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude, lng: center.longitude)
+      
+      cameraPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: center.latitude, lng: center.longitude))
+      cameraPosition.animation = .easeIn
+      mapView.mapView.moveCamera(cameraPosition)
+      
+      locationManager.stopUpdatingLocation()
     }
   }
 }
