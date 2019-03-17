@@ -40,8 +40,10 @@ final class UserViewController: UIViewController, ViewType {
   // MARK: Setup UI
   
   func setupUI() {
-    self.title = "User".localized
+    self.navigationItem.title = "USER".localized
     self.view.backgroundColor = .white
+    self.tabBarItem.image = UIImage(named: "user-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "user-selected.png")
   }
   
   // MARK: Setup Constraints

@@ -6,11 +6,13 @@
 //  Copyright © 2019 Tae joong Yoon. All rights reserved.
 //
 
-import Fusuma
+import Photos
+
 import Kingfisher
 import RxCocoa
 import RxSwift
 import Then
+import TLPhotoPicker
 
 final class SuggestedViewController: UIViewController, ViewType {
   
@@ -38,12 +40,11 @@ final class SuggestedViewController: UIViewController, ViewType {
   var viewModel: SuggestedViewModelType!
   
   // MARK: UI
-  
-  let addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil).then {
+  let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil).then {
     $0.tintColor = .tintColor
   }
   
-  let segmentedControl = UISegmentedControl(items: ["Recent".localized, "Popular".localized]).then {
+  let segmentedControl = UISegmentedControl(items: ["RECENT".localized, "POPULAR".localized]).then {
     $0.backgroundColor = .white
     $0.tintColor = .mainColor
     $0.layer.borderColor = UIColor.white.cgColor
@@ -66,9 +67,10 @@ final class SuggestedViewController: UIViewController, ViewType {
   // MARK: Setup UI
   
   func setupUI() {
-    
-    self.title = "Burgers".localized
+    self.navigationItem.title = "BURGERS".localized
     self.view.backgroundColor = .white
+    self.tabBarItem.image = UIImage(named: "hamburger-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "hamburger-selected.png")
     self.navigationItem.rightBarButtonItem = self.addButton
     self.view.addSubview(self.segmentedControl)
     
@@ -78,7 +80,6 @@ final class SuggestedViewController: UIViewController, ViewType {
     self.scrollView.addSubview(self.containerView)
 
     self.view.addSubview(self.scrollView)
-    
   }
   
   // MARK: Setup Constraints
@@ -156,14 +157,18 @@ final class SuggestedViewController: UIViewController, ViewType {
     
     viewModel.add
       .drive(onNext: { [weak self] in
-        let fusuma = FusumaViewController()
-        fusuma.delegate = self
-        fusumaCameraRollTitle = "Library".localized
-        fusumaCameraTitle = "Camera".localized
+        let viewController = TLPhotosPickerViewController()
+        viewController.delegate = self
         
-        fusuma.availableModes = [FusumaMode.library, FusumaMode.camera]
-        fusuma.allowMultipleSelection = true
-        self?.present(fusuma, animated: true, completion: nil)
+        var configure = TLPhotosPickerConfigure()
+        configure.doneTitle = "Done".localized
+        configure.cancelTitle = "Cancel".localized
+        configure.defaultCameraRollTitle = "All Photos".localized
+        configure.allowedVideo = false
+        configure.selectedColor = .tintColor
+        viewController.configure = configure
+        
+        self?.present(viewController, animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
     
@@ -189,29 +194,40 @@ final class SuggestedViewController: UIViewController, ViewType {
   
 }
 
-extension SuggestedViewController: FusumaDelegate {
-  func fusumaVideoCompleted(withFileURL fileURL: URL) {
-    log.verbose(fileURL)
+
+extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
+  //TLPhotosPickerViewControllerDelegate
+  func dismissPhotoPicker(withTLPHAssets: [TLPHAsset]) {
+    // use selected order, fullresolution image
+    log.verbose(withTLPHAssets)
   }
-  
-  func fusumaMultipleImageSelected(_ images: [UIImage], source: FusumaMode) {
-    log.verbose(images)
+  func dismissPhotoPicker(withPHAssets: [PHAsset]) {
+    log.verbose(withPHAssets)
+    // if you want to used phasset.
   }
-  
-  func fusumaImageSelected(_ image: UIImage, source: FusumaMode) {
-    log.verbose(image)
+  func photoPickerDidCancel() {
+    log.verbose("did cancel")
+    // cancel
   }
-  
-  func fusumaCameraRollUnauthorized() {
-    log.verbose("unauthor")
+  func dismissComplete() {
+    log.verbose("completed")
+    // picker viewcontroller dismiss completion
   }
-  
-  func fusumaDismissedWithImage(image: UIImage, source: FusumaMode) {
-    print("Called just after FusumaViewController is dismissed.")
+  func canSelectAsset(phAsset: PHAsset) -> Bool {
+    //Custom Rules & Display
+    //You can decide in which case the selection of the cell could be forbidden.
+    
+    return true
   }
-  
-  func fusumaImageSelected(_ image: UIImage, source: FusumaMode, metaData: ImageMetadata) {
-    log.verbose(image)
+  func didExceedMaximumNumberOfSelection(picker: TLPhotosPickerViewController) {
+    // exceed max selection
   }
-  
+  func handleNoAlbumPermissions(picker: TLPhotosPickerViewController) {
+    log.verbose("album denied")
+    // handle denied albums permissions case
+  }
+  func handleNoCameraPermissions(picker: TLPhotosPickerViewController) {
+    log.verbose("camera denied")
+    // handle denied camera permissions case
+  }
 }

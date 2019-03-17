@@ -54,8 +54,10 @@ final class MapViewController: UIViewController, ViewType {
   
   func setupUI() {
     
-    self.title = "Map".localized
+    self.navigationItem.title = "MAP".localized
     self.view.backgroundColor = .white
+    self.tabBarItem.image = UIImage(named: "pin-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "pin-selected.png")
     
     self.view.addSubview(mapView)
     

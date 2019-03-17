@@ -11,7 +11,7 @@ target 'Burgers' do
 
   # UI
   pod 'SnapKit'
-  pod 'Fusuma'
+  pod "TLPhotoPicker"
 
   # Networking
   pod 'Kingfisher'

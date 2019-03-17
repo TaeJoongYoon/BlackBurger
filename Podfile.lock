@@ -89,7 +89,6 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - Fusuma (1.3.3)
   - GoogleAppMeasurement (5.6.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -150,6 +149,7 @@ PODS:
     - RxAtomic (~> 4.4)
   - SnapKit (4.0.1)
   - Then (2.4.0)
+  - TLPhotoPicker (1.8.3)
 
 DEPENDENCIES:
   - CocoaLumberjack/Swift
@@ -161,7 +161,6 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/RemoteConfig
   - Firebase/Storage
-  - Fusuma
   - Kingfisher
   - NMapsMap
   - ReusableKit
@@ -169,6 +168,7 @@ DEPENDENCIES:
   - RxSwift
   - SnapKit
   - Then
+  - TLPhotoPicker
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -189,7 +189,6 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseRemoteConfig
     - FirebaseStorage
-    - Fusuma
     - GoogleAppMeasurement
     - GoogleUtilities
     - "gRPC-C++"
@@ -206,6 +205,7 @@ SPEC REPOS:
     - RxSwift
     - SnapKit
     - Then
+    - TLPhotoPicker
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -225,7 +225,6 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 4522aad88f69297622062c0e9ffccdee3dd9b151
   FirebaseRemoteConfig: 7e11c65f0769c09bff6947997c209515058c5318
   FirebaseStorage: 29075f874c2b3cf61e5221a62c4ceefc809e5412
-  Fusuma: 3bd08c8c5341ec60c0074fa28570fea8765966f0
   GoogleAppMeasurement: 008e04ecd8efedd97a693aea8634aefe220bd26e
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
@@ -242,7 +241,8 @@ SPEC CHECKSUMS:
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
+  TLPhotoPicker: 9955e20e4d59cf4a3accc2d3b320e1bf08f453bf
 
-PODFILE CHECKSUM: f357361ac30e14e1310bea963f4ba4092ca732d9
+PODFILE CHECKSUM: 144e3fa26ed3c91b8d41a74d34b350eb0eb73267
 
 COCOAPODS: 1.5.3

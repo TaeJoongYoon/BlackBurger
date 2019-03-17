@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-"Burgers" = "버거스";
+"BURGERS" = "버거들";
 "Update" = "업데이트";
 "forceUpdate" = "필수 업데이트가 있습니다. 업데이트하시겠습니까?";
 "optionalUpdate" = "최신 업데이트가 있습니다. 업데이트하시겠습니까?";
@@ -19,7 +19,10 @@
 "password (more than 8)" = "비밀번호를 입력해주세요 (8자 이상)";
 "Sign Up" = "회원가입하기";
 "The email address is already in use by another account" = "이미 사용중인 이메일입니다";
-"Recent" = "최신 버거";
-"Popular" = "인기 버거";
-"Map" = "맛집 찾기";
-"User" = "내 정보";
+"RECENT" = "최신 버거";
+"POPULAR" = "인기 버거";
+"MAP" = "맛집 찾기";
+"USER" = "내 정보";
+"All Photos" = "모든 사진";
+"Done" = "완료";
+"Cancel" = "취소";

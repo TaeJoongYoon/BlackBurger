@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import Then
+import TLPhotoPicker
 
 final class RecentViewController: UIViewController, ViewType {
   
@@ -150,3 +151,4 @@ final class RecentViewController: UIViewController, ViewType {
   }
   
 }
+

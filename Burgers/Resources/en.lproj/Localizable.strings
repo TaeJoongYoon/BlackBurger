@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-"Burgers" = "Burgers";
+"BUGRERS" = "BURGERS";
 "Update" = "Update";
 "forceUpdate" = "There are required updates. Do you want to update?";
 "optionalUpdate" = "You have the latest updates. Do you want to update?";
@@ -19,7 +19,10 @@
 "password (more than 8)" = "password (more than 8)";
 "Sign Up" = "Sign Up";
 "The email address is already in use by another account" = "The email address is already in use by another account";
-"Recent" = "Recent";
-"Popular" = "Popular";
-"Map" = "Map";
-"User" = "User";
+"RECENT" = "RECENT";
+"POPULAR" = "POPULAR";
+"MAP" = "MAP";
+"USER" = "USER";
+"All Photos" = "All Photos";
+"Done" = "Done";
+"Cancel" = "Cancel";
