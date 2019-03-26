@@ -8,10 +8,36 @@
 
 import Foundation
 
-struct Post: Decodable {
-  let name: String
-}
 
-struct Posts: Decodable {
-  let items: [Post]
+struct Post {
+  var author: String
+  var content: String
+  var rating: Double
+  var likes: Int
+  var likeUser: [String]
+  var imageURLs: [String]
+  var restaurant: String
+  
+  init(author: String, content: String, rating: Double, likes: Int, likeUser: [String],
+       imageURLs: [String], restaurant: String) {
+    self.author = author
+    self.content = content
+    self.rating = rating
+    self.likes = likes
+    self.likeUser = likeUser
+    self.imageURLs = imageURLs
+    self.restaurant = restaurant
+  }
+  
+  func uploadForm() -> [String: Any] {
+    return [
+      "author": self.author,
+      "content": self.content,
+      "rating": self.rating,
+      "likes": self.likes,
+      "likeUser": self.likeUser,
+      "imageURLs": self.imageURLs,
+      "restaurant": self.restaurant
+    ]
+  }
 }

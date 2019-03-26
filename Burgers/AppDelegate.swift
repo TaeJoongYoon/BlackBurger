@@ -13,6 +13,7 @@ import Fabric
 import FBSDKCoreKit
 import Firebase
 import NMapsMap
+import Toaster
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
+    
+    // Toaster config
+    ToastView.appearance().bottomOffsetPortrait = (window?.safeAreaInsets.bottom)! + CGFloat(55)
+    ToastView.appearance().font = UIFont.preferredFont(forTextStyle: .subheadline)
     
     let splashViewModel = SplashViewModel()
     let splashViewController = SplashViewController.create(with: splashViewModel)

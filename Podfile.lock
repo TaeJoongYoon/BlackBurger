@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.8.1)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -14,6 +15,7 @@ PODS:
   - CocoaLumberjack/Core (3.5.1)
   - CocoaLumberjack/Swift (3.5.1):
     - CocoaLumberjack/Core
+  - Cosmos (18.0.1)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
   - Fabric (1.9.0)
@@ -150,9 +152,12 @@ PODS:
   - SnapKit (4.0.1)
   - Then (2.4.0)
   - TLPhotoPicker (1.8.3)
+  - Toaster (2.1.1)
 
 DEPENDENCIES:
+  - Alamofire
   - CocoaLumberjack/Swift
+  - Cosmos (~> 18.0)
   - Crashlytics
   - Fabric
   - FBSDKLoginKit
@@ -169,12 +174,15 @@ DEPENDENCIES:
   - SnapKit
   - Then
   - TLPhotoPicker
+  - Toaster
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Bolts
     - BoringSSL-GRPC
     - CocoaLumberjack
+    - Cosmos
     - Crashlytics
     - Fabric
     - FBSDKCoreKit
@@ -206,11 +214,14 @@ SPEC REPOS:
     - SnapKit
     - Then
     - TLPhotoPicker
+    - Toaster
 
 SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   CocoaLumberjack: 2101f8a5508197a305e737d16c5c2e9e2157628c
+  Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
@@ -242,7 +253,8 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
   TLPhotoPicker: 9955e20e4d59cf4a3accc2d3b320e1bf08f453bf
+  Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
 
-PODFILE CHECKSUM: 144e3fa26ed3c91b8d41a74d34b350eb0eb73267
+PODFILE CHECKSUM: b122e45a33d13034ecb083f6fce727638c450e14
 
 COCOAPODS: 1.5.3

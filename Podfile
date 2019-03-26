@@ -12,8 +12,11 @@ target 'Burgers' do
   # UI
   pod 'SnapKit'
   pod "TLPhotoPicker"
+  pod 'Cosmos', '~> 18.0'
+  pod 'Toaster'
 
   # Networking
+  pod 'Alamofire'
   pod 'Kingfisher'
 
   # Logging
