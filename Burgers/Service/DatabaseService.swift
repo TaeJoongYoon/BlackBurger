@@ -88,30 +88,45 @@ class DatabaseService: DatabaseServiceType {
   
   
   func fetchRecentPosts(loading: Loading) -> Observable<[Post]> {
+    let first = self.db.collection("posts").limit(to: 20)
+    var next = self.db.collection("posts").limit(to: 20)
+
+    var query = first
     
     switch loading {
     case .refresh:
-      from = 0
+      query = first
     case .loadMore:
-      from += 20
+      query = next
     }
-    
+  
     return Observable.create { observer -> Disposable in
       
-      var ps = [Post]()
+      var posts = [Post]()
       
-      for i in self.from..<self.from+20 {
-        ps.append(Post(author: String(i),
-                       content: "",
-                       rating: 0,
-                       likes: 0,
-                       likeUser: [],
-                       imageURLs: [],
-                       restaurant: ""))
+      query.addSnapshotListener { (snapshot, error) in
+    
+        guard let snapshot = snapshot else {
+          log.error(error ?? "error is nil")
+          observer.onError(error!)
+          return
+        }
+      
+        for document in snapshot.documents {
+         let post = Post(dictionary: document.data())
+          posts.append(post)
+        }
+        
+        guard let lastSnapshot = snapshot.documents.last else {
+          // The collection is empty.
+          return
+        }
+        
+        next = next.start(afterDocument: lastSnapshot)
+        
+        observer.onNext(posts)
+        observer.onCompleted()
       }
-      
-      observer.onNext(ps)
-      observer.onCompleted()
       
       return Disposables.create()
     }
@@ -120,26 +135,32 @@ class DatabaseService: DatabaseServiceType {
   func fetchPopularPosts() -> Observable<[Post]> {
     return Observable.create { observer -> Disposable in
       
-      var ps = [Post]()
+      var posts = [Post]()
       
-      for i in 1...20 {
-        ps.append(Post(author: String(i),
-                       content: "",
-                       rating: 0,
-                       likes: 0,
-                       likeUser: [],
-                       imageURLs: [],
-                       restaurant: ""))
+      self.db.collection("posts")
+        .order(by: "likes", descending: true)
+        .limit(to: 20).addSnapshotListener { (snapshot, error) in
+        
+        guard let snapshot = snapshot else {
+          log.error(error ?? "error is nil")
+          observer.onError(error!)
+          return
+        }
+        
+        for document in snapshot.documents {
+          let post = Post(dictionary: document.data())
+          posts.append(post)
+        }
+        
+        observer.onNext(posts)
+        observer.onCompleted()
       }
-      
-      observer.onNext(ps)
-      observer.onCompleted()
       
       return Disposables.create()
     }
   }
   
-  func imageFrom(asset: PHAsset) -> UIImage {
+  private func imageFrom(asset: PHAsset) -> UIImage {
     let manager = PHImageManager.default()
     let option = PHImageRequestOptions()
     var image = UIImage()

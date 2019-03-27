@@ -29,6 +29,17 @@ struct Post {
     self.restaurant = restaurant
   }
   
+  init(dictionary: [String: Any]) {
+    self.author = dictionary["author"] as! String
+    self.content = dictionary["content"] as! String
+    self.rating = dictionary["rating"] as! Double
+    self.likes = dictionary["likes"] as! Int
+    self.likeUser = dictionary["likeUser"] as! [String]
+    self.imageURLs = dictionary["imageURLs"] as! [String]
+    self.restaurant = dictionary["restaurant"] as! String
+  }
+
+  
   func uploadForm() -> [String: Any] {
     return [
       "author": self.author,

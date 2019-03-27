@@ -104,22 +104,22 @@ final class SignUpViewController: BaseViewController, ViewType {
     self.emailTextField.rx.text
       .orEmpty
       .bind(to: viewModel.email)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.emailTextField.rx.controlEvent(.editingDidEndOnExit)
       .subscribe(onNext: { [weak self] in
         self?.passwordTextField.becomeFirstResponder()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.text
       .orEmpty
       .bind(to: viewModel.password)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.controlEvent(.editingDidEndOnExit)
       .bind(to: viewModel.tappedDoneButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.signupButton.rx.tap
       .do(onNext: { [weak self] in
@@ -127,7 +127,7 @@ final class SignUpViewController: BaseViewController, ViewType {
         self?.signupButton.loadingIndicator(show: true)
       })
       .bind(to: viewModel.tappedSignUpButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     
   }
@@ -141,7 +141,7 @@ final class SignUpViewController: BaseViewController, ViewType {
         self?.signupButton.isEnabled = $0
         self?.signupButton.backgroundColor = $0 ? .tintColor : .disabledColor
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.isSignedUp
       .drive(onNext: { [weak self] signed in
@@ -154,7 +154,7 @@ final class SignUpViewController: BaseViewController, ViewType {
           self?.showAlert()
         }
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
   

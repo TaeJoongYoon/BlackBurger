@@ -46,6 +46,7 @@ final class SuggestedViewController: BaseViewController, ViewType {
   let scrollView = UIScrollView(frame: .zero).then {
     $0.isPagingEnabled = true
     $0.isDirectionalLockEnabled = true
+    $0.showsHorizontalScrollIndicator = false
     $0.contentInsetAdjustmentBehavior = .never
   }
   
@@ -129,11 +130,11 @@ final class SuggestedViewController: BaseViewController, ViewType {
     self.addButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
       .bind(to: viewModel.didTappedAddButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.segmentedControl.rx.selectedSegmentIndex
       .bind(to: viewModel.selectedSegmentIndex)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.scrollView.rx.contentOffset
       .map { [weak self] in
@@ -141,7 +142,7 @@ final class SuggestedViewController: BaseViewController, ViewType {
       }
       .distinctUntilChanged()
       .bind(to: viewModel.swipePage)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
   // MARK: - <- Rx UI Binding
@@ -150,20 +151,9 @@ final class SuggestedViewController: BaseViewController, ViewType {
     
     viewModel.add
       .drive(onNext: { [weak self] in
-        let viewController = TLPhotosPickerViewController()
-        viewController.delegate = self
-        
-        var configure = TLPhotosPickerConfigure()
-        configure.doneTitle = "Done".localized
-        configure.cancelTitle = "Cancel".localized
-        configure.defaultCameraRollTitle = "All Photos".localized
-        configure.allowedVideo = false
-        configure.selectedColor = .tintColor
-        viewController.configure = configure
-        
-        self?.present(viewController, animated: true, completion: nil)
+        self?.showPhotoPicker()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.showView
       .drive(onNext: { [weak self] index in
@@ -172,9 +162,11 @@ final class SuggestedViewController: BaseViewController, ViewType {
         self?.scrollView.setContentOffset(CGPoint(x: width, y: 0), animated: true)
         self?.segmentedControl.selectedSegmentIndex = index
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
+  
+  // MARK: Action Handler
   
   private func add(_ viewControllers: [UIViewController], to containerView: UIView) {
     
@@ -183,6 +175,21 @@ final class SuggestedViewController: BaseViewController, ViewType {
       self.addChild(vc)
       vc.didMove(toParent: self)
     }
+  }
+  
+  private func showPhotoPicker() {
+    let viewController = TLPhotosPickerViewController()
+    viewController.delegate = self
+    
+    var configure = TLPhotosPickerConfigure()
+    configure.doneTitle = "Done".localized
+    configure.cancelTitle = "Cancel".localized
+    configure.defaultCameraRollTitle = "All Photos".localized
+    configure.allowedVideo = false
+    configure.selectedColor = .tintColor
+    viewController.configure = configure
+    
+    self.present(viewController, animated: true, completion: nil)
   }
   
 }
@@ -196,9 +203,9 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
     
     if withPHAssets.count > 0 {
       let viewModel = PostViewModel(images: withPHAssets)
-      let viewContoller = PostViewController.create(with: viewModel)
-      viewContoller.hidesBottomBarWhenPushed = true
-      self.navigationController?.pushViewController(viewContoller, animated: true)
+      let viewController = PostViewController.create(with: viewModel)
+      viewController.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(viewController, animated: true)
     } else {
       Toast(text: "Please select photos at least one".localized, duration: Delay.short).show()
     }
@@ -220,6 +227,7 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
   }
   func handleNoCameraPermissions(picker: TLPhotosPickerViewController) {
     Toast(text: "Camera permission denied, Please allow it".localized, duration: Delay.short).show()
+    
     // handle denied camera permissions case
   }
 }

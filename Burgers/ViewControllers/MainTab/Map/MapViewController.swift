@@ -75,7 +75,7 @@ final class MapViewController: BaseViewController, ViewType {
   
   override func setupConstraints() {
     
-    mapView.snp.makeConstraints { make in
+    self.mapView.snp.makeConstraints { make in
       make.top.equalTo(self.view.safeArea.top)
       make.bottom.equalTo(self.view.safeArea.bottom)
       make.left.right.equalTo(self.view)
@@ -101,13 +101,13 @@ extension MapViewController: CLLocationManagerDelegate {
     if let location = locations.last{
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
       
-      mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude, lng: center.longitude)
+      self.mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude, lng: center.longitude)
       
-      cameraPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: center.latitude, lng: center.longitude))
-      cameraPosition.animation = .easeIn
-      mapView.mapView.moveCamera(cameraPosition)
+      self.cameraPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: center.latitude, lng: center.longitude))
+      self.cameraPosition.animation = .easeIn
+      self.mapView.mapView.moveCamera(cameraPosition)
       
-      locationManager.stopUpdatingLocation()
+      self.locationManager.stopUpdatingLocation()
     }
   }
 }

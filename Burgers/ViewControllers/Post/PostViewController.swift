@@ -123,33 +123,33 @@ final class PostViewController: BaseViewController, ViewType {
   
   override func setupConstraints() {
     
-    searchBar.snp.makeConstraints { make in
+    self.searchBar.snp.makeConstraints { make in
       make.top.equalTo(self.view.safeArea.top)
       make.left.right.equalTo(self.view).inset(5)
     }
     
-    tableView.snp.makeConstraints { make in
+    self.tableView.snp.makeConstraints { make in
       make.left.right.equalTo(self.view)
       make.top.equalTo(self.searchBar.snp.bottom)
       make.bottom.equalTo(self.view.safeArea.bottom)
     }
     
-    rating.snp.makeConstraints { make in
+    self.rating.snp.makeConstraints { make in
       make.top.equalTo(self.searchBar.snp.bottom).offset(Metric.offset)
       make.centerX.equalTo(self.view.snp.centerX)
     }
     
-    textView.snp.makeConstraints { make in
+    self.textView.snp.makeConstraints { make in
       make.top.equalTo(self.rating.snp.bottom).offset(Metric.offset)
       make.left.right.equalTo(self.view).inset(Metric.offset)
       make.bottom.equalTo(self.view.safeArea.bottom)
     }
     
-    indicator.snp.makeConstraints { make in
+    self.indicator.snp.makeConstraints { make in
       make.center.equalTo(self.view.center)
     }
     
-    indicatorView.snp.makeConstraints { make in
+    self.indicatorView.snp.makeConstraints { make in
       make.top.equalTo(self.view.safeArea.top)
       make.left.right.equalTo(self.view)
       make.bottom.equalTo(self.view.safeArea.bottom)
@@ -162,14 +162,14 @@ final class PostViewController: BaseViewController, ViewType {
   func setupEventBinding() {
     
     self.textView.rx.setDelegate(self)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.searchBar.rx.setDelegate(self)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.coordinate
       .bind(to: viewModel.coordinate)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.searchBar.rx.text
       .orEmpty
@@ -177,24 +177,24 @@ final class PostViewController: BaseViewController, ViewType {
       .debounce(1.0, scheduler: MainScheduler.instance)
       .distinctUntilChanged()
       .bind(to: viewModel.query)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.tableView.rx.modelSelected(Place.self)
       .bind(to: viewModel.didCellSelected)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.textView.rx.text
       .orEmpty
       .distinctUntilChanged()
       .bind(to: viewModel.text)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.writeButton.rx.tap
       .do(onNext: { [weak self] in
         self?.viewModel.rating.accept((self?.rating.rating)!)
       })
       .bind(to: viewModel.write)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
   // MARK: - <- Rx UI Binding
@@ -206,7 +206,7 @@ final class PostViewController: BaseViewController, ViewType {
       .bind(to: self.tableView.rx.items(cellIdentifier: Reusable.TitleCell.identifier,
                                         cellType: UITableViewCell.self)) { row, element, cell in
                                          cell.textLabel?.text = element.name
-    }.disposed(by: disposeBag)
+    }.disposed(by: self.disposeBag)
     
     viewModel.selectedPlace
       .drive(onNext: { [weak self] in
@@ -216,7 +216,7 @@ final class PostViewController: BaseViewController, ViewType {
         self?.rating.isHidden.toggle()
         self?.textView.isHidden.toggle()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.writeisEnabled
       .distinctUntilChanged()
@@ -228,7 +228,7 @@ final class PostViewController: BaseViewController, ViewType {
           self?.writeButton.tintColor = .disabledColor
         }
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.writed
       .drive(onNext: { [weak self] in
@@ -240,13 +240,13 @@ final class PostViewController: BaseViewController, ViewType {
           Toast(text: "Failure Posting!".localized, duration: Delay.long).show()
         }
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
   
@@ -254,11 +254,11 @@ final class PostViewController: BaseViewController, ViewType {
   
   private func showNetworkingAnimation(_ isNetworking: Bool) {
     if !isNetworking {
-      indicator.stopAnimating()
-      indicatorView.isHidden = true
+      self.indicator.stopAnimating()
+      self.indicatorView.isHidden = true
     } else {
-      indicator.startAnimating()
-      indicatorView.isHidden = false
+      self.indicator.startAnimating()
+      self.indicatorView.isHidden = false
     }
   }
   
@@ -301,7 +301,7 @@ extension PostViewController: CLLocationManagerDelegate {
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
       
       self.coordinate.accept("\(center.longitude),\(center.latitude)")
-      locationManager.stopUpdatingLocation()
+      self.locationManager.stopUpdatingLocation()
     }
   }
 }

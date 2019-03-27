@@ -44,6 +44,7 @@ final class RecentViewController: BaseViewController, ViewType {
     $0.refreshControl = UIRefreshControl()
     $0.refreshControl?.tintColor = .mainColor
     $0.rowHeight = Metric.rowHeight
+    $0.separatorInset = UIEdgeInsets.zero
     //$0.separatorInset = UIEdgeInsets(top: 0, left: Metric.baseMargin, bottom: 0, right: Metric.baseMargin)
     $0.register(Reusable.burgerPostCell)
   }
@@ -59,7 +60,7 @@ final class RecentViewController: BaseViewController, ViewType {
     self.view.addSubview(self.tableView)
     self.view.addSubview(self.indicator)
   }
-
+  
   // MARK: Setup Constraints
   
   override func setupConstraints() {
@@ -78,26 +79,26 @@ final class RecentViewController: BaseViewController, ViewType {
   
   func setupEventBinding() {
     
-    rx.viewWillAppear
+    self.rx.viewWillAppear
       .take(1)
       .bind(to: viewModel.viewWillAppear)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    tableView.refreshControl?.rx.controlEvent(.valueChanged)
+    self.tableView.refreshControl?.rx.controlEvent(.valueChanged)
       .bind(to: viewModel.didPulltoRefresh)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    tableView.rx.modelSelected(Post.self)
+    self.tableView.rx.modelSelected(Post.self)
       .bind(to: viewModel.didCellSelected)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    tableView.rx.willDisplayCell
-      .map { [weak self] in
-        $1.row + 1 == self?.posts.value.count
-      }
-      .filter { $0 }
-      .bind(to: viewModel.isReachedBottom)
-      .disposed(by: disposeBag)
+    //    tableView.rx.willDisplayCell
+    //      .map { [weak self] in
+    //        $1.row + 1 == self?.posts.value.count
+    //      }
+    //      .filter { $0 }
+    //      .bind(to: viewModel.isReachedBottom)
+    //      .disposed(by: disposeBag)
     
   }
   
@@ -105,48 +106,69 @@ final class RecentViewController: BaseViewController, ViewType {
   
   func setupUIBinding() {
     
-    posts.asObservable()
+    self.tableView.rx.setDelegate(self)
+      .disposed(by: self.disposeBag)
+    
+    self.posts.asObservable()
       .bind(to: tableView.rx.items(cellIdentifier: Reusable.burgerPostCell.identifier,
                                    cellType: BurgerPostCell.self)) { row, element, cell in
-        cell.configureWith(name: element.author)
-        
-    }.disposed(by: disposeBag)
+                                    cell.configureWith(
+                                      url: element.imageURLs[0],
+                                      restaurant: element.restaurant,
+                                      likes: element.likes)
+                                    
+      }.disposed(by: self.disposeBag)
     
     viewModel.posts
       .drive(onNext: { [weak self] in
         self?.posts.accept($0)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.loadMore
       .drive(onNext: { [weak self] in
         self?.posts.accept((self?.posts.value)! + $0)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.showPost
-      .drive(onNext: {
-        print($0)
+      .drive(onNext: { [weak self] in
+        self?.postDetail($0)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
-      }).disposed(by: disposeBag)
+      }).disposed(by: self.disposeBag)
     
   }
   
   // MARK: Action Handler
   
+  private func postDetail(_ post: Post) {
+    let viewModel = PostDetailViewModel()
+    let viewController = PostDetailViewController.create(with: viewModel)
+    viewController.post = post
+    viewController.hidesBottomBarWhenPushed = true
+    
+    self.navigationController?.pushViewController(viewController, animated: true)
+  }
+  
   private func showNetworkingAnimation(_ isNetworking: Bool) {
     if !isNetworking {
-      indicator.stopAnimating()
-      tableView.refreshControl?.endRefreshing()
+      self.indicator.stopAnimating()
+      self.tableView.refreshControl?.endRefreshing()
     } else if !tableView.refreshControl!.isRefreshing {
-      indicator.startAnimating()
+      self.indicator.startAnimating()
     }
   }
   
 }
 
+
+extension RecentViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+}

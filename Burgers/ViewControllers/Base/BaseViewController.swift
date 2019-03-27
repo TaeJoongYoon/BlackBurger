@@ -76,6 +76,14 @@ class BaseViewController: UIViewController {
     }
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+  }
+  
   // MARK: Layout Constraints
   private(set) var didSetupConstraints = false
   

@@ -19,7 +19,7 @@ protocol PopularViewModelType: ViewModelType {
   // UI
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
-  var showPost: Driver<String> { get }
+  var showPost: Driver<Post> { get }
   
 }
 
@@ -36,7 +36,7 @@ struct PopularViewModel: PopularViewModelType {
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>
-  let showPost: Driver<String>
+  let showPost: Driver<Post>
   
   // MARK: - Initialize
   
@@ -62,8 +62,13 @@ struct PopularViewModel: PopularViewModelType {
       .asDriver(onErrorJustReturn: [])
     
     showPost = didCellSelected
-      .map { $0.author }
-      .asDriver(onErrorJustReturn: "")
+      .asDriver(onErrorJustReturn: Post(author: "",
+                                        content: "",
+                                        rating: 0,
+                                        likes: 0,
+                                        likeUser: [],
+                                        imageURLs: [],
+                                        restaurant: ""))
     
   }
   

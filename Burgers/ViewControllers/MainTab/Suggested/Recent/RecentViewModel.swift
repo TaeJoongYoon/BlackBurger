@@ -21,7 +21,7 @@ protocol RecentViewModelType: ViewModelType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
   var loadMore: Driver<[Post]> { get }
-  var showPost: Driver<String> { get }
+  var showPost: Driver<Post> { get }
   
 }
 
@@ -40,7 +40,7 @@ struct RecentViewModel: RecentViewModelType {
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>
   let loadMore: Driver<[Post]>
-  let showPost: Driver<String>
+  let showPost: Driver<Post>
   
   // MARK: - Initialize
   
@@ -79,8 +79,13 @@ struct RecentViewModel: RecentViewModelType {
       .asDriver(onErrorJustReturn: [])
    
     showPost = didCellSelected
-      .map { $0.author }
-      .asDriver(onErrorJustReturn: "")
+      .asDriver(onErrorJustReturn: Post(author: "",
+                                        content: "",
+                                        rating: 0,
+                                        likes: 0,
+                                        likeUser: [],
+                                        imageURLs: [],
+                                        restaurant: ""))
   }
   
 }

@@ -42,6 +42,7 @@ final class SplashViewController: BaseViewController, ViewType {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    
     Toast(text: "Enjoy your Hamburger :)".localized, duration: Delay.short).show()
   }
   
@@ -57,10 +58,10 @@ final class SplashViewController: BaseViewController, ViewType {
   
   func setupEventBinding() {
     
-    rx.viewDidAppear
+    self.rx.viewDidAppear
       .delay(0.5, scheduler: MainScheduler.instance)
-      .bind(to:viewModel.checkIfAuthenticated)
-      .disposed(by: disposeBag)
+      .bind(to: viewModel.checkIfAuthenticated)
+      .disposed(by: self.disposeBag)
     
   }
   
@@ -72,7 +73,7 @@ final class SplashViewController: BaseViewController, ViewType {
       .drive(onNext: { [weak self] in
         $0 ? self?.presentMainScreen() : self?.presentLoginScreen()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
   
@@ -81,13 +82,13 @@ final class SplashViewController: BaseViewController, ViewType {
   private func presentLoginScreen() {
     let loginViewModel = LoginViewModel()
     let loginViewController = LoginViewController.create(with: loginViewModel)
-    let navi = UINavigationController(rootViewController: loginViewController)
-    navi.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    navi.navigationBar.clipsToBounds = true
-    navi.navigationBar.tintColor = .tintColor
+    let navigationController = UINavigationController(rootViewController: loginViewController)
+    navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController.navigationBar.clipsToBounds = true
+    navigationController.navigationBar.tintColor = .tintColor
     
     UIApplication.shared.keyWindow?
-      .setRootViewController(navi,
+      .setRootViewController(navigationController,
                              options: UIWindow.TransitionOptions.init(
                               direction: .toTop,
                               style: .easeInOut))

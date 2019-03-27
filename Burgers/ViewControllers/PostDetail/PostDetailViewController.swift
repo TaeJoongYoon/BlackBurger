@@ -28,10 +28,16 @@ final class PostDetailViewController: BaseViewController, ViewType {
   // MARK: Properties
   
   var viewModel: PostDetailViewModelType!
+  var post: Post!
   
   // MARK: UI
   
-  
+  let moreButton = UIBarButtonItem().then {
+    let button = UIButton(type: .custom)
+    button.setImage(UIImage(named: "more.png"), for: .normal)
+    $0.customView = button
+  }
+
   
   // MARK: Setup UI
   
@@ -39,6 +45,8 @@ final class PostDetailViewController: BaseViewController, ViewType {
     super.viewDidLoad()
     self.navigationItem.title = "DETAIL".localized
     self.view.backgroundColor = .white
+    
+    self.navigationItem.rightBarButtonItem = self.moreButton
   }
   
   // MARK: Setup Constraints

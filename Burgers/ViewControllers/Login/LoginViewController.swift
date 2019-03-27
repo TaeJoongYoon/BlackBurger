@@ -161,16 +161,16 @@ final class LoginViewController: BaseViewController, ViewType {
     self.emailTextField.rx.text
       .orEmpty
       .bind(to: viewModel.email)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.text
       .orEmpty
       .bind(to: viewModel.password)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.signupButton.rx.tap
       .bind(to: viewModel.tappedSignUpButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.loginButton.rx.tap
       .do(onNext: { [weak self] in
@@ -178,7 +178,7 @@ final class LoginViewController: BaseViewController, ViewType {
         self?.loginButton.loadingIndicator(show: true)
       })
       .bind(to: viewModel.tappedLoginButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
   
@@ -190,18 +190,18 @@ final class LoginViewController: BaseViewController, ViewType {
       .subscribe(onNext: { [weak self] in
         self?.passwordTextField.becomeFirstResponder()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.controlEvent(.editingDidEndOnExit)
       .bind(to: viewModel.tappedDoneButton)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.isLoginEnabled
       .drive(onNext: { [weak self] in
         self?.loginButton.isEnabled = $0
         self?.loginButton.backgroundColor = $0 ? .tintColor : .disabledColor
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.pushSignup
       .drive(onNext: { [weak self] in
@@ -210,7 +210,7 @@ final class LoginViewController: BaseViewController, ViewType {
         let signUpViewController = SignUpViewController.create(with: signUpViewModel)
         self?.navigationController?.pushViewController(signUpViewController, animated: true)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     viewModel.isLogined
       .drive(onNext: { [weak self] logined in
@@ -223,7 +223,7 @@ final class LoginViewController: BaseViewController, ViewType {
           self?.showAlert()
         }
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
   }
   
