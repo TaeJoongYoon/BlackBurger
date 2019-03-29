@@ -24,34 +24,28 @@ class AuthService: AuthServiceType {
   
   // MARK: DataTask
   
-  func login(email: String, password: String) -> Observable<Bool> {
-    return Observable.create { observer in
+  func login(email: String, password: String) -> Single<Bool> {
+    return Single<Bool>.create { single in
       Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-        
         if user != nil {
-          observer.onNext(true)
+          single(.success(true))
         } else {
-          observer.onNext(false)
+          single(.success(false))
         }
-        
-        observer.onCompleted()
       }
       
       return Disposables.create()
     }
   }
   
-  func signup(email: String, password: String) -> Observable<Bool> {
-    return Observable.create { observer in
+  func signup(email: String, password: String) -> Single<Bool> {
+    return Single<Bool>.create { single in
       Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
-        
         if authResult?.user != nil {
-          observer.onNext(true)
+          single(.success(true))
         } else {
-          observer.onNext(false)
+          single(.success(false))
         }
-        
-        observer.onCompleted()
       }
       
       return Disposables.create()

@@ -25,7 +25,6 @@ protocol PopularViewModelType: ViewModelType {
 
 struct PopularViewModel: PopularViewModelType {
   
-  // MARK: Properties
   // MARK: -> Event
   
   let viewWillAppear = PublishSubject<Void>()
@@ -54,7 +53,7 @@ struct PopularViewModel: PopularViewModelType {
       .flatMapLatest {
         return DatabaseService.shared.fetchPopularPosts()
           .do { onNetworking.onNext(false) }
-          .catchError({ error -> Observable<[Post]> in
+          .catchError({ error -> Single<[Post]> in
             onError.onNext(error)
             return .never()
           })
@@ -68,7 +67,8 @@ struct PopularViewModel: PopularViewModelType {
                                         likes: 0,
                                         likeUser: [],
                                         imageURLs: [],
-                                        restaurant: ""))
+                                        restaurant: "",
+                                        address: ""))
     
   }
   

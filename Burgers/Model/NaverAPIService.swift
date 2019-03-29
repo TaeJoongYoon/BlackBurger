@@ -30,34 +30,41 @@ class NaverAPIService: NaverAPIServiceType {
   
   // MARK: DataTask
   
-  func fetchPlaces(query: String, coordinate: String) -> Single<[Place]> {
+  func fetchPlaces(query: String, coordinate: String) -> Single<NetworkResult<[Place]>> {
+    let url = "https://naveropenapi.apigw.ntruss.com/map-place/v1/search"
     param["query"] = query
     param["coordinate"] = "126.8400960,37.5692690"
     
     return Single.create { [weak self] single in
-      let request = Alamofire.request("https://naveropenapi.apigw.ntruss.com/map-place/v1/search",
+      let request = Alamofire.request(url,
                                       method: .get,
                                       parameters: self?.param,
                                       headers: self?.header)
         .responseData { response in
           
-          log.verbose("Parameter : ", self?.param)
-          log.verbose("Header : ", self?.header)
-          log.verbose("Response : ", String(data: response.data!, encoding: .utf8))
+          log.verbose("Parameter : ", self?.param ?? "none")
+          log.verbose("Header : ", self?.header ?? "none")
+          log.verbose("Response : ", String(data: response.data!, encoding: .utf8) ?? "none")
           
           switch response.result {
           case let .success(jsonData):
             do {
               let accessToken = try JSONDecoder().decode(PlaceResult.self, from: jsonData)
               log.info(accessToken)
-              single(.success(accessToken.places))
+              single(.success(.success(accessToken.places)))
             } catch let error {
               log.error(error)
+              single(.error(error))
             }
             
           case let .failure(error):
             log.error(error)
-            single(.error(error))
+            if let statusCode = response.response?.statusCode {
+              if let networkError = NetworkError(rawValue: statusCode){
+                single(.success(.error(networkError)))
+              }
+            }
+            
           }
       }
       

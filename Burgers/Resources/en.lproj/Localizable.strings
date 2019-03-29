@@ -14,6 +14,7 @@
 "email" = "email";
 "password" = "password";
 "Don't you have an account?" = "Don't you have an account?";
+"or" = "or";
 "Log in" = "Log in";
 "The account is invalid, please check it" = "The account is invalid, please check it";
 "password (more than 8)" = "password (more than 8)";
@@ -34,3 +35,8 @@
 "Failure Posting!" = "Failure Posting!";
 "Album permission denied, Please allow it" = "Album permission denied, Please allow it";
 "Camera permission denied, Please allow it" = "Camera permission denied, Please allow it";
+"Please select photos at least one" = "Please select photos at least one";
+"RESTAURANT" = "RESTAURANT";
+"My Posts" = "My Posts";
+"My Likes" = "My Likes";
+"See you again :)" = "See you again :)";

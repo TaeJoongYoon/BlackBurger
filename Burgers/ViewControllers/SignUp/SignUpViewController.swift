@@ -14,6 +14,7 @@ final class SignUpViewController: BaseViewController, ViewType {
   // MARK: Constants
   
   struct Metric {
+    static let buttonRadius = CGFloat(5)
     static let height = 40
     static let textfieldOffset = 30
     static let textfieldInset = 10
@@ -51,7 +52,7 @@ final class SignUpViewController: BaseViewController, ViewType {
     $0.setTitle("Sign Up".localized, for: .normal)
     $0.backgroundColor = .disabledColor
     $0.setTitleColor(.white, for: .normal)
-    $0.layer.cornerRadius = 5
+    $0.layer.cornerRadius = Metric.buttonRadius
     $0.clipsToBounds = true
     $0.isEnabled = false
   }
@@ -138,21 +139,13 @@ final class SignUpViewController: BaseViewController, ViewType {
     
     viewModel.isSignedUpEnabled
       .drive(onNext: { [weak self] in
-        self?.signupButton.isEnabled = $0
-        self?.signupButton.backgroundColor = $0 ? .tintColor : .disabledColor
+        self?.isSignUpEnabled($0)
       })
       .disposed(by: self.disposeBag)
     
     viewModel.isSignedUp
-      .drive(onNext: { [weak self] signed in
-        self?.signupButton.setTitle("Sign Up".localized, for: .normal)
-        self?.signupButton.loadingIndicator(show: false)
-        
-        if signed {
-          self?.presentMainScreen()
-        } else {
-          self?.showAlert()
-        }
+      .drive(onNext: { [weak self] in
+        self?.isSignedUp($0)
       })
       .disposed(by: self.disposeBag)
     
@@ -162,6 +155,22 @@ final class SignUpViewController: BaseViewController, ViewType {
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     self.view.endEditing(true)
+  }
+  
+  private func isSignUpEnabled(_ enable: Bool) {
+    self.signupButton.isEnabled = enable
+    self.signupButton.backgroundColor = enable ? .tintColor : .disabledColor
+  }
+  
+  private func isSignedUp(_ signed: Bool) {
+    self.signupButton.setTitle("Sign Up".localized, for: .normal)
+    self.signupButton.loadingIndicator(show: false)
+    
+    if signed {
+      self.presentMainScreen()
+    } else {
+      self.showAlert()
+    }
   }
   
   private func presentMainScreen() {
@@ -175,9 +184,12 @@ final class SignUpViewController: BaseViewController, ViewType {
   }
   
   private func showAlert() {
-    let alert = UIAlertController(title: "Burgers",
-                                  message: "The email address is already in use by another account".localized,
-                                  preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: "Burgers",
+      message: "The email address is already in use by another account".localized,
+      preferredStyle: .alert
+    )
+    
     let defaultAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
     alert.addAction(defaultAction)
     

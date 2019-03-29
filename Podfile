@@ -8,6 +8,7 @@ target 'Burgers' do
   # Rx
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxGesture'
 
   # UI
   pod 'SnapKit'

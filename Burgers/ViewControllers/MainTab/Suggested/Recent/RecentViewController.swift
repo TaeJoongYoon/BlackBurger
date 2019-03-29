@@ -28,7 +28,7 @@ final class RecentViewController: BaseViewController, ViewType {
   private struct Metric {
     static let baseMargin = CGFloat(20)
     static let tableViewFrame = UIScreen.main.bounds
-    static let rowHeight = CGFloat(250)
+    static let rowHeight = CGFloat(220)
   }
   
   // MARK: Properties
@@ -42,10 +42,9 @@ final class RecentViewController: BaseViewController, ViewType {
     $0.backgroundColor = .white
     $0.contentInsetAdjustmentBehavior = .never
     $0.refreshControl = UIRefreshControl()
-    $0.refreshControl?.tintColor = .mainColor
+    $0.refreshControl?.tintColor = .tintColor
     $0.rowHeight = Metric.rowHeight
     $0.separatorInset = UIEdgeInsets.zero
-    //$0.separatorInset = UIEdgeInsets(top: 0, left: Metric.baseMargin, bottom: 0, right: Metric.baseMargin)
     $0.register(Reusable.burgerPostCell)
   }
   
@@ -66,7 +65,9 @@ final class RecentViewController: BaseViewController, ViewType {
   override func setupConstraints() {
     
     self.tableView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.equalTo(self.view.safeArea.top)
+      make.left.right.equalToSuperview()
+      make.bottom.equalTo(self.view.safeArea.bottom)
     }
     
     self.indicator.snp.makeConstraints { make in
@@ -80,7 +81,6 @@ final class RecentViewController: BaseViewController, ViewType {
   func setupEventBinding() {
     
     self.rx.viewWillAppear
-      .take(1)
       .bind(to: viewModel.viewWillAppear)
       .disposed(by: self.disposeBag)
     
@@ -115,7 +115,9 @@ final class RecentViewController: BaseViewController, ViewType {
                                     cell.configureWith(
                                       url: element.imageURLs[0],
                                       restaurant: element.restaurant,
-                                      likes: element.likes)
+                                      address: element.address,
+                                      likes: element.likes
+                                    )
                                     
       }.disposed(by: self.disposeBag)
     

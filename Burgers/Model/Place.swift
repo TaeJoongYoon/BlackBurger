@@ -21,6 +21,16 @@ struct Place: ModelType {
   var distance: Double
   var sessionId: String
   
+  init(dictionary: [String: Any]) {
+    self.name = dictionary["name"] as! String
+    self.roadAddress = dictionary["roadAddress"] as! String
+    self.jibunAddress = dictionary["jibunAddress"] as! String
+    self.phoneNumber = dictionary["phoneNumber"] as! String
+    self.x = dictionary["x"] as! String
+    self.y = dictionary["y"] as! String
+    self.distance = dictionary["distance"] as! Double
+    self.sessionId = dictionary["sessionId"] as! String
+  }
   
   enum CodingKeys: String, CodingKey {
     case name = "name"
@@ -31,5 +41,18 @@ struct Place: ModelType {
     case y = "y"
     case distance = "distance"
     case sessionId = "sessionId"
+  }
+  
+  func uploadForm() -> [String: Any] {
+    return [
+      "name": self.name,
+      "roadAddress": self.roadAddress,
+      "jibunAddress": self.jibunAddress,
+      "phoneNumber": self.phoneNumber,
+      "x": self.x,
+      "y": self.y,
+      "distance": self.distance,
+      "sessionId": self.sessionId
+    ]
   }
 }

@@ -30,7 +30,7 @@ class RemoteConfigManager: NSObject {
     
     remoteConfig.fetch { (status, error) -> Void in
       
-      log.error(error)
+      log.error(error ?? "none")
       log.verbose(status.hashValue)
       
       if status == .success {

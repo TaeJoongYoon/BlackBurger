@@ -25,12 +25,13 @@ final class PostViewController: BaseViewController, ViewType {
   }
   
   struct Constant {
-    
   }
   
   struct Metric {
     static let borderWidth = Double(2)
-    static let offset = CGFloat(20)
+    static let offset = 20
+    static let indicatorAlpha = CGFloat(0.5)
+    static let starSize = Double(UIScreen.main.bounds.size.width / 8)
   }
   
   // MARK: Properties
@@ -38,6 +39,8 @@ final class PostViewController: BaseViewController, ViewType {
   var viewModel: PostViewModelType!
   let locationManager = CLLocationManager()
   let coordinate = BehaviorRelay<String>(value: "")
+  let places = BehaviorRelay<[Place]>(value: [])
+  var restaurant: Place!
   
   // MARK: UI
   
@@ -53,7 +56,6 @@ final class PostViewController: BaseViewController, ViewType {
     $0.tintColor = .tintColor
     $0.backgroundImage = UIImage()
     $0.showsCancelButton = true
-    //$0.setShowsCancelButton(true, animated: true)
   }
   
   let tableView = UITableView(frame: .zero).then {
@@ -88,7 +90,7 @@ final class PostViewController: BaseViewController, ViewType {
   
   let indicatorView = UIView(frame: .zero).then {
     $0.backgroundColor = .black
-    $0.alpha = 0.5
+    $0.alpha = Metric.indicatorAlpha
     $0.isHidden = true
   }
   
@@ -99,7 +101,7 @@ final class PostViewController: BaseViewController, ViewType {
     self.navigationItem.title = "POST".localized
     self.view.backgroundColor = .white
     
-    self.rating.settings.starSize = Double(UIScreen.main.bounds.size.width / 8)
+    self.rating.settings.starSize = Metric.starSize
     
     self.navigationItem.rightBarButtonItem = self.writeButton
     self.view.addSubview(searchBar)
@@ -150,9 +152,7 @@ final class PostViewController: BaseViewController, ViewType {
     }
     
     self.indicatorView.snp.makeConstraints { make in
-      make.top.equalTo(self.view.safeArea.top)
-      make.left.right.equalTo(self.view)
-      make.bottom.equalTo(self.view.safeArea.bottom)
+      make.edges.equalToSuperview()
     }
     
   }
@@ -201,44 +201,34 @@ final class PostViewController: BaseViewController, ViewType {
   
   func setupUIBinding() {
     
-    viewModel.places
-      .asObservable()
+    self.places.asObservable()
       .bind(to: self.tableView.rx.items(cellIdentifier: Reusable.TitleCell.identifier,
                                         cellType: UITableViewCell.self)) { row, element, cell in
-                                         cell.textLabel?.text = element.name
-    }.disposed(by: self.disposeBag)
+                                          cell.textLabel?.text = element.name
+      }.disposed(by: self.disposeBag)
     
-    viewModel.selectedPlace
+    viewModel.places
       .drive(onNext: { [weak self] in
-        self?.searchBar.text = $0
-        self?.searchBar.resignFirstResponder()
-        self?.tableView.isHidden.toggle()
-        self?.rating.isHidden.toggle()
-        self?.textView.isHidden.toggle()
+        self?.places($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.writeisEnabled
+    viewModel.selectedPlace
+      .subscribe(onNext: { [weak self] in
+        self?.selectedPlace($0)
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.writeIsEnabled
       .distinctUntilChanged()
       .drive(onNext: { [weak self] in
-        self?.writeButton.isEnabled = $0
-        if $0 {
-          self?.writeButton.tintColor = .tintColor
-        } else {
-          self?.writeButton.tintColor = .disabledColor
-        }
+        self?.writeIsEnabled($0)
       })
       .disposed(by: self.disposeBag)
     
     viewModel.writed
       .drive(onNext: { [weak self] in
-        if $0 {
-          self?.navigationController?.popViewController(animated: true) {
-            Toast(text: "Success Posting!".localized, duration: Delay.long).show()
-          }
-        } else {
-          Toast(text: "Failure Posting!".localized, duration: Delay.long).show()
-        }
+        self?.writed($0)
       })
       .disposed(by: self.disposeBag)
     
@@ -251,6 +241,47 @@ final class PostViewController: BaseViewController, ViewType {
   }
   
   // MARK: Action Handler
+  
+  private func places(_ result: NetworkResult<[Place]>) {
+    switch result {
+    case let .success(places):
+      self.places.accept(places)
+      
+    case let .error(error):
+      Toast(text: error.localizedDescription, duration: Delay.short).show()
+      
+    case .none:
+      log.error("Result is Invalid!!!")
+    }
+  }
+  
+  private func selectedPlace(_ place: Place) {
+    self.restaurant = place
+    self.searchBar.text = place.name
+    self.searchBar.resignFirstResponder()
+    self.tableView.isHidden.toggle()
+    self.rating.isHidden.toggle()
+    self.textView.isHidden.toggle()
+  }
+  
+  private func writeIsEnabled(_ enabled: Bool) {
+    self.writeButton.isEnabled = enabled
+    if enabled {
+      self.writeButton.tintColor = .tintColor
+    } else {
+      self.writeButton.tintColor = .disabledColor
+    }
+  }
+  
+  private func writed(_ isWrited: Bool) {
+    if isWrited {
+      self.navigationController?.popViewController(animated: true) {
+        Toast(text: "Success Posting!".localized, duration: Delay.long).show()
+      }
+    } else {
+      Toast(text: "Failure Posting!".localized, duration: Delay.long).show()
+    }
+  }
   
   private func showNetworkingAnimation(_ isNetworking: Bool) {
     if !isNetworking {
@@ -298,7 +329,8 @@ extension PostViewController: UITextViewDelegate {
 extension PostViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let location = locations.last{
-      let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+      let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                          longitude: location.coordinate.longitude)
       
       self.coordinate.accept("\(center.longitude),\(center.latitude)")
       self.locationManager.stopUpdatingLocation()

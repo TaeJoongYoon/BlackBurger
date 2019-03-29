@@ -17,6 +17,9 @@ final class LoginViewController: BaseViewController, ViewType {
   // MARK: Constants
   
   struct Metric {
+    static let logoFontSize = CGFloat(30)
+    static let orFontSize = CGFloat(20)
+    static let buttonRadius = CGFloat(5)
     static let height = 40
     static let leftRightOffset = 30
     static let topBottomOffset = 10
@@ -34,7 +37,7 @@ final class LoginViewController: BaseViewController, ViewType {
   let logo = UILabel(frame: .zero).then {
     $0.text = "BURGERS"
     $0.textColor = .white
-    $0.font = UIFont.systemFont(ofSize: 30)
+    $0.font = UIFont.systemFont(ofSize: Metric.logoFontSize)
   }
   
   let emailTextField = UITextField(frame: .zero).then {
@@ -65,16 +68,16 @@ final class LoginViewController: BaseViewController, ViewType {
   }
   
   let orLabel = UILabel(frame: .zero).then {
-    $0.text = "or"
+    $0.text = "or".localized
     $0.textColor = .white
-    $0.font = UIFont.systemFont(ofSize: 20)
+    $0.font = UIFont.systemFont(ofSize: Metric.orFontSize)
   }
   
   let loginButton = UIButton(type: .system).then {
     $0.setTitle("Log in".localized, for: .normal)
     $0.backgroundColor = .disabledColor
     $0.setTitleColor(.white, for: .normal)
-    $0.layer.cornerRadius = 5
+    $0.layer.cornerRadius = Metric.buttonRadius
     $0.clipsToBounds = true
     $0.isEnabled = false
   }
@@ -198,30 +201,19 @@ final class LoginViewController: BaseViewController, ViewType {
     
     viewModel.isLoginEnabled
       .drive(onNext: { [weak self] in
-        self?.loginButton.isEnabled = $0
-        self?.loginButton.backgroundColor = $0 ? .tintColor : .disabledColor
+        self?.isLoginEnabled($0)
       })
       .disposed(by: self.disposeBag)
     
     viewModel.pushSignup
       .drive(onNext: { [weak self] in
-        
-        let signUpViewModel = SignUpViewModel()
-        let signUpViewController = SignUpViewController.create(with: signUpViewModel)
-        self?.navigationController?.pushViewController(signUpViewController, animated: true)
+        self?.pushSignup()
       })
       .disposed(by: self.disposeBag)
     
     viewModel.isLogined
-      .drive(onNext: { [weak self] logined in
-        self?.loginButton.setTitle("Log in".localized, for: .normal)
-        self?.loginButton.loadingIndicator(show: false)
-        
-        if logined {
-          self?.presentMainScreen()
-        } else {
-          self?.showAlert()
-        }
+      .drive(onNext: { [weak self] in
+        self?.isLogined($0)
       })
       .disposed(by: self.disposeBag)
     
@@ -231,6 +223,28 @@ final class LoginViewController: BaseViewController, ViewType {
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     self.view.endEditing(true)
+  }
+  
+  private func isLoginEnabled(_ enable: Bool) {
+    self.loginButton.isEnabled = enable
+    self.loginButton.backgroundColor = enable ? .tintColor : .disabledColor
+  }
+  
+  private func pushSignup() {
+    let signUpViewModel = SignUpViewModel()
+    let signUpViewController = SignUpViewController.create(with: signUpViewModel)
+    self.navigationController?.pushViewController(signUpViewController, animated: true)
+  }
+  
+  private func isLogined(_ isLogined: Bool) {
+    self.loginButton.setTitle("Log in".localized, for: .normal)
+    self.loginButton.loadingIndicator(show: false)
+    
+    if isLogined {
+      self.presentMainScreen()
+    } else {
+      self.showAlert()
+    }
   }
   
   private func presentMainScreen() {
@@ -261,7 +275,9 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
     log.verbose("Facebook loginButton Did LogOut")
   }
   
-  func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+  func loginButton(_ loginButton: FBSDKLoginButton!,
+                   didCompleteWith result: FBSDKLoginManagerLoginResult!,
+                   error: Error!) {
     if let error = error {
       log.error(error.localizedDescription)
       return

@@ -27,7 +27,6 @@ protocol RecentViewModelType: ViewModelType {
 
 struct RecentViewModel: RecentViewModelType {
   
-  // MARK: Properties
   // MARK: -> Event
   
   let viewWillAppear = PublishSubject<Void>()
@@ -58,7 +57,7 @@ struct RecentViewModel: RecentViewModelType {
       .flatMapLatest {
         return DatabaseService.shared.fetchRecentPosts(loading: .refresh)
           .do { onNetworking.onNext(false) }
-          .catchError({ error -> Observable<[Post]> in
+          .catchError({ error -> Single<[Post]> in
             onError.onNext(error)
             return .never()
           })
@@ -71,7 +70,7 @@ struct RecentViewModel: RecentViewModelType {
       .flatMapLatest { _ in
         return DatabaseService.shared.fetchRecentPosts(loading: .loadMore)
           .do { onNetworking.onNext(false) }
-          .catchError({ error -> Observable<[Post]> in
+          .catchError({ error -> Single<[Post]> in
             onError.onNext(error)
             return .never()
           })
@@ -85,7 +84,8 @@ struct RecentViewModel: RecentViewModelType {
                                         likes: 0,
                                         likeUser: [],
                                         imageURLs: [],
-                                        restaurant: ""))
+                                        restaurant: "",
+                                        address: ""))
   }
   
 }

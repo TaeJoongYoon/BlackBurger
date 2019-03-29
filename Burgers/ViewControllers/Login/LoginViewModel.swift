@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol LoginViewModelType: ViewModelType {
+  
   // Event
   var email: BehaviorRelay<String> { get }
   var password: BehaviorRelay<String> { get }
@@ -21,11 +22,11 @@ protocol LoginViewModelType: ViewModelType {
   var isLoginEnabled: Driver<Bool> { get }
   var pushSignup: Driver<Void> { get }
   var isLogined: Driver<Bool> { get }
+  
 }
 
 struct LoginViewModel: LoginViewModelType {
   
-  // Properties
   // MARK: -> Event
   let email = BehaviorRelay<String>(value: "")
   let password = BehaviorRelay<String>(value: "")
@@ -37,6 +38,8 @@ struct LoginViewModel: LoginViewModelType {
   let isLoginEnabled: Driver<Bool>
   let pushSignup: Driver<Void>
   let isLogined: Driver<Bool>
+  
+  // MARK: - Initialize
   
   init() {
     

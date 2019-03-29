@@ -17,9 +17,10 @@ struct Post {
   var likeUser: [String]
   var imageURLs: [String]
   var restaurant: String
+  var address: String
   
   init(author: String, content: String, rating: Double, likes: Int, likeUser: [String],
-       imageURLs: [String], restaurant: String) {
+       imageURLs: [String], restaurant: String, address: String) {
     self.author = author
     self.content = content
     self.rating = rating
@@ -27,6 +28,7 @@ struct Post {
     self.likeUser = likeUser
     self.imageURLs = imageURLs
     self.restaurant = restaurant
+    self.address = address
   }
   
   init(dictionary: [String: Any]) {
@@ -37,6 +39,7 @@ struct Post {
     self.likeUser = dictionary["likeUser"] as! [String]
     self.imageURLs = dictionary["imageURLs"] as! [String]
     self.restaurant = dictionary["restaurant"] as! String
+    self.address = dictionary["address"] as! String
   }
 
   
@@ -48,7 +51,8 @@ struct Post {
       "likes": self.likes,
       "likeUser": self.likeUser,
       "imageURLs": self.imageURLs,
-      "restaurant": self.restaurant
+      "restaurant": self.restaurant,
+      "address": self.address
     ]
   }
 }

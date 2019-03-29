@@ -13,16 +13,26 @@ import Toaster
 
 final class SplashViewController: BaseViewController, ViewType {
   
+  // MARK: Constant
+  
+  struct Constant {
+    static let duration = 0.5
+  }
+  
+  struct Metric {
+    static let logoFontSize = CGFloat(30)
+  }
+  
   // MARK: Properties
   
   var viewModel: SplashViewModelType!
   
   // MARK: UI
   
-  let logo = UILabel(frame: .zero).then {
+  let logoLabel = UILabel(frame: .zero).then {
     $0.text = "BURGERS"
     $0.textColor = .black
-    $0.font = UIFont.systemFont(ofSize: 30)
+    $0.font = UIFont.systemFont(ofSize: Metric.logoFontSize)
   }
   
   // MARK: Setup UI
@@ -30,14 +40,7 @@ final class SplashViewController: BaseViewController, ViewType {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    self.view.addSubview(logo)
-    
-//    let firebaseAuth = Auth.auth()
-//    do {
-//      try firebaseAuth.signOut()
-//    } catch let signOutError as NSError {
-//      print ("Error signing out: %@", signOutError)
-//    }
+    self.view.addSubview(logoLabel)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -49,7 +52,7 @@ final class SplashViewController: BaseViewController, ViewType {
   // MARK: Setup Constraints
   
   override func setupConstraints() {
-    self.logo.snp.makeConstraints { make in
+    self.logoLabel.snp.makeConstraints { make in
       make.center.equalTo(self.view)
     }
   }
@@ -59,7 +62,7 @@ final class SplashViewController: BaseViewController, ViewType {
   func setupEventBinding() {
     
     self.rx.viewDidAppear
-      .delay(0.5, scheduler: MainScheduler.instance)
+      .delay(Constant.duration, scheduler: MainScheduler.instance)
       .bind(to: viewModel.checkIfAuthenticated)
       .disposed(by: self.disposeBag)
     

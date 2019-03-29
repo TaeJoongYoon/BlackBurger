@@ -147,6 +147,9 @@ PODS:
   - RxAtomic (4.4.1)
   - RxCocoa (4.4.1):
     - RxSwift (~> 4.0)
+  - RxGesture (2.1.0):
+    - RxCocoa (~> 4.4.0)
+    - RxSwift (~> 4.4.0)
   - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
   - SnapKit (4.0.1)
@@ -170,6 +173,7 @@ DEPENDENCIES:
   - NMapsMap
   - ReusableKit
   - RxCocoa
+  - RxGesture
   - RxSwift
   - SnapKit
   - Then
@@ -210,6 +214,7 @@ SPEC REPOS:
     - ReusableKit
     - RxAtomic
     - RxCocoa
+    - RxGesture
     - RxSwift
     - SnapKit
     - Then
@@ -249,12 +254,13 @@ SPEC CHECKSUMS:
   ReusableKit: d0b040de03b293288b0ca27a78602691d3346d9b
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
   RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
+  RxGesture: 7f6dfb45dbde06e618c24442d38493e3144f2c95
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
   TLPhotoPicker: 9955e20e4d59cf4a3accc2d3b320e1bf08f453bf
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
 
-PODFILE CHECKSUM: b122e45a33d13034ecb083f6fce727638c450e14
+PODFILE CHECKSUM: 0687d522c6bd790c535996fd77c09c15c8add6f4
 
 COCOAPODS: 1.5.3

@@ -24,7 +24,6 @@ protocol SuggestedViewModelType: ViewModelType {
 
 struct SuggestedViewModel: SuggestedViewModelType {
   
-  // MARK: Properties
   // MARK: -> Event
   
   let didTappedAddButton = PublishSubject<Void>()

@@ -14,20 +14,6 @@ import RxSwift
 import Then
 
 final class MapViewController: BaseViewController, ViewType {
-
-  // MARK: Constants
-  
-  struct Reusable {
-    
-  }
-  
-  struct Constant {
-    
-  }
-  
-  struct Metric {
-    
-  }
   
   // MARK: Properties
   
@@ -52,6 +38,8 @@ final class MapViewController: BaseViewController, ViewType {
     super.viewDidLoad()
     
     self.navigationItem.title = "MAP".localized
+    let backBarButtton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    self.navigationItem.backBarButtonItem = backBarButtton
     self.view.backgroundColor = .white
     self.tabBarItem.image = UIImage(named: "pin-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "pin-selected.png")
@@ -66,9 +54,6 @@ final class MapViewController: BaseViewController, ViewType {
       locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
       locationManager.startUpdatingLocation()
     }
-    
-    
-    
   }
   
   // MARK: Setup Constraints
@@ -87,23 +72,75 @@ final class MapViewController: BaseViewController, ViewType {
   
   func setupEventBinding(){
     
+    self.rx.viewWillAppear
+      .bind(to: viewModel.viewDidLoad)
+      .disposed(by: self.disposeBag)
+    
   }
   
   // MARK: - <- Rx UI Binding
   
   func setupUIBinding() {
     
+    viewModel.restaurants
+      .drive(onNext: { [weak self] in
+        self?.setMarkers($0)
+      })
+      .disposed(by: self.disposeBag)
+    
   }
+  
+  // MARK: Action Handler
+  
+  func setMarkers(_ places: [Place]) {
+    for place in places {
+      let marker = NMFMarker()
+      
+      let lat = Double(place.y)
+      let lng = Double(place.x)
+      
+      marker.position = NMGLatLng(lat: lat!, lng: lng!)
+      marker.captionText = place.name
+      marker.iconPerspectiveEnabled = true
+      marker.isHideCollidedSymbols = true
+      marker.isHideCollidedMarkers = true
+      marker.userInfo = [
+        "name": place.name,
+        "address": place.jibunAddress,
+        "phone_number": place.phoneNumber,
+        "lat": lat!,
+        "lng": lng!,
+        "distance": place.distance,
+      ]
+      
+      marker.touchHandler = { overlay -> Bool in
+        
+        let viewModel = RestaurantViewModel()
+        let viewController = RestaurantViewController.create(with: viewModel)
+        viewController.hidesBottomBarWhenPushed = true
+        viewController.restaurant = overlay.userInfo
+        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        return false
+      }
+      
+      marker.mapView = self.mapView.mapView
+    }
+  }
+  
 }
 
 extension MapViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let location = locations.last{
-      let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+      let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                          longitude: location.coordinate.longitude)
       
-      self.mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude, lng: center.longitude)
+      self.mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude,
+                                                                lng: center.longitude)
       
-      self.cameraPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: center.latitude, lng: center.longitude))
+      self.cameraPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: center.latitude,
+                                                                lng: center.longitude))
       self.cameraPosition.animation = .easeIn
       self.mapView.mapView.moveCamera(cameraPosition)
       

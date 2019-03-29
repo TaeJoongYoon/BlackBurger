@@ -22,12 +22,13 @@ protocol SplashViewModelType: ViewModelType {
 
 struct SplashViewModel: SplashViewModelType {
   
-  // MARK: Properties
   // MARK: -> Event
   let checkIfAuthenticated = PublishSubject<Void>()
   
   // MARK: <- UI
   let isAuthenticated: Driver<Bool>
+  
+  // MARK: - Initialize
   
   init() {
     

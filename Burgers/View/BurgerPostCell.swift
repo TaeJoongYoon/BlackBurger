@@ -12,6 +12,14 @@ import UIKit
 
 class BurgerPostCell: UITableViewCell {
   
+  // MARK: - UI Metrics
+  
+  private struct UI {
+    static let mainFontSize = CGFloat(17)
+    static let subFontSize = CGFloat(12)
+    static let offset = 10
+  }
+  
   // MARK: - Properties
   
   private let mainImageView = UIImageView(frame: .zero).then {
@@ -28,8 +36,14 @@ class BurgerPostCell: UITableViewCell {
     $0.image = UIImage(named: "placeholder.png")
   }
   
-  private let restaurant = UILabel(frame: .zero).then {
-    $0.textColor = .mainColor
+  private let restaurantLabel = UILabel(frame: .zero).then {
+    $0.textColor = .black
+    $0.font = UIFont.boldSystemFont(ofSize: UI.mainFontSize)
+  }
+  
+  private let addressLabel = UILabel(frame: .zero).then {
+    $0.textColor = .lightGray
+    $0.font = $0.font.withSize(UI.subFontSize)
   }
   
   private let likeImage = UIImageView(frame: .zero).then {
@@ -38,11 +52,7 @@ class BurgerPostCell: UITableViewCell {
   
   private let likes = UILabel(frame: .zero).then {
     $0.textColor = .mainColor
-  }
-  
-  // MARK: - UI Metrics
-  
-  private struct UI {
+    $0.lineBreakMode = .byTruncatingTail
   }
   
   // MARK: - Initialize
@@ -69,57 +79,66 @@ class BurgerPostCell: UITableViewCell {
   
   private func setupUI() {
     self.contentView.backgroundColor = .white
-    contentView.addSubview(mainImageView)
+    contentView.addSubview(self.mainImageView)
    
-    containerView.addSubview(restaurant)
-    containerView.addSubview(likes)
-    containerView.addSubview(placeImage)
-    containerView.addSubview(likeImage)
+    self.containerView.addSubview(self.restaurantLabel)
+    self.containerView.addSubview(self.addressLabel)
+    self.containerView.addSubview(self.likes)
+    self.containerView.addSubview(self.placeImage)
+    self.containerView.addSubview(self.likeImage)
     
-    contentView.addSubview(containerView)
+    contentView.addSubview(self.containerView)
   }
   
   
   private func setupConstraints() {
-    
-    mainImageView.snp.makeConstraints { make in
-      make.top.left.right.equalTo(self.contentView)
-      make.height.equalTo(200)
+  
+    self.mainImageView.snp.makeConstraints { make in
+      make.top.left.right.equalToSuperview()
+      make.height.equalTo(160)
       make.bottom.equalTo(self.containerView.snp.top)
     }
     
-    containerView.snp.makeConstraints { make in
+    self.containerView.snp.makeConstraints { make in
       make.top.equalTo(self.mainImageView.snp.bottom)
-      make.left.right.bottom.equalTo(self.contentView)
+      make.left.right.bottom.equalToSuperview()
     }
     
-    placeImage.snp.makeConstraints { make in
-      make.centerY.equalTo(containerView.snp.centerY)
-      make.left.equalTo(self.contentView).offset(10)
+    self.placeImage.snp.makeConstraints { make in
+      make.top.equalTo(self.mainImageView.snp.bottom).offset(UI.offset)
+      make.left.equalTo(self.contentView).offset(UI.offset)
     }
     
-    restaurant.snp.makeConstraints { make in
-      make.centerY.equalTo(containerView.snp.centerY)
-      make.left.equalTo(self.placeImage.snp.right).offset(10)
+    self.restaurantLabel.snp.makeConstraints { make in
+      make.centerY.equalTo(self.placeImage.snp.centerY)
+      make.left.equalTo(self.placeImage.snp.right).offset(UI.offset)
+      make.width.equalTo(self.containerView.snp.width).multipliedBy(0.5)
     }
     
-    likeImage.snp.makeConstraints { make in
-      make.centerY.equalTo(containerView.snp.centerY)
-      make.right.equalTo(self.likes.snp.left).offset(-10)
+    self.addressLabel.snp.makeConstraints { make in
+      make.top.equalTo(self.restaurantLabel.snp.bottom).offset(UI.offset/2)
+      make.left.equalTo(self.contentView).offset(UI.offset)
+      make.width.equalTo(self.containerView.snp.width).multipliedBy(0.8)
     }
     
-    likes.snp.makeConstraints { make in
+    self.likeImage.snp.makeConstraints { make in
+      make.centerY.equalTo(self.containerView.snp.centerY)
+      make.right.equalTo(self.likes.snp.left).offset(-UI.offset)
+    }
+    
+    self.likes.snp.makeConstraints { make in
       make.centerY.equalTo(containerView.snp.centerY)
-      make.right.equalTo(self.contentView).offset(-10)
+      make.right.equalTo(self.contentView).offset(-UI.offset)
     }
     
   }
   
   // MARK: - Cell Contents
   
-  func configureWith(url: String, restaurant: String, likes: Int) {
+  func configureWith(url: String, restaurant: String, address: String, likes: Int) {
     self.mainImageView.kf.setImage(with: URL(string: url))
-    self.restaurant.text = restaurant
+    self.restaurantLabel.text = restaurant
+    self.addressLabel.text = address
     self.likes.text = String(likes)
   }
 }

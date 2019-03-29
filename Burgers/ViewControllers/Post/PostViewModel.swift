@@ -19,12 +19,13 @@ protocol PostViewModelType: ViewModelType {
   var rating: BehaviorRelay<Double> { get }
   var text: PublishSubject<String> { get }
   var write: PublishSubject<Void> { get }
+  var writeRestaurant: PublishSubject<Place> { get }
   
   // UI
   var isNetworking: Driver<Bool> { get }
-  var places: Driver<[Place]> { get }
-  var selectedPlace: Driver<String> { get }
-  var writeisEnabled: Driver<Bool> { get }
+  var places: Driver<NetworkResult<[Place]>> { get }
+  var selectedPlace: Observable<Place> { get }
+  var writeIsEnabled: Driver<Bool> { get }
   var writed: Driver<Bool> { get }
   
 }
@@ -43,15 +44,17 @@ struct PostViewModel: PostViewModelType {
   let rating = BehaviorRelay<Double>(value: 0)
   let text = PublishSubject<String>()
   let write = PublishSubject<Void>()
+  let writeRestaurant = PublishSubject<Place>()
   
   // MARK: <- UI
   
   let isNetworking: Driver<Bool>
-  let places: Driver<[Place]>
-  let selectedPlace: Driver<String>
-  let writeisEnabled: Driver<Bool>
+  let places: Driver<NetworkResult<[Place]>>
+  let selectedPlace: Observable<Place>
+  let writeIsEnabled: Driver<Bool>
   let writed: Driver<Bool>
   
+  // MARK: - Initialize
   
   init(images: [PHAsset]) {
     
@@ -64,14 +67,13 @@ struct PostViewModel: PostViewModelType {
       .flatMapLatest { query, coordinate in
         return NaverAPIService.shared.fetchPlaces(query: query, coordinate: coordinate)
       }
-      .asDriver(onErrorJustReturn: [])
+      .asDriver(onErrorJustReturn: .none)
     
     
     selectedPlace = didCellSelected
-      .map { $0.name }
-      .asDriver(onErrorJustReturn: "")
+      .asObservable()
     
-    writeisEnabled = Observable.combineLatest(query, text)
+    writeIsEnabled = Observable.combineLatest(query, text)
       .asObservable()
       .map {
         $0.0.count > 0 && $0.1.count > 0
@@ -84,15 +86,18 @@ struct PostViewModel: PostViewModelType {
       .withLatestFrom(Observable.combineLatest(Observable.just(self.images),
                                                rating.asObservable(),
                                                text.asObservable(),
-                                               query.asObservable()))
+                                               query.asObservable(),
+                                               didCellSelected.asObservable()))
       .flatMapLatest {
         return DatabaseService.shared.writePost(images: $0.0,
                                                 rating: $0.1,
                                                 content: $0.2,
-                                                restaurant: $0.3)
+                                                restaurant: $0.3,
+                                                place: $0.4)
           .do { onNetworking.onNext(false) }
       }
       .asDriver(onErrorJustReturn: false)
+    
   }
   
 }

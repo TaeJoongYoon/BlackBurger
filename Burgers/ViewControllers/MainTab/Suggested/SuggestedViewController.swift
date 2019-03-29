@@ -120,7 +120,8 @@ final class SuggestedViewController: BaseViewController, ViewType {
       make.height.equalTo(self.scrollView.frame.height)
     }
     
-    self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 2, height: self.scrollView.frame.height)
+    self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width * 2,
+                                         height: self.scrollView.frame.height)
   }
   
   // MARK: - -> Rx Event Binding
@@ -156,11 +157,8 @@ final class SuggestedViewController: BaseViewController, ViewType {
       .disposed(by: self.disposeBag)
     
     viewModel.showView
-      .drive(onNext: { [weak self] index in
-        let width = (self?.view.bounds.width)! * CGFloat(index)
-        
-        self?.scrollView.setContentOffset(CGPoint(x: width, y: 0), animated: true)
-        self?.segmentedControl.selectedSegmentIndex = index
+      .drive(onNext: { [weak self] in
+        self?.showView($0)
       })
       .disposed(by: self.disposeBag)
     
@@ -169,12 +167,18 @@ final class SuggestedViewController: BaseViewController, ViewType {
   // MARK: Action Handler
   
   private func add(_ viewControllers: [UIViewController], to containerView: UIView) {
-    
     for vc in viewControllers {
       containerView.addSubview(vc.view)
       self.addChild(vc)
       vc.didMove(toParent: self)
     }
+  }
+  
+  private func showView(_ index: Int) {
+    let width = self.view.bounds.width * CGFloat(index)
+
+    self.scrollView.setContentOffset(CGPoint(x: width, y: 0), animated: true)
+    self.segmentedControl.selectedSegmentIndex = index
   }
   
   private func showPhotoPicker() {
@@ -217,17 +221,16 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
     
     return true
   }
+  
   func didExceedMaximumNumberOfSelection(picker: TLPhotosPickerViewController) {
     // exceed max selection
   }
+  
   func handleNoAlbumPermissions(picker: TLPhotosPickerViewController) {
     Toast(text: "Album permission denied, Please allow it".localized, duration: Delay.short).show()
-  
-    // handle denied albums permissions case
   }
+  
   func handleNoCameraPermissions(picker: TLPhotosPickerViewController) {
     Toast(text: "Camera permission denied, Please allow it".localized, duration: Delay.short).show()
-    
-    // handle denied camera permissions case
   }
 }
