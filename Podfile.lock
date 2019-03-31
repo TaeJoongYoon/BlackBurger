@@ -140,6 +140,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - NMapsMap (3.2.1)
+  - PMAlertController (3.5.0)
   - Protobuf (3.6.1)
   - ReusableKit (2.1.0):
     - ReusableKit/Core (= 2.1.0)
@@ -156,6 +157,7 @@ PODS:
   - Then (2.4.0)
   - TLPhotoPicker (1.8.3)
   - Toaster (2.1.1)
+  - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -171,6 +173,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Kingfisher
   - NMapsMap
+  - PMAlertController
   - ReusableKit
   - RxCocoa
   - RxGesture
@@ -179,6 +182,7 @@ DEPENDENCIES:
   - Then
   - TLPhotoPicker
   - Toaster
+  - XLPagerTabStrip (~> 8.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -210,6 +214,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - NMapsMap
+    - PMAlertController
     - Protobuf
     - ReusableKit
     - RxAtomic
@@ -220,6 +225,7 @@ SPEC REPOS:
     - Then
     - TLPhotoPicker
     - Toaster
+    - XLPagerTabStrip
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -250,6 +256,7 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NMapsMap: 432c7f5e90f5c406d52c3137f425143352d78430
+  PMAlertController: 06dab8160066fc4ce991c880e3722cd403e2926a
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   ReusableKit: d0b040de03b293288b0ca27a78602691d3346d9b
   RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
@@ -260,7 +267,8 @@ SPEC CHECKSUMS:
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
   TLPhotoPicker: 9955e20e4d59cf4a3accc2d3b320e1bf08f453bf
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
+  XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: 0687d522c6bd790c535996fd77c09c15c8add6f4
+PODFILE CHECKSUM: e9742f6d97a6f2f6b4f26f7d26ba28b7b01fd3eb
 
 COCOAPODS: 1.5.3

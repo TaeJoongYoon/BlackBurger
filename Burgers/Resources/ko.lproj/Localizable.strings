@@ -13,6 +13,7 @@
 "OK" = "확인";
 "email" = "이메일을 입력해주세요";
 "password" = "비밀번호를 입력해주세요";
+"Please type password more than 8" = "비밀번호를 8글자 이상이어야 합니다";
 "Don't you have an account?" = "아직 회원이 아니신가요?";
 "or" = "혹은";
 "Log in" = "로그인하기";
@@ -37,6 +38,14 @@
 "Camera permission denied, Please allow it" = "카메라권한이 허용되지 않았습니다. 더 많은 기능을 위해선 허용해주세요 :)";
 "Please select photos at least one" = "최소 한 장의 사진을 선택해 주세요";
 "RESTAURANT" = "버거 레스토랑";
+"This restaurant doesn't have any posts" = "이 레스토랑은 아직 쓰여진 글이 없습니다";
 "My Posts" = "내가 쓴 글";
 "My Likes" = "내가 좋아요한 글";
+"Change Password" = "비밀번호 바꾸기";
+"Terms of service" = "이용약관";
+"Privacy Policy" = "개인정보처리방침";
+"Account Remove" = "계정 탈퇴하기";
 "See you again :)" = "다음에 또 만나요 :)";
+"No Posts" = "게시된 글이 없습니다";
+"You don't have any posts" = "아직 작성한 글이 없습니다";
+"You don't have any likes" = "아직 좋아요한 글이 없습니다";

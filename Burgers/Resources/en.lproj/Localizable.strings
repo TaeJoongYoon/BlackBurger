@@ -18,6 +18,7 @@
 "Log in" = "Log in";
 "The account is invalid, please check it" = "The account is invalid, please check it";
 "password (more than 8)" = "password (more than 8)";
+"Please type password more than 8" =  "Please type password more than 8";
 "Sign Up" = "Sign Up";
 "The email address is already in use by another account" = "The email address is already in use by another account";
 "Enjoy your Hamburger :)" = "Enjoy your Hamburger :)";
@@ -37,6 +38,14 @@
 "Camera permission denied, Please allow it" = "Camera permission denied, Please allow it";
 "Please select photos at least one" = "Please select photos at least one";
 "RESTAURANT" = "RESTAURANT";
+"This restaurant doesn't have any posts" = "This restaurant doesn't have any posts";
 "My Posts" = "My Posts";
 "My Likes" = "My Likes";
+"Change Password" = "Change Password";
+"Terms of service" = "Terms of service";
+"Privacy Policy" = "Privacy Policy";
+"Account Remove" = "Account Remove";
 "See you again :)" = "See you again :)";
+"No Posts" = "No Posts";
+"You don't have any posts" = "You don't have any posts";
+"You don't have any likes" = "You don't have any likes";

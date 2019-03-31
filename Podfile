@@ -15,6 +15,8 @@ target 'Burgers' do
   pod "TLPhotoPicker"
   pod 'Cosmos', '~> 18.0'
   pod 'Toaster'
+  pod 'XLPagerTabStrip', '~> 8.1'
+  pod 'PMAlertController'
 
   # Networking
   pod 'Alamofire'
