@@ -12,6 +12,7 @@ import Firebase
 class AppConfig {
   var lastestVersion: String?
   var minVersion: String?
+  var storeURL: String?
 }
 
 
@@ -23,14 +24,16 @@ class RemoteConfigManager: NSObject {
   
   public func launching(
     completionHandler: @escaping (_ conf: AppConfig) -> (),
-    forceUpdate:@escaping (_ need: Bool)->()
+    forceUpdate:@escaping (_ need: Bool, _ string: String)->()
     ) {
     
     let remoteConfig = RemoteConfig.remoteConfig()
     
     remoteConfig.fetch { (status, error) -> Void in
       
-      log.error(error ?? "none")
+      if let error = error {
+        log.error(error)
+      }
       log.verbose(status.hashValue)
       
       if status == .success {
@@ -40,6 +43,7 @@ class RemoteConfigManager: NSObject {
         let appConfig = AppConfig()
         appConfig.lastestVersion = remoteConfig["lastest_version"].stringValue
         appConfig.minVersion = remoteConfig["min_version"].stringValue
+        appConfig.storeURL = remoteConfig["store_url"].stringValue
         
         completionHandler(appConfig)
         
@@ -48,11 +52,12 @@ class RemoteConfigManager: NSObject {
         log.info("current_version : \(appVersion)")
         log.info("lastest_version : \(String(describing: appConfig.lastestVersion))")
         log.info("min_version : \(String(describing: appConfig.minVersion))")
+        log.info("store_url : \(String(describing: appConfig.storeURL))")
         
         // Force update
         let needForcedUpdate: Bool = (self.compareVersion(versionA: appVersion, versionB: appConfig.minVersion) == ComparisonResult.orderedAscending)
         
-        forceUpdate(needForcedUpdate)
+        forceUpdate(needForcedUpdate, appConfig.storeURL!)
         
         if needForcedUpdate {
           let alert = UIAlertController.init(title: "Update".localized,

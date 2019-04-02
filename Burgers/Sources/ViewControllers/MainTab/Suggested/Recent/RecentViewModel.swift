@@ -62,6 +62,7 @@ struct RecentViewModel: RecentViewModelType {
             return .never()
           })
       }
+      .debug()
       .asDriver(onErrorJustReturn: [])
     
     loadMore = isReachedBottom
@@ -78,7 +79,8 @@ struct RecentViewModel: RecentViewModelType {
       .asDriver(onErrorJustReturn: [])
    
     showPost = didCellSelected
-      .asDriver(onErrorJustReturn: Post(author: "",
+      .asDriver(onErrorJustReturn: Post(id:"",
+                                        author: "",
                                         content: "",
                                         rating: 0,
                                         likes: 0,

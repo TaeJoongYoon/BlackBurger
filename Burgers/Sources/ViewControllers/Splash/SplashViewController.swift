@@ -62,8 +62,7 @@ final class SplashViewController: BaseViewController, ViewType {
   func setupEventBinding() {
     
     self.rx.viewDidAppear
-      .delay(Constant.duration, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.checkIfAuthenticated)
+      .bind(to: viewModel.viewWillAppear)
       .disposed(by: self.disposeBag)
     
   }
@@ -71,6 +70,19 @@ final class SplashViewController: BaseViewController, ViewType {
   // MARK: - <- Rx UI Binding
   
   func setupUIBinding() {
+    
+    viewModel.versionCheck
+      .drive(onNext: { [weak self] in
+        if $0 {
+          Observable.just(())
+            .delay(Constant.duration, scheduler: MainScheduler.instance)
+            .bind(to: self!.viewModel.checkIfAuthenticated)
+            .disposed(by: self!.disposeBag)
+        } else {
+          UIApplication.shared.open(URL(string: $1)!, options: [:], completionHandler: nil)
+        }
+      })
+      .disposed(by: self.disposeBag)
     
     viewModel.isAuthenticated
       .drive(onNext: { [weak self] in

@@ -29,9 +29,7 @@ class AuthService: AuthServiceType {
     return Single<Bool>.create { single in
       Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
         if user != nil {
-          UserDefaults.standard.set(email, forKey: "email")
-          UserDefaults.standard.set(password, forKey: "password")
-          UserDefaults.standard.synchronize()
+          setCredential(email: email, password: password)
           
           single(.success(true))
         } else {
@@ -43,18 +41,19 @@ class AuthService: AuthServiceType {
     }
   }
   
-  func logout() {
-    let firebaseAuth = Auth.auth()
-    FBSDKLoginManager().logOut()
-    do {
-      try firebaseAuth.signOut()
-      UserDefaults.standard.removeObject(forKey: "email")
-      UserDefaults.standard.removeObject(forKey: "password")
-      UserDefaults.standard.removeObject(forKey: "token")
-      UserDefaults.standard.synchronize()
-      
-    } catch let signOutError as NSError {
-      log.error("Error signing out: \(signOutError)")
+  func logout() -> Single<Bool>  {
+    return Single<Bool>.create { single in
+      let firebaseAuth = Auth.auth()
+      FBSDKLoginManager().logOut()
+      do {
+        try firebaseAuth.signOut()
+        resetUserInfo()
+        single(.success(true))
+      } catch let signOutError as NSError {
+        log.error("Error signing out: \(signOutError)")
+        single(.success(false))
+      }
+      return Disposables.create()
     }
   }
   
@@ -62,9 +61,7 @@ class AuthService: AuthServiceType {
     return Single<Bool>.create { single in
       Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
         if authResult?.user != nil {
-          UserDefaults.standard.set(email, forKey: "email")
-          UserDefaults.standard.set(password, forKey: "password")
-          UserDefaults.standard.synchronize()
+          setCredential(email: email, password: password)
           
           single(.success(true))
         } else {
@@ -76,83 +73,59 @@ class AuthService: AuthServiceType {
     }
   }
   
-  func changePassword(_ newPassword: String, success: @escaping () -> Void) {
-    
-    var credential: AuthCredential
-    
-    if UserDefaults.standard.string(forKey: "email") != nil {
-      credential = EmailAuthProvider.credential(
-        withEmail: UserDefaults.standard.string(forKey: "email")!,
-        password: UserDefaults.standard.string(forKey: "password")!
-      )
-    } else {
-      credential = FacebookAuthProvider.credential(
-        withAccessToken: UserDefaults.standard.string(forKey: "token")!
-      )
-    }
-    
-    Auth.auth().currentUser?.reauthenticateAndRetrieveData(with: credential) { result, error in
-      if let error = error {
-        log.error(error)
-      } else {
-        result?.user.updatePassword(to: newPassword) { error in
-          if error == nil {
-            UserDefaults.standard.set(newPassword, forKey: "password")
-            UserDefaults.standard.synchronize()
-            success()
-          } else {
-            log.error(error ?? "NONE")
+  func changePassword(_ newPassword: String) -> Single<Bool> {
+    return Single<Bool>.create { single in
+      Auth.auth().currentUser?.reauthenticateAndRetrieveData(with: credential()) { result, error in
+        if let error = error {
+          log.error(error)
+          single(.success(false))
+        } else {
+          result?.user.updatePassword(to: newPassword) { error in
+            if error == nil {
+              setPassword(newPassword: newPassword)
+              single(.success(true))
+            } else {
+              log.error(error!)
+              single(.success(false))
+            }
           }
         }
       }
+      return Disposables.create()
     }
   }
   
-  func removeAccount(_ success: @escaping () -> Void) {
-    
-    let author = (Auth.auth().currentUser?.email)!
-    var credential: AuthCredential
-    
-    if UserDefaults.standard.string(forKey: "email") != nil {
-      credential = EmailAuthProvider.credential(
-        withEmail: UserDefaults.standard.string(forKey: "email")!,
-        password: UserDefaults.standard.string(forKey: "password")!
-      )
-    } else {
-      credential = FacebookAuthProvider.credential(
-        withAccessToken: UserDefaults.standard.string(forKey: "token")!
-      )
-    }
-    
-    Auth.auth().currentUser?.reauthenticateAndRetrieveData(with: credential) { result, error in
-      if let error = error {
-        log.error(error)
-      } else {
-        DatabaseService.shared.removeAll(from: author)
-        
-        result?.user.delete {error in
-          if let error = error {
-            log.error(error)
-          } else {
-
-            let firebaseAuth = Auth.auth()
-            FBSDKLoginManager().logOut()
-            do {
-              try firebaseAuth.signOut()
-
-              UserDefaults.standard.removeObject(forKey: "email")
-              UserDefaults.standard.removeObject(forKey: "password")
-              UserDefaults.standard.removeObject(forKey: "token")
-              UserDefaults.standard.synchronize()
-
-            } catch let signOutError as NSError {
-              log.error("Error signing out: \(signOutError)")
+  func removeAccount() -> Single<Bool> {
+    return Single<Bool>.create { single in
+      Auth.auth().currentUser?.reauthenticateAndRetrieveData(with: credential()) { result, error in
+        if let error = error {
+          log.error(error)
+          single(.success(false))
+        } else {
+          DatabaseService.shared.removeAll(from: (Auth.auth().currentUser?.email)!)
+          
+          result?.user.delete { error in
+            if let error = error {
+              log.error(error)
+              single(.success(false))
+            } else {
+              
+              let firebaseAuth = Auth.auth()
+              FBSDKLoginManager().logOut()
+              do {
+                try firebaseAuth.signOut()
+                resetUserInfo()
+                single(.success(true))
+              } catch let signOutError as NSError {
+                log.error("Error signing out: \(signOutError)")
+                single(.success(false))
+              }
+              
             }
-
-            success()
           }
         }
       }
+      return Disposables.create()
     }
   }
   

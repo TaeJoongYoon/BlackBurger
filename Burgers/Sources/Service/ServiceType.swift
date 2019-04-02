@@ -12,10 +12,10 @@ import RxSwift
 
 protocol AuthServiceType {
   func login(email: String, password: String) -> Single<Bool>
-  func logout() -> Void
+  func logout() -> Single<Bool>
   func signup(email: String, password: String) -> Single<Bool>
-  func changePassword(_ newPassword: String, success: @escaping () -> Void)
-  func removeAccount(_ success: @escaping () -> Void)
+  func changePassword(_ newPassword: String) -> Single<Bool>
+  func removeAccount() -> Single<Bool>
 }
 
 protocol DatabaseServiceType {
@@ -25,6 +25,8 @@ protocol DatabaseServiceType {
   func fetchRestaurants() -> Single<[Place]>
   func fetchPosts(from restaurant: String) -> Single<[Post]>
   func fetchPosts(isMyPosts: Bool) -> Single<[Post]>
+  func post(_ id: String) -> Single<Post>
+  func like(id: String, liked: Bool) -> Single<Int>
   func removeAll(from author: String)
 }
 

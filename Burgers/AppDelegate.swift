@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     
@@ -46,15 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let splashViewModel = SplashViewModel()
     let splashViewController = SplashViewController.create(with: splashViewModel)
-    window?.rootViewController = splashViewController
-    
-    // Version Check
-    RemoteConfigManager.shared.launching(completionHandler: { (config) in
-    }, forceUpdate: { (forceUpdate) in
-      if !forceUpdate {
-        log.verbose("Update checked")
-      }
-    })
+    self.window?.rootViewController = splashViewController
     
     return true
   }

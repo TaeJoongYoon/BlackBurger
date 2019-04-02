@@ -11,6 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Post {
+  var id: String
   var author: String
   var content: String
   var rating: Double
@@ -21,8 +22,9 @@ struct Post {
   var address: String
   var createdAt: Date
   
-  init(author: String, content: String, rating: Double, likes: Int, likeUser: [String],
+  init(id: String, author: String, content: String, rating: Double, likes: Int, likeUser: [String],
        imageURLs: [String], restaurant: String, address: String, createdAt: Date) {
+    self.id = id
     self.author = author
     self.content = content
     self.rating = rating
@@ -35,6 +37,7 @@ struct Post {
   }
   
   init(dictionary: [String: Any]) {
+    self.id = dictionary["id"] as! String
     self.author = dictionary["author"] as! String
     self.content = dictionary["content"] as! String
     self.rating = dictionary["rating"] as! Double
@@ -50,6 +53,7 @@ struct Post {
   
   func uploadForm() -> [String: Any] {
     return [
+      "id": self.id,
       "author": self.author,
       "content": self.content,
       "rating": self.rating,

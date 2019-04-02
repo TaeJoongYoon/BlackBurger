@@ -10,6 +10,7 @@ import Cosmos
 import FirebaseAuth
 import ReusableKit
 import RxCocoa
+import RxGesture
 import RxSwift
 
 final class PostDetailViewController: BaseViewController, ViewType {
@@ -36,6 +37,7 @@ final class PostDetailViewController: BaseViewController, ViewType {
   
   var viewModel: PostDetailViewModelType!
   var post: Post!
+  var isLiked = BehaviorRelay<Bool>(value: false)
   
   // MARK: UI
   
@@ -158,12 +160,30 @@ final class PostDetailViewController: BaseViewController, ViewType {
   func setupEventBinding() {
     
     self.rx.viewWillAppear
+      .map { [weak self] in
+        (self?.post.id)!
+      }
       .bind(to: viewModel.viewWillAppear)
       .disposed(by: self.disposeBag)
     
     self.imageCollectionView.rx.currentPage
       .bind(to: viewModel.willDisplayCell)
       .disposed(by: self.disposeBag)
+    
+    Observable.merge([
+      self.imageCollectionView.rx.tapGesture() { gesture, _ in
+        gesture.numberOfTapsRequired = 2
+        }
+        .when(.recognized)
+        .asObservable(),
+      self.likeImageView.rx.tapGesture()
+        .when(.recognized)
+        .asObservable()])
+        .map { [weak self] _ in
+          ((self?.post.id)!, (self?.isLiked.value)!)
+        }
+        .bind(to: viewModel.requestLike)
+        .disposed(by: self.disposeBag)
     
   }
   
@@ -176,13 +196,32 @@ final class PostDetailViewController: BaseViewController, ViewType {
     
     viewModel.setView
       .drive(onNext: { [weak self] in
-        self?.setView()
+        self?.setView($0)
       })
       .disposed(by: self.disposeBag)
     
     viewModel.currentPage
       .drive(onNext: { [weak self] in
         self?.setPageControl($0)
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.liked
+      .drive(onNext: { [weak self] in
+        self?.likesCountLabel.text = String($0)
+        var toggle = (self?.isLiked.value)!
+        toggle.toggle()
+        self?.isLiked.accept(toggle)
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.isLiked.asObservable()
+      .subscribe(onNext: { [weak self] in
+        if $0 {
+          self?.likeImageView.image = UIImage(named: "thumbs-up.png")
+        } else {
+          self?.likeImageView.image = UIImage(named: "no-thumbs-up.png")
+        }
       })
       .disposed(by: self.disposeBag)
     
@@ -194,28 +233,27 @@ final class PostDetailViewController: BaseViewController, ViewType {
     self.view.endEditing(true)
   }
   
-  private func setView() {
-    log.info(self.post!)
+  private func setView(_ post: Post) {
+    self.post = post
     
-    Observable.just(self.post!)
+    self.imageCollectionView.dataSource = nil
+    Observable.just(post)
       .map { $0.imageURLs }
-      .bind(to: self.imageCollectionView.rx.items(cellIdentifier: Reusable.detailCell.identifier,
-                                                  cellType: DetailCell.self)) { row, element, cell in
-                                                    cell.configureWith(url: element)
-      }.disposed(by: self.disposeBag)
+      .bind(to: self.imageCollectionView.rx.items(
+        cellIdentifier: Reusable.detailCell.identifier,
+        cellType: DetailCell.self)
+      ) { row, element, cell in
+        cell.configureWith(url: element)
+      }
+      .disposed(by: self.disposeBag)
     
-    self.pageControl.numberOfPages = self.post!.imageURLs.count
+    self.pageControl.numberOfPages = self.post.imageURLs.count
     
-    self.ratingView.rating = self.post!.rating
+    self.ratingView.rating = self.post.rating
+    self.isLiked.accept(self.post!.likeUser.contains((Auth.auth().currentUser?.email)!))
     
-    if self.post!.likeUser.contains((Auth.auth().currentUser?.email)!) {
-      self.likeImageView.image = UIImage(named: "thumbs-up.png")
-    } else {
-      self.likeImageView.image = UIImage(named: "no-thumbs-up.png")
-    }
-    
-    self.likesCountLabel.text = String(self.post!.likes)
-    self.contentTextView.text = self.post!.content
+    self.likesCountLabel.text = String(self.post.likes)
+    self.contentTextView.text = self.post.content
   }
   
   private func setPageControl(_ currentPage: Int) {

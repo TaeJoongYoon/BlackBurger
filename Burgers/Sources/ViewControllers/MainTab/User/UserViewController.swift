@@ -250,6 +250,16 @@ final class UserViewController: BaseViewController, ViewType {
       })
       .disposed(by: self.disposeBag)
     
+    viewModel.passwordChanged
+      .drive(onNext: {
+        if $0 {
+          Toast(text: "Success Changing".localized, duration: Delay.long).show()
+        } else {
+          Toast(text: "Failure Changing".localized, duration: Delay.long).show()
+        }
+      })
+      .disposed(by: self.disposeBag)
+    
     viewModel.terms
       .drive(onNext: { [weak self] in
         self?.terms()
@@ -264,13 +274,27 @@ final class UserViewController: BaseViewController, ViewType {
     
     viewModel.logout
       .drive(onNext: { [weak self] in
-        self?.logout()
+        if $0 {
+          self?.logout()
+        } else {
+          Toast(text: "Server Error".localized, duration: Delay.long).show()
+        }
       })
       .disposed(by: self.disposeBag)
     
     viewModel.accountRemove
       .drive(onNext: { [weak self] in
         self?.accountRemove()
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.accountRemoved
+      .drive(onNext: { [weak self] in
+        if $0 {
+          self?.logout()
+        } else {
+          Toast(text: "Server Error".localized, duration: Delay.long).show()
+        }
       })
       .disposed(by: self.disposeBag)
     
@@ -315,11 +339,9 @@ final class UserViewController: BaseViewController, ViewType {
                     action: { () in
                       if let newPassword = alertViewController.textFields[0].text {
                         if newPassword.isValidPassword() {
-                          AuthService.shared.changePassword(newPassword) {
-                            Toast(text: "Success Changing".localized,
-                                  duration: Delay.long)
-                              .show()
-                          }
+                          Observable.just(newPassword)
+                            .bind(to: self.viewModel.requestPasswordChange)
+                            .disposed(by: self.disposeBag)
                         } else {
                           Toast(text: "Please type password more than 8".localized,
                                 duration: Delay.long)
@@ -350,8 +372,6 @@ final class UserViewController: BaseViewController, ViewType {
   }
   
   private func logout() {
-    AuthService.shared.logout()
-    
     let loginViewModel = LoginViewModel()
     let loginViewController = LoginViewController.create(with: loginViewModel)
     let navigationController = UINavigationController(rootViewController: loginViewController)
@@ -366,7 +386,6 @@ final class UserViewController: BaseViewController, ViewType {
                              options: UIWindow.TransitionOptions.init(
                               direction: .toTop,
                               style: .easeInOut))
-    
   }
   
   private func accountRemove() {
@@ -386,29 +405,12 @@ final class UserViewController: BaseViewController, ViewType {
       PMAlertAction(title: "OK".localized,
                     style: .default,
                     action: { () in
-                      AuthService.shared.removeAccount {
-                        let loginViewModel = LoginViewModel()
-                        let loginViewController = LoginViewController.create(with: loginViewModel)
-                        let navigationController = UINavigationController(
-                          rootViewController: loginViewController
-                        )
-                        navigationController.navigationBar.setBackgroundImage(UIImage(),
-                                                                              for: .default)
-                        navigationController.navigationBar.clipsToBounds = true
-                        navigationController.navigationBar.tintColor = .tintColor
-                        
-                        Toast(text: "See you again :)".localized, duration: Delay.long).show()
-                        
-                        UIApplication.shared.keyWindow?
-                          .setRootViewController(navigationController,
-                                                 options: UIWindow.TransitionOptions.init(
-                                                  direction: .toTop,
-                                                  style: .easeInOut))
-                      }
+                      Observable.just(())
+                        .bind(to: self.viewModel.requestRemove)
+                        .disposed(by: self.disposeBag)
       }))
     
     self.present(alertViewController, animated: true, completion: nil)
-    
   }
   
 }

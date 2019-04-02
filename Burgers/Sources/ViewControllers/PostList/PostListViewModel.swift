@@ -59,7 +59,8 @@ struct PostListViewModel: PostListViewModelType {
       .asDriver(onErrorJustReturn: [])
     
     showPost = didCellSelected
-      .asDriver(onErrorJustReturn: Post(author: "",
+      .asDriver(onErrorJustReturn: Post(id: "",
+                                        author: "",
                                         content: "",
                                         rating: 0,
                                         likes: 0,

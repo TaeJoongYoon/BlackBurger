@@ -49,3 +49,7 @@
 "No Posts" = "게시된 글이 없습니다";
 "You don't have any posts" = "아직 작성한 글이 없습니다";
 "You don't have any likes" = "아직 좋아요한 글이 없습니다";
+"Enter Your new Password" = "새로운 비밀번호를 입력해주세요";
+"Success Changing" = "비밀번호가 바뀌었습니다";
+"Failure Changing" = "비밀번호변경에 실패했습니다";
+"Server Error" = "서버오류입니다. 다시 시도해주세요";
