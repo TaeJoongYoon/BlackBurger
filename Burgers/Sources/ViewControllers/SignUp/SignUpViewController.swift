@@ -191,7 +191,7 @@ final class SignUpViewController: BaseViewController {
   
   private func showAlert() {
     let alert = UIAlertController(
-      title: "Burgers",
+      title: "BLACK BURGER".localized,
       message: "The email address is already in use by another account".localized,
       preferredStyle: .alert
     )

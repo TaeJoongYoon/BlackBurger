@@ -46,7 +46,7 @@ final class SuggestedViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.title = "BURGERS".localized
+    self.navigationItem.title = "BLACK BURGER".localized
     let backBarButtton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     self.navigationItem.backBarButtonItem = backBarButtton
     

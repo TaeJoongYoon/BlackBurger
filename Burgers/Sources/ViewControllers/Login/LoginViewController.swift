@@ -35,7 +35,7 @@ final class LoginViewController: BaseViewController {
   // MARK: UI
   
   let logo = UILabel(frame: .zero).then {
-    $0.text = "BURGERS"
+    $0.text = "BLACK BURGER"
     $0.textColor = .white
     $0.font = UIFont.systemFont(ofSize: Metric.logoFontSize)
   }
@@ -263,7 +263,7 @@ final class LoginViewController: BaseViewController {
   }
   
   private func showAlert() {
-    let alert = UIAlertController(title: "Burgers",
+    let alert = UIAlertController(title: "BLACK BURGER".localized,
                                   message: "The account is invalid, please check it".localized,
                                   preferredStyle: .alert)
     let defaultAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)

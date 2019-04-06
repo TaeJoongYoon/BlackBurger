@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-"BURGERS" = "BURGERS";
+"BLACK BURGER" = "BLACK BURGER";
 "Update" = "업데이트";
 "forceUpdate" = "필수 업데이트가 있습니다. 업데이트하시겠습니까?";
 "optionalUpdate" = "최신 업데이트가 있습니다. 업데이트하시겠습니까?";
@@ -47,7 +47,7 @@
 "Terms of service" = "이용약관";
 "Privacy Policy" = "개인정보처리방침";
 "Account Remove" = "계정 탈퇴하기";
-"Contact the BURGERS" = "BURGERS에 의견 보내기";
+"Contact the BLACK BURGER" = "BLACK BURGER에 의견 보내기";
 "Write a Review" = "앱 리뷰하기";
 "See you again :)" = "다음에 또 만나요 :)";
 "No Posts" = "게시된 글이 없습니다";

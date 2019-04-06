@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-"BUGRERS" = "BURGERS";
+"BLACK BURGER" = "BLACK BURGER";
 "Update" = "Update";
 "forceUpdate" = "There are required updates. Do you want to update?";
 "optionalUpdate" = "You have the latest updates. Do you want to update?";
@@ -47,7 +47,7 @@
 "Terms of service" = "Terms of service";
 "Privacy Policy" = "Privacy Policy";
 "Account Remove" = "Account Remove";
-"Contact the BURGERS" = "Contact the BURGERS";
+"Contact the BLACK BURGER" = "Contact the BLACK BURGER";
 "Write a Review" = "Write a Review";
 "See you again :)" = "See you again :)";
 "No Posts" = "No Posts";

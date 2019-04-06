@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-CFBundleDisplayName = "Burgers";
+CFBundleDisplayName = "BlackBurger";
 NSLocationWhenInUseUsageDescription = "Burgers needs your location to write a post and find places.";
 NSPhotoLibraryUsageDescription = "Burgers needs your photos library to write a post.";
 NSCameraUsageDescription = "Burgers needs your camera to write a post.";

@@ -99,7 +99,7 @@ final class UserViewController: BaseViewController {
     $0.setImage(UIImage(named:"email.png"), for: .normal)
     $0.tintColor = .tintColor
     $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: Metric.buttonTitleInset, bottom: 0, right: 0)
-    $0.setTitle("Contact the BURGERS".localized, for: .normal)
+    $0.setTitle("Contact the BLACK BURGER".localized, for: .normal)
     $0.setTitleColor(.mainColor, for: .normal)
     $0.contentHorizontalAlignment = .left
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)

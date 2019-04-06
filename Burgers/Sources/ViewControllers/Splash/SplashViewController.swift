@@ -30,7 +30,7 @@ final class SplashViewController: BaseViewController {
   // MARK: UI
   
   let logoLabel = UILabel(frame: .zero).then {
-    $0.text = "BURGERS"
+    $0.text = "BLACK BURGER"
     $0.textColor = .black
     $0.font = UIFont.systemFont(ofSize: Metric.logoFontSize)
   }
