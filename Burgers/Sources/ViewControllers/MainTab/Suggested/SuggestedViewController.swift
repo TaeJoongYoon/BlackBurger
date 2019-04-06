@@ -15,7 +15,7 @@ import Then
 import TLPhotoPicker
 import Toaster
 
-final class SuggestedViewController: BaseViewController, ViewType {
+final class SuggestedViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -38,6 +38,12 @@ final class SuggestedViewController: BaseViewController, ViewType {
   
   // MARK: Setup UI
   
+  override init() {
+    super.init()
+    self.tabBarItem.image = UIImage(named: "hamburger-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "hamburger-selected.png")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.navigationItem.title = "BURGERS".localized
@@ -47,6 +53,7 @@ final class SuggestedViewController: BaseViewController, ViewType {
     self.view.backgroundColor = .white
     self.tabBarItem.image = UIImage(named: "hamburger-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "hamburger-selected.png")
+    
     self.navigationItem.rightBarButtonItem = self.addButton
     
     self.addChild(contentTabView)
@@ -68,20 +75,20 @@ final class SuggestedViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.addButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.didTappedAddButton)
+      .bind(to: viewModel.inputs.didTappedAddButton)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
-    viewModel.add
+    viewModel.outputs.add
       .drive(onNext: { [weak self] in
         self?.showPhotoPicker()
       })
@@ -114,11 +121,9 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
 
   func dismissPhotoPicker(withPHAssets: [PHAsset]) {
      // if you want to used phasset.
-    log.verbose(withPHAssets)
     
     if withPHAssets.count > 0 {
-      let viewModel = PostViewModel(images: withPHAssets)
-      let viewController = PostViewController.create(with: viewModel)
+      let viewController = appDelegate.container.resolve(PostViewController.self, argument: withPHAssets)!
       viewController.hidesBottomBarWhenPushed = true
       self.navigationController?.pushViewController(viewController, animated: true)
     } else {

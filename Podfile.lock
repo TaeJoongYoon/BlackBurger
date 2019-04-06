@@ -154,6 +154,7 @@ PODS:
   - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
   - SnapKit (4.0.1)
+  - Swinject (2.5.0)
   - Then (2.4.0)
   - TLPhotoPicker (1.8.3)
   - Toaster (2.1.1)
@@ -179,6 +180,7 @@ DEPENDENCIES:
   - RxGesture
   - RxSwift
   - SnapKit
+  - Swinject
   - Then
   - TLPhotoPicker
   - Toaster
@@ -222,6 +224,7 @@ SPEC REPOS:
     - RxGesture
     - RxSwift
     - SnapKit
+    - Swinject
     - Then
     - TLPhotoPicker
     - Toaster
@@ -264,11 +267,12 @@ SPEC CHECKSUMS:
   RxGesture: 7f6dfb45dbde06e618c24442d38493e3144f2c95
   RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  Swinject: 82cdb851f63f91bba974e3eca1d69780f2f7677e
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
   TLPhotoPicker: 9955e20e4d59cf4a3accc2d3b320e1bf08f453bf
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: e9742f6d97a6f2f6b4f26f7d26ba28b7b01fd3eb
+PODFILE CHECKSUM: 4d9c4e8f8a552484026881e1ab0e9db02b154f8d
 
 COCOAPODS: 1.5.3

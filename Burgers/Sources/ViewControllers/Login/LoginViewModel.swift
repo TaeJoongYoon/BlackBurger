@@ -9,32 +9,40 @@
 import RxCocoa
 import RxSwift
 
-protocol LoginViewModelType: ViewModelType {
-  
-  // Event
+protocol LoginViewModelInputsType {
   var email: BehaviorRelay<String> { get }
   var password: BehaviorRelay<String> { get }
   var tappedSignUpButton: PublishSubject<Void> { get }
   var tappedDoneButton: PublishSubject<Void> { get }
   var tappedLoginButton: PublishSubject<Void> { get }
-  
-  // UI
+}
+
+protocol LoginViewModelOutputsType {
   var isLoginEnabled: Driver<Bool> { get }
   var pushSignup: Driver<Void> { get }
   var isLogined: Driver<Bool> { get }
-  
 }
 
-struct LoginViewModel: LoginViewModelType {
+protocol LoginViewModelType: ViewModelType {
+  var inputs: LoginViewModelInputsType { get }
+  var outputs: LoginViewModelOutputsType { get }
+}
+
+final class LoginViewModel: LoginViewModelType, LoginViewModelInputsType, LoginViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: LoginViewModelInputsType { return self }
+  var outputs: LoginViewModelOutputsType { return self }
+  
+  // MARK: Input
+  
   let email = BehaviorRelay<String>(value: "")
   let password = BehaviorRelay<String>(value: "")
   let tappedSignUpButton = PublishSubject<Void>()
   let tappedDoneButton = PublishSubject<Void>()
   let tappedLoginButton = PublishSubject<Void>()
   
-  // MARK: <- UI
+  // MARK: Output
+  
   let isLoginEnabled: Driver<Bool>
   let pushSignup: Driver<Void>
   let isLogined: Driver<Bool>

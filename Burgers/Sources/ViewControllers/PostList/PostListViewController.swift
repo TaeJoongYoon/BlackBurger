@@ -14,7 +14,7 @@ import SnapKit
 import Then
 import TLPhotoPicker
 
-final class PostListViewController: BaseViewController, ViewType {
+final class PostListViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -90,24 +90,24 @@ final class PostListViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
         (self?.isMyList)!
       }
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
     self.tableView.rx.modelSelected(Post.self)
-      .bind(to: viewModel.didCellSelected)
+      .bind(to: viewModel.inputs.didCellSelected)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -119,24 +119,25 @@ final class PostListViewController: BaseViewController, ViewType {
                                       url: element.imageURLs[0],
                                       restaurant: element.restaurant,
                                       address: element.address,
-                                      likes: element.likes
+                                      likes: element.likes,
+                                      rating: element.rating
                                     )
                                     
       }.disposed(by: self.disposeBag)
     
-    viewModel.posts
+    viewModel.outputs.posts
       .drive(onNext: { [weak self] in
         self?.setTableView($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.showPost
+    viewModel.outputs.showPost
       .drive(onNext: { [weak self] in
         self?.postDetail($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isNetworking
+    viewModel.outputs.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       }).disposed(by: self.disposeBag)
@@ -168,10 +169,7 @@ final class PostListViewController: BaseViewController, ViewType {
   }
   
   private func postDetail(_ post: Post) {
-    let viewModel = PostDetailViewModel()
-    let viewController = PostDetailViewController.create(with: viewModel)
-    viewController.post = post
-    
+    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   

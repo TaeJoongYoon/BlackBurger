@@ -12,7 +12,7 @@ import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-final class LoginViewController: BaseViewController, ViewType {
+final class LoginViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -159,20 +159,24 @@ final class LoginViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.emailTextField.rx.text
       .orEmpty
-      .bind(to: viewModel.email)
+      .bind(to: viewModel.inputs.email)
       .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.text
       .orEmpty
-      .bind(to: viewModel.password)
+      .bind(to: viewModel.inputs.password)
       .disposed(by: self.disposeBag)
     
     self.signupButton.rx.tap
-      .bind(to: viewModel.tappedSignUpButton)
+      .bind(to: viewModel.inputs.tappedSignUpButton)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordTextField.rx.controlEvent(.editingDidEndOnExit)
+      .bind(to: viewModel.inputs.tappedDoneButton)
       .disposed(by: self.disposeBag)
     
     self.loginButton.rx.tap
@@ -180,14 +184,14 @@ final class LoginViewController: BaseViewController, ViewType {
         self?.loginButton.setTitle("", for: .normal)
         self?.loginButton.loadingIndicator(show: true)
       })
-      .bind(to: viewModel.tappedLoginButton)
+      .bind(to: viewModel.inputs.tappedLoginButton)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.emailTextField.rx.controlEvent(.editingDidEndOnExit)
       .subscribe(onNext: { [weak self] in
@@ -196,22 +200,24 @@ final class LoginViewController: BaseViewController, ViewType {
       .disposed(by: self.disposeBag)
     
     self.passwordTextField.rx.controlEvent(.editingDidEndOnExit)
-      .bind(to: viewModel.tappedDoneButton)
+      .subscribe(onNext: { [weak self] in
+        self?.passwordTextField.resignFirstResponder()
+      })
       .disposed(by: self.disposeBag)
     
-    viewModel.isLoginEnabled
+    viewModel.outputs.isLoginEnabled
       .drive(onNext: { [weak self] in
         self?.isLoginEnabled($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.pushSignup
+    viewModel.outputs.pushSignup
       .drive(onNext: { [weak self] in
         self?.pushSignup()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isLogined
+    viewModel.outputs.isLogined
       .drive(onNext: { [weak self] in
         self?.isLogined($0)
       })
@@ -231,8 +237,7 @@ final class LoginViewController: BaseViewController, ViewType {
   }
   
   private func pushSignup() {
-    let signUpViewModel = SignUpViewModel()
-    let signUpViewController = SignUpViewController.create(with: signUpViewModel)
+    let signUpViewController = appDelegate.container.resolve(SignUpViewController.self)!
     self.navigationController?.pushViewController(signUpViewController, animated: true)
   }
   
@@ -248,7 +253,7 @@ final class LoginViewController: BaseViewController, ViewType {
   }
   
   private func presentMainScreen() {
-    let mainViewController = MainTabViewController()
+    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
     
     UIApplication.shared.keyWindow?
       .setRootViewController(mainViewController,
@@ -284,13 +289,7 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
     }
     
     if let token = FBSDKAccessToken.current()?.tokenString {
-      UserDefaults.standard.set(token, forKey: "token")
-      UserDefaults.standard.synchronize()
-      
-      print("email : ", UserDefaults.standard.string(forKey: "email"))
-      print("password : ", UserDefaults.standard.string(forKey: "password"))
-      print("token : ", UserDefaults.standard.string(forKey: "token"))
-      
+      setToken(token: token)
       let credential = FacebookAuthProvider.credential(withAccessToken: token)
       
       Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in

@@ -14,7 +14,7 @@ import Then
 import TLPhotoPicker
 import XLPagerTabStrip
 
-final class RecentViewController: BaseViewController, ViewType {
+final class RecentViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -86,19 +86,18 @@ final class RecentViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewWillAppear
-      .take(1)
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
     self.tableView.refreshControl?.rx.controlEvent(.valueChanged)
-      .bind(to: viewModel.didPulltoRefresh)
+      .bind(to: viewModel.inputs.didPulltoRefresh)
       .disposed(by: self.disposeBag)
     
     self.tableView.rx.modelSelected(Post.self)
-      .bind(to: viewModel.didCellSelected)
+      .bind(to: viewModel.inputs.didCellSelected)
       .disposed(by: self.disposeBag)
     
     self.tableView.rx.willDisplayCell
@@ -108,14 +107,14 @@ final class RecentViewController: BaseViewController, ViewType {
       }
       .filter { $0 }
       .distinctUntilChanged()
-      .bind(to: viewModel.isReachedBottom)
+      .bind(to: viewModel.inputs.isReachedBottom)
       .disposed(by: disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -127,30 +126,31 @@ final class RecentViewController: BaseViewController, ViewType {
                                       url: element.imageURLs[0],
                                       restaurant: element.restaurant,
                                       address: element.address,
-                                      likes: element.likes
+                                      likes: element.likes,
+                                      rating: element.rating
                                     )
                                     
       }.disposed(by: self.disposeBag)
     
-    viewModel.posts
+    viewModel.outputs.posts
       .drive(onNext: { [weak self] in
         self?.setTableView($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.loadMore
+    viewModel.outputs.loadMore
       .drive(onNext: { [weak self] in
         self?.posts.accept((self?.posts.value)! + $0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.showPost
+    viewModel.outputs.showPost
       .drive(onNext: { [weak self] in
         self?.postDetail($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isNetworking
+    viewModel.outputs.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       }).disposed(by: self.disposeBag)
@@ -171,9 +171,7 @@ final class RecentViewController: BaseViewController, ViewType {
   }
   
   private func postDetail(_ post: Post) {
-    let viewModel = PostDetailViewModel()
-    let viewController = PostDetailViewController.create(with: viewModel)
-    viewController.post = post
+    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
     viewController.hidesBottomBarWhenPushed = true
     
     self.navigationController?.pushViewController(viewController, animated: true)

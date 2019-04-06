@@ -13,7 +13,7 @@ import RxCocoa
 import RxSwift
 import Then
 
-final class MapViewController: BaseViewController, ViewType {
+final class MapViewController: BaseViewController {
   
   // MARK: Properties
   
@@ -34,6 +34,12 @@ final class MapViewController: BaseViewController, ViewType {
   
   // MARK: Setup UI
   
+  override init() {
+    super.init()
+    self.tabBarItem.image = UIImage(named: "pin-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "pin-selected.png")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -41,8 +47,6 @@ final class MapViewController: BaseViewController, ViewType {
     let backBarButtton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     self.navigationItem.backBarButtonItem = backBarButtton
     self.view.backgroundColor = .white
-    self.tabBarItem.image = UIImage(named: "pin-unselected.png")
-    self.tabBarItem.selectedImage = UIImage(named: "pin-selected.png")
     
     self.view.addSubview(mapView)
     
@@ -70,19 +74,19 @@ final class MapViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding(){
+  override func eventBinding(){
     
     self.rx.viewWillAppear
-      .bind(to: viewModel.viewDidLoad)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
-    viewModel.restaurants
+    viewModel.outputs.restaurants
       .drive(onNext: { [weak self] in
         self?.setMarkers($0)
       })
@@ -114,11 +118,8 @@ final class MapViewController: BaseViewController, ViewType {
       ]
       
       marker.touchHandler = { overlay -> Bool in
-        
-        let viewModel = RestaurantViewModel()
-        let viewController = RestaurantViewController.create(with: viewModel)
+        let viewController = self.appDelegate.container.resolve(RestaurantViewController.self, argument: overlay.userInfo)!
         viewController.hidesBottomBarWhenPushed = true
-        viewController.restaurant = overlay.userInfo
         self.navigationController?.pushViewController(viewController, animated: true)
         
         return false

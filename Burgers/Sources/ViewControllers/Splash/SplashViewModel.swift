@@ -10,26 +10,38 @@ import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-protocol SplashViewModelType: ViewModelType {
-  
-  // Event
+protocol SplashViewModelInputsType {
   var viewWillAppear: PublishSubject<Void> { get }
-  var checkIfAuthenticated: PublishSubject<Void> { get }
-  
-  // UI
-  var versionCheck: Driver<(Bool, String)> { get }
-  var isAuthenticated: Driver<Bool> { get }
-  
+  func checkIfAuthenticated()
 }
 
-struct SplashViewModel: SplashViewModelType {
+protocol SplashViewModelOutputsType {
+  var versionCheck: Driver<(Bool, Bool, String)> { get }
+  var isAuthenticated: Driver<Bool> { get }
+}
+
+protocol SplashViewModelType: ViewModelType {
+  var inputs: SplashViewModelInputsType { get }
+  var outputs: SplashViewModelOutputsType { get }
+}
+
+final class SplashViewModel: SplashViewModelType, SplashViewModelInputsType, SplashViewModelOutputsType {
   
-  // MARK: -> Event
-  let checkIfAuthenticated = PublishSubject<Void>()
+  var inputs: SplashViewModelInputsType { return self }
+  var outputs: SplashViewModelOutputsType { return self }
+  
+  // MARK: Input
+  
   let viewWillAppear = PublishSubject<Void>()
   
-  // MARK: <- UI
-  let versionCheck: Driver<(Bool, String)>
+  private let _checkIfAuthenticated = ReplaySubject<Void>.create(bufferSize: 1)
+  func checkIfAuthenticated() {
+    _checkIfAuthenticated.onNext(())
+  }
+  
+  // MARK: Ouput
+  
+  let versionCheck: Driver<(Bool, Bool, String)>
   let isAuthenticated: Driver<Bool>
   
   // MARK: - Initialize
@@ -38,25 +50,18 @@ struct SplashViewModel: SplashViewModelType {
     
     versionCheck = viewWillAppear
       .flatMapLatest {
-        return Single<(Bool, String)>.create { single in
+        return Single<(Bool, Bool, String)>.create { single in
           // Version Check
           RemoteConfigManager.shared.launching(completionHandler: { (config) in
-          }, forceUpdate: { (forceUpdate, string) in
-            if !forceUpdate {
-              log.verbose("Update checked")
-              single(.success((true, "")))
-            } else {
-              log.verbose("Update required")
-              single(.success((false, string)))
-            }
+          }, update: { (forceUpdate, optionUpdate) in
+            single(.success((forceUpdate, optionUpdate, "https://itunes.apple.com/app/id\(PrivateKey.appID)?mt=8")))
           })
-          
           return Disposables.create()
         }
       }
-      .asDriver(onErrorJustReturn: (false,""))
+      .asDriver(onErrorJustReturn: (false,false,"https://itunes.apple.com/app/id\(PrivateKey.appID)?mt=8"))
     
-    isAuthenticated = checkIfAuthenticated.map {
+    isAuthenticated = _checkIfAuthenticated.map {
       return Auth.auth().currentUser != nil
       }
       .asDriver(onErrorJustReturn: false)

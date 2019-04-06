@@ -15,6 +15,8 @@ class ContentTabViewController: ButtonBarPagerTabStripViewController {
     return type(of: self).description().components(separatedBy: ".").last ?? ""
   }()
   
+  var appDelegate = UIApplication.shared.delegate as! AppDelegate
+  
   // MARK: Initializing
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -48,8 +50,8 @@ class ContentTabViewController: ButtonBarPagerTabStripViewController {
   
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
     
-    let recentView = RecentViewController.create(with: RecentViewModel())
-    let popularView = PopularViewController.create(with: PopularViewModel())
+    let recentView = appDelegate.container.resolve(RecentViewController.self)!
+    let popularView = appDelegate.container.resolve(PopularViewController.self)!
     
     return [recentView, popularView]
   }

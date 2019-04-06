@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 import Toaster
 
-final class UserViewController: BaseViewController, ViewType {
+final class UserViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -21,7 +21,7 @@ final class UserViewController: BaseViewController, ViewType {
     static let itemFontSize = CGFloat(16)
     static let buttonTitleInset = CGFloat(20)
     static let buttonWidthRatio = CGFloat(0.8)
-    static let offset = CGFloat(30)
+    static let offset = CGFloat(25)
   }
   
   // MARK: Properties
@@ -31,6 +31,7 @@ final class UserViewController: BaseViewController, ViewType {
   // MARK: UI
   
   let idLabel = UILabel(frame: .zero).then {
+    $0.text = (Auth.auth().currentUser?.email)!
     $0.font = UIFont.boldSystemFont(ofSize: Metric.idFontSize)
   }
   
@@ -64,6 +65,16 @@ final class UserViewController: BaseViewController, ViewType {
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
   }
   
+  let logoutButton = UIButton(type: .system).then {
+    $0.setImage(UIImage(named:"logout.png"), for: .normal)
+    $0.tintColor = .tintColor
+    $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: Metric.buttonTitleInset, bottom: 0, right: 0)
+    $0.setTitle("Logout".localized, for: .normal)
+    $0.setTitleColor(.mainColor, for: .normal)
+    $0.contentHorizontalAlignment = .left
+    $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
+  }
+  
   let termsButton = UIButton(type: .system).then {
     $0.setImage(UIImage(named:"terms.png"), for: .normal)
     $0.tintColor = .tintColor
@@ -84,11 +95,21 @@ final class UserViewController: BaseViewController, ViewType {
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
   }
   
-  let logoutButton = UIButton(type: .system).then {
-    $0.setImage(UIImage(named:"logout.png"), for: .normal)
+  let emailButton = UIButton(type: .system).then {
+    $0.setImage(UIImage(named:"email.png"), for: .normal)
     $0.tintColor = .tintColor
     $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: Metric.buttonTitleInset, bottom: 0, right: 0)
-    $0.setTitle("Logout".localized, for: .normal)
+    $0.setTitle("Contact the BURGERS".localized, for: .normal)
+    $0.setTitleColor(.mainColor, for: .normal)
+    $0.contentHorizontalAlignment = .left
+    $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
+  }
+  
+  let reviewButton = UIButton(type: .system).then {
+    $0.setImage(UIImage(named:"star.png"), for: .normal)
+    $0.tintColor = .tintColor
+    $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: Metric.buttonTitleInset, bottom: 0, right: 0)
+    $0.setTitle("Write a Review".localized, for: .normal)
     $0.setTitleColor(.mainColor, for: .normal)
     $0.contentHorizontalAlignment = .left
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
@@ -104,8 +125,13 @@ final class UserViewController: BaseViewController, ViewType {
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
   }
   
-  
   // MARK: Setup UI
+  
+  override init() {
+    super.init()
+    self.tabBarItem.image = UIImage(named: "user-unselected.png")
+    self.tabBarItem.selectedImage = UIImage(named: "user-selected.png")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -115,23 +141,20 @@ final class UserViewController: BaseViewController, ViewType {
     let backBarButtton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     self.navigationItem.backBarButtonItem = backBarButtton
     
-    self.tabBarItem.image = UIImage(named: "user-unselected.png")
-    self.tabBarItem.selectedImage = UIImage(named: "user-selected.png")
-    
     self.view.addSubview(self.idLabel)
+  
     self.view.addSubview(self.myPostButton)
     self.view.addSubview(self.myLikeButton)
     self.view.addSubview(self.changePasswordButton)
+    self.view.addSubview(self.logoutButton)
+  
     self.view.addSubview(self.termsButton)
     self.view.addSubview(self.privacyButton)
-    self.view.addSubview(self.logoutButton)
-    self.view.addSubview(self.accountRemoveButton)
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
     
-    self.idLabel.text = (Auth.auth().currentUser?.email)!
+    self.view.addSubview(self.accountRemoveButton)
+    self.view.addSubview(self.emailButton)
+    
+    self.view.addSubview(self.reviewButton)
   }
   
   // MARK: Setup Constraints
@@ -142,9 +165,9 @@ final class UserViewController: BaseViewController, ViewType {
       make.top.equalTo(self.view.safeArea.top).offset(Metric.offset)
       make.left.equalTo(self.view).offset(Metric.offset)
     }
-    
+  
     self.myPostButton.snp.makeConstraints { make in
-      make.top.equalTo(self.idLabel.snp.bottom).offset(Metric.offset*2)
+      make.top.equalTo(self.idLabel.snp.bottom).offset(Metric.offset*1.5)
       make.left.equalTo(self.view).offset(Metric.offset)
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
@@ -161,8 +184,14 @@ final class UserViewController: BaseViewController, ViewType {
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
     
-    self.termsButton.snp.makeConstraints { make in
+    self.logoutButton.snp.makeConstraints { make in
       make.top.equalTo(self.changePasswordButton.snp.bottom).offset(Metric.offset)
+      make.left.equalTo(self.view).offset(Metric.offset)
+      make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
+    }
+    
+    self.termsButton.snp.makeConstraints { make in
+      make.top.equalTo(self.logoutButton.snp.bottom).offset(Metric.offset*1.5)
       make.left.equalTo(self.view).offset(Metric.offset)
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
@@ -173,14 +202,20 @@ final class UserViewController: BaseViewController, ViewType {
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
     
-    self.logoutButton.snp.makeConstraints { make in
-      make.top.equalTo(self.privacyButton.snp.bottom).offset(Metric.offset)
+    self.emailButton.snp.makeConstraints { make in
+      make.top.equalTo(self.privacyButton.snp.bottom).offset(Metric.offset*1.5)
+      make.left.equalTo(self.view).offset(Metric.offset)
+      make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
+    }
+    
+    self.reviewButton.snp.makeConstraints { make in
+      make.top.equalTo(self.emailButton.snp.bottom).offset(Metric.offset)
       make.left.equalTo(self.view).offset(Metric.offset)
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
     
     self.accountRemoveButton.snp.makeConstraints { make in
-      make.top.equalTo(self.logoutButton.snp.bottom).offset(Metric.offset)
+      make.top.equalTo(self.reviewButton.snp.bottom).offset(Metric.offset*1.5)
       make.left.equalTo(self.view).offset(Metric.offset)
       make.width.equalTo(self.view).multipliedBy(Metric.buttonWidthRatio)
     }
@@ -189,68 +224,78 @@ final class UserViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.myPostButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.myPostButtonDidTapped)
+      .bind(to: viewModel.inputs.myPostButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.myLikeButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.myLikeButtonDidTapped)
+      .bind(to: viewModel.inputs.myLikeButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.changePasswordButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.changePasswordButtonDidTapped)
+      .bind(to: viewModel.inputs.changePasswordButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.termsButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.termsButtonDidTapped)
+      .bind(to: viewModel.inputs.termsButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.privacyButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.privacyButtonDidTapped)
+      .bind(to: viewModel.inputs.privacyButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.logoutButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.logoutButtonDidTapped)
+      .bind(to: viewModel.inputs.logoutButtonDidTapped)
       .disposed(by: self.disposeBag)
     
     self.accountRemoveButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
-      .bind(to: viewModel.accountRemoveButtonDidTapped)
+      .bind(to: viewModel.inputs.accountRemoveButtonDidTapped)
+      .disposed(by: self.disposeBag)
+    
+    self.emailButton.rx.tap
+      .debounce(0.3, scheduler: MainScheduler.instance)
+      .bind(to: viewModel.inputs.emailButtonDidTapped)
+      .disposed(by: self.disposeBag)
+    
+    self.reviewButton.rx.tap
+      .debounce(0.3, scheduler: MainScheduler.instance)
+      .bind(to: viewModel.inputs.reviewButtonDidTapped)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
-    viewModel.post
+    viewModel.outputs.post
       .drive(onNext: { [weak self] in
         self?.posts()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.like
+    viewModel.outputs.like
       .drive(onNext: { [weak self] in
         self?.likes()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.changePassword
+    viewModel.outputs.changePassword
       .drive(onNext: { [weak self] in
         self?.changePassword()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.passwordChanged
+    viewModel.outputs.passwordChanged
       .drive(onNext: {
         if $0 {
           Toast(text: "Success Changing".localized, duration: Delay.long).show()
@@ -260,19 +305,19 @@ final class UserViewController: BaseViewController, ViewType {
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.terms
+    viewModel.outputs.terms
       .drive(onNext: { [weak self] in
         self?.terms()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.privacy
+    viewModel.outputs.privacy
       .drive(onNext: { [weak self] in
         self?.privacy()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.logout
+    viewModel.outputs.logout
       .drive(onNext: { [weak self] in
         if $0 {
           self?.logout()
@@ -282,19 +327,31 @@ final class UserViewController: BaseViewController, ViewType {
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.accountRemove
+    viewModel.outputs.accountRemove
       .drive(onNext: { [weak self] in
         self?.accountRemove()
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.accountRemoved
+    viewModel.outputs.accountRemoved
       .drive(onNext: { [weak self] in
         if $0 {
           self?.logout()
         } else {
           Toast(text: "Server Error".localized, duration: Delay.long).show()
         }
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.outputs.email
+      .drive(onNext: { [weak self] in
+        self?.email($0)
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.outputs.review
+      .drive(onNext: { [weak self] in
+        self?.review($0)
       })
       .disposed(by: self.disposeBag)
     
@@ -303,8 +360,7 @@ final class UserViewController: BaseViewController, ViewType {
   // MARK: Action Handler
   
   private func posts() {
-    let viewModel = PostListViewModel()
-    let viewController = PostListViewController.create(with: viewModel)
+    let viewController = appDelegate.container.resolve(PostListViewController.self)!
     viewController.hidesBottomBarWhenPushed = true
     viewController.isMyList = true
     
@@ -312,8 +368,7 @@ final class UserViewController: BaseViewController, ViewType {
   }
   
   private func likes() {
-    let viewModel = PostListViewModel()
-    let viewController = PostListViewController.create(with: viewModel)
+    let viewController = appDelegate.container.resolve(PostListViewController.self)!
     viewController.hidesBottomBarWhenPushed = true
     viewController.isMyList = false
     
@@ -335,20 +390,17 @@ final class UserViewController: BaseViewController, ViewType {
     
     alertViewController.addAction(
       PMAlertAction(title: "OK".localized,
-                    style: .default,
-                    action: { () in
+                    style: .default) {
                       if let newPassword = alertViewController.textFields[0].text {
                         if newPassword.isValidPassword() {
-                          Observable.just(newPassword)
-                            .bind(to: self.viewModel.requestPasswordChange)
-                            .disposed(by: self.disposeBag)
+                          self.viewModel.inputs.requestPasswordChange(newPassword: newPassword)
                         } else {
                           Toast(text: "Please type password more than 8".localized,
                                 duration: Delay.long)
                             .show()
                         }
                       }
-      }))
+    })
     
     alertViewController.addAction(PMAlertAction(title: "Cancel".localized,
                                                 style: .cancel,
@@ -358,22 +410,21 @@ final class UserViewController: BaseViewController, ViewType {
   }
   
   private func terms() {
-    let viewController = TermsViewController()
+    let viewController = appDelegate.container.resolve(TermsViewController.self)!
     viewController.isTerms = true
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   private func privacy() {
-    let viewController = TermsViewController()
+    let viewController = appDelegate.container.resolve(TermsViewController.self)!
     viewController.isTerms = false
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   private func logout() {
-    let loginViewModel = LoginViewModel()
-    let loginViewController = LoginViewController.create(with: loginViewModel)
+    let loginViewController = appDelegate.container.resolve(LoginViewController.self)!
     let navigationController = UINavigationController(rootViewController: loginViewController)
     navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController.navigationBar.clipsToBounds = true
@@ -400,17 +451,35 @@ final class UserViewController: BaseViewController, ViewType {
     alertViewController.addAction(PMAlertAction(title: "Cancel".localized,
                                                 style: .cancel,
                                                 action: nil))
-
+    
     alertViewController.addAction(
       PMAlertAction(title: "OK".localized,
-                    style: .default,
-                    action: { () in
-                      Observable.just(())
-                        .bind(to: self.viewModel.requestRemove)
-                        .disposed(by: self.disposeBag)
-      }))
+                    style: .default) {
+                      self.viewModel.inputs.requestRemove()
+      })
     
     self.present(alertViewController, animated: true, completion: nil)
+  }
+  
+  private func email(_ email: String) {
+    let url = URL(string: "mailto:\(email)")!
+    if UIApplication.shared.canOpenURL(url) {
+      if #available(iOS 10.0, *) {
+        UIApplication.shared.open(url)
+      } else {
+        UIApplication.shared.openURL(url)
+      }
+    }
+  }
+  
+  private func review(_ url: String) {
+    if let url = URL(string: url) {
+      if #available(iOS 10.0, *) {
+        UIApplication.shared.open(url)
+      } else {
+        UIApplication.shared.openURL(url)
+      }
+    }
   }
   
 }

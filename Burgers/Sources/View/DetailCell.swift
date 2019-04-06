@@ -14,7 +14,7 @@ class DetailCell: UICollectionViewCell {
   
   // MARK: - Properties
   
-  private let detailImageView = UIImageView(frame: .zero).then {
+  let detailImageView = UIImageView(frame: .zero).then {
     $0.backgroundColor = .white
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.clipsToBounds = true

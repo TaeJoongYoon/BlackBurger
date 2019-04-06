@@ -20,8 +20,8 @@ class NaverAPIService: NaverAPIServiceType {
   var param = [String: String]()
   
   let header = [
-    "X-NCP-APIGW-API-KEY-ID": "0hvz2ykiw6",
-    "X-NCP-APIGW-API-KEY": "dEhTAIgIgFzR9XDsWTHyiWiQsMSrIhDRU2viOeOH"
+    "X-NCP-APIGW-API-KEY-ID": PrivateKey.naverAPIKeyID,
+    "X-NCP-APIGW-API-KEY": PrivateKey.naverAPIKey
   ]
   
   // MARK: Initialize
@@ -36,10 +36,12 @@ class NaverAPIService: NaverAPIServiceType {
     param["coordinate"] = "126.8400960,37.5692690"
     
     return Single.create { [weak self] single in
-      let request = Alamofire.request(url,
-                                      method: .get,
-                                      parameters: self?.param,
-                                      headers: self?.header)
+      let request = Alamofire.request(
+        url,
+        method: .get,
+        parameters: self?.param,
+        headers: self?.header
+        )
         .responseData { response in
           
           log.verbose("Parameter : ", self?.param ?? "none")

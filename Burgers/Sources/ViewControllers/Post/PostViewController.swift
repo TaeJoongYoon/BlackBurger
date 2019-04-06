@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import Photos
 
 import Alamofire
 import Cosmos
@@ -16,15 +17,12 @@ import RxSwift
 import Then
 import Toaster
 
-final class PostViewController: BaseViewController, ViewType {
+final class PostViewController: BaseViewController {
   
   // MARK: Constants
   
   struct Reusable {
     static let TitleCell = ReusableCell<UITableViewCell>()
-  }
-  
-  struct Constant {
   }
   
   struct Metric {
@@ -38,9 +36,9 @@ final class PostViewController: BaseViewController, ViewType {
   
   var viewModel: PostViewModelType!
   let locationManager = CLLocationManager()
-  let coordinate = BehaviorRelay<String>(value: "")
   let places = BehaviorRelay<[Place]>(value: [])
   var restaurant: Place!
+  var photos: [PHAsset]!
   
   // MARK: UI
   
@@ -158,7 +156,39 @@ final class PostViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
+    
+    viewModel.inputs.photos(assets: self.photos)
+    
+    self.searchBar.rx.text
+      .orEmpty
+      .filter { !$0.isEmpty }
+      .debounce(1.0, scheduler: MainScheduler.instance)
+      .distinctUntilChanged()
+      .bind(to: viewModel.inputs.query)
+      .disposed(by: self.disposeBag)
+    
+    self.tableView.rx.modelSelected(Place.self)
+      .bind(to: viewModel.inputs.didCellSelected)
+      .disposed(by: self.disposeBag)
+    
+    self.textView.rx.text
+      .orEmpty
+      .distinctUntilChanged()
+      .bind(to: viewModel.inputs.text)
+      .disposed(by: self.disposeBag)
+    
+    self.writeButton.rx.tap
+      .do(onNext: { [weak self] in
+        self?.viewModel.inputs.rating.accept((self?.rating.rating)!)
+      })
+      .bind(to: viewModel.inputs.write)
+      .disposed(by: self.disposeBag)
+  }
+  
+  // MARK: - <- Rx UI Binding
+  
+  override func uiBinding() {
     
     self.textView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -166,72 +196,38 @@ final class PostViewController: BaseViewController, ViewType {
     self.searchBar.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
     
-    self.coordinate
-      .bind(to: viewModel.coordinate)
-      .disposed(by: self.disposeBag)
-    
-    self.searchBar.rx.text
-      .orEmpty
-      .filter { !$0.isEmpty }
-      .debounce(1.0, scheduler: MainScheduler.instance)
-      .distinctUntilChanged()
-      .bind(to: viewModel.query)
-      .disposed(by: self.disposeBag)
-    
-    self.tableView.rx.modelSelected(Place.self)
-      .bind(to: viewModel.didCellSelected)
-      .disposed(by: self.disposeBag)
-    
-    self.textView.rx.text
-      .orEmpty
-      .distinctUntilChanged()
-      .bind(to: viewModel.text)
-      .disposed(by: self.disposeBag)
-    
-    self.writeButton.rx.tap
-      .do(onNext: { [weak self] in
-        self?.viewModel.rating.accept((self?.rating.rating)!)
-      })
-      .bind(to: viewModel.write)
-      .disposed(by: self.disposeBag)
-  }
-  
-  // MARK: - <- Rx UI Binding
-  
-  func setupUIBinding() {
-    
     self.places.asObservable()
       .bind(to: self.tableView.rx.items(cellIdentifier: Reusable.TitleCell.identifier,
                                         cellType: UITableViewCell.self)) { row, element, cell in
                                           cell.textLabel?.text = element.name
       }.disposed(by: self.disposeBag)
     
-    viewModel.places
-      .drive(onNext: { [weak self] in
+    viewModel.outputs.places
+      .subscribe(onNext: { [weak self] in
         self?.places($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.selectedPlace
+    viewModel.outputs.selectedPlace
       .subscribe(onNext: { [weak self] in
         self?.selectedPlace($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.writeIsEnabled
+    viewModel.outputs.writeIsEnabled
       .distinctUntilChanged()
       .drive(onNext: { [weak self] in
         self?.writeIsEnabled($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.writed
+    viewModel.outputs.writed
       .drive(onNext: { [weak self] in
         self?.writed($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isNetworking
+    viewModel.outputs.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       })
@@ -252,9 +248,6 @@ final class PostViewController: BaseViewController, ViewType {
       
     case let .error(error):
       Toast(text: error.localizedDescription, duration: Delay.short).show()
-      
-    case .none:
-      log.error("Result is Invalid!!!")
     }
   }
   
@@ -298,6 +291,8 @@ final class PostViewController: BaseViewController, ViewType {
   
 }
 
+// MARK: UISearchBarDelegate
+
 extension PostViewController: UISearchBarDelegate {
   func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
     self.tableView.isHidden.toggle()
@@ -312,6 +307,8 @@ extension PostViewController: UISearchBarDelegate {
     self.textView.isHidden.toggle()
   }
 }
+
+// MARK: UITextViewDelegate
 
 extension PostViewController: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
@@ -329,13 +326,15 @@ extension PostViewController: UITextViewDelegate {
   }
 }
 
+// MARK: CLLocationManagerDelegate
+
 extension PostViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     if let location = locations.last{
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                           longitude: location.coordinate.longitude)
       
-      self.coordinate.accept("\(center.longitude),\(center.latitude)")
+      self.viewModel.inputs.coordinate(coordinate: "\(center.longitude),\(center.latitude)")
       self.locationManager.stopUpdatingLocation()
     }
   }

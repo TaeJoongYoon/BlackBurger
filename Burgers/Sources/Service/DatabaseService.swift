@@ -139,7 +139,7 @@ class DatabaseService: DatabaseServiceType {
   
   func fetchPopularPosts() -> Single<[Post]> {
     return Single<[Post]>.create { single in
-      
+  
       var posts = [Post]()
       
       self.db.collection("posts")
@@ -314,6 +314,38 @@ class DatabaseService: DatabaseServiceType {
           log.info("Likes increased to \(object!)")
         }
       }
+      return Disposables.create()
+    }
+  }
+  
+  func edit(id: String, newContent:String) -> Single<Bool> {
+    return Single<Bool>.create { single in
+      self.db.collection("posts").document(id).updateData([
+        "content": newContent
+      ]) {err in
+        if let err = err {
+          log.error("Error removing document: \(err)")
+          single(.success(false))
+        } else {
+          single(.success(true))
+        }
+      }
+      
+      return Disposables.create()
+    }
+  }
+  
+  func delete(id: String) -> Single<Bool> {
+    return Single<Bool>.create { single in
+      self.db.collection("posts").document(id).delete() {err in
+        if let err = err {
+          log.error("Error removing document: \(err)")
+          single(.success(false))
+        } else {
+          single(.success(true))
+        }
+      }
+      
       return Disposables.create()
     }
   }

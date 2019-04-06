@@ -12,7 +12,7 @@ import RxGesture
 import RxSwift
 import Then
 
-final class RestaurantViewController: BaseViewController, ViewType {
+final class RestaurantViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -34,12 +34,14 @@ final class RestaurantViewController: BaseViewController, ViewType {
   var viewModel: RestaurantViewModelType!
   var posts = BehaviorRelay<[Post]>(value: [])
   var restaurant: [AnyHashable: Any]!
-  //  "name": name
-  //  "address": jibunAddress
-  //  "phone_number": phoneNumber
-  //  "lat": lat
-  //  "lng": lng
-  //  "distance": distance
+      //////////////////////////////////////////
+      //  "name": name                        //
+      //  "address": jibunAddress             //
+      //  "phone_number": phoneNumber         //
+      //  "lat": lat                          //
+      //  "lng": lng                          //
+      //  "distance": distance                //
+      //////////////////////////////////////////
   
   // MARK: UI
   
@@ -155,25 +157,25 @@ final class RestaurantViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
         self?.restaurant["name"] as! String
         
       }
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
 
     self.tableView.rx.modelSelected(Post.self)
-      .bind(to: viewModel.didCellSelected)
+      .bind(to: viewModel.inputs.didCellSelected)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -199,19 +201,19 @@ final class RestaurantViewController: BaseViewController, ViewType {
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.posts
+    viewModel.outputs.posts
       .drive(onNext: { [weak self] in
         self?.setTableView($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.showPost
+    viewModel.outputs.showPost
       .drive(onNext: { [weak self] in
         self?.postDetail($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isNetworking
+    viewModel.outputs.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       })
@@ -233,9 +235,7 @@ final class RestaurantViewController: BaseViewController, ViewType {
   }
   
   private func postDetail(_ post: Post) {
-    let viewModel = PostDetailViewModel()
-    let viewController = PostDetailViewController.create(with: viewModel)
-    viewController.post = post
+    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
     viewController.hidesBottomBarWhenPushed = true
     
     self.navigationController?.pushViewController(viewController, animated: true)

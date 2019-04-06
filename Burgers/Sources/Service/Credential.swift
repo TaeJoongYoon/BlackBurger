@@ -34,6 +34,11 @@ func setCredential(email: String, password: String) {
   UserDefaults.standard.synchronize()
 }
 
+func setToken(token: String) {
+  UserDefaults.standard.set(token, forKey: "token")
+  UserDefaults.standard.synchronize()
+}
+
 func setPassword(newPassword: String) {
   UserDefaults.standard.set(newPassword, forKey: "password")
   UserDefaults.standard.synchronize()

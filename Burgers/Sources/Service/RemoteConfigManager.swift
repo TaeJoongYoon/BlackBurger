@@ -12,7 +12,6 @@ import Firebase
 class AppConfig {
   var lastestVersion: String?
   var minVersion: String?
-  var storeURL: String?
 }
 
 
@@ -24,7 +23,7 @@ class RemoteConfigManager: NSObject {
   
   public func launching(
     completionHandler: @escaping (_ conf: AppConfig) -> (),
-    forceUpdate:@escaping (_ need: Bool, _ string: String)->()
+    update:@escaping (_ force: Bool, _ need: Bool)->()
     ) {
     
     let remoteConfig = RemoteConfig.remoteConfig()
@@ -34,7 +33,7 @@ class RemoteConfigManager: NSObject {
       if let error = error {
         log.error(error)
       }
-      log.verbose(status.hashValue)
+      log.verbose(status)
       
       if status == .success {
         remoteConfig.activateFetched()
@@ -43,7 +42,6 @@ class RemoteConfigManager: NSObject {
         let appConfig = AppConfig()
         appConfig.lastestVersion = remoteConfig["lastest_version"].stringValue
         appConfig.minVersion = remoteConfig["min_version"].stringValue
-        appConfig.storeURL = remoteConfig["store_url"].stringValue
         
         completionHandler(appConfig)
         
@@ -52,62 +50,15 @@ class RemoteConfigManager: NSObject {
         log.info("current_version : \(appVersion)")
         log.info("lastest_version : \(String(describing: appConfig.lastestVersion))")
         log.info("min_version : \(String(describing: appConfig.minVersion))")
-        log.info("store_url : \(String(describing: appConfig.storeURL))")
         
         // Force update
         let needForcedUpdate: Bool = (self.compareVersion(versionA: appVersion, versionB: appConfig.minVersion) == ComparisonResult.orderedAscending)
-        
-        forceUpdate(needForcedUpdate, appConfig.storeURL!)
-        
-        if needForcedUpdate {
-          let alert = UIAlertController.init(title: "Update".localized,
-                                             message: "forceUpdate".localized,
-                                             preferredStyle: .alert)
-          
-          alert.addAction(UIAlertAction.init(title: "Update".localized,
-                                             style: .default,
-                                             handler: { (action) in
-                                              self.appStore()
-          }))
-          
-          var topController = UIApplication.shared.keyWindow?.rootViewController
-          if topController != nil {
-            while let presentedViewController = topController?.presentedViewController {
-              topController = presentedViewController
-            }
-          }
-          topController!.present(alert, animated: false, completion: nil)
-        }
-        
         
         // Optional update
         let needUpdate:Bool = (self.compareVersion(versionA: appVersion, versionB: appConfig.minVersion) != ComparisonResult.orderedAscending) &&
           (self.compareVersion(versionA: appVersion, versionB: appConfig.lastestVersion) == ComparisonResult.orderedAscending)
         
-        if needUpdate {
-          let alert = UIAlertController.init(title: "Update".localized,
-                                             message: "optionalUpdate".localized,
-                                             preferredStyle: .alert)
-          
-          alert.addAction(UIAlertAction.init(title: "Update".localized,
-                                             style: .default,
-                                             handler: { (action) in
-                                              self.appStore()
-          }))
-          
-          alert.addAction(UIAlertAction.init(title: "Later".localized,
-                                             style: .default,
-                                             handler: nil))
-          
-          var topController = UIApplication.shared.keyWindow?.rootViewController
-          if topController != nil {
-            while let presentedViewController = topController?.presentedViewController {
-              topController = presentedViewController
-            }
-          }
-          
-          topController!.present(alert, animated: false, completion: nil)
-        }
+        update(needForcedUpdate, needUpdate)
         
       }
     }
@@ -131,12 +82,6 @@ class RemoteConfigManager: NSObject {
       return ComparisonResult.orderedAscending
     }
     return ComparisonResult.orderedSame
-  }
-  
-  private func appStore() {
-    let appStoreAppID = "1111111111"
-    let url = URL(string: "itms-apps://itunes.apple.com/app/id" + appStoreAppID)!
-    UIApplication.shared.open(url, options: [:], completionHandler: nil)
   }
   
 }

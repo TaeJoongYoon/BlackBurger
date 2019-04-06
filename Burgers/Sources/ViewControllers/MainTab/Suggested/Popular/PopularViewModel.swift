@@ -9,29 +9,35 @@
 import RxCocoa
 import RxSwift
 
-protocol PopularViewModelType: ViewModelType {
-  
-  // Event
+protocol PopularViewModelInputsType {
   var viewWillAppear: PublishSubject<Void> { get }
   var didPulltoRefresh: PublishSubject<Void> { get }
   var didCellSelected: PublishSubject<Post> { get }
-  
-  // UI
+}
+
+protocol PopularViewModelOutputsType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
   var showPost: Driver<Post> { get }
-  
 }
 
-struct PopularViewModel: PopularViewModelType {
+protocol PopularViewModelType: ViewModelType {
+  var inputs: PopularViewModelInputsType { get }
+  var outputs: PopularViewModelOutputsType { get}
+}
+
+final class PopularViewModel: PopularViewModelType, PopularViewModelInputsType, PopularViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: PopularViewModelInputsType { return self }
+  var outputs: PopularViewModelOutputsType { return self }
+  
+  // MARK: Input
   
   let viewWillAppear = PublishSubject<Void>()
   let didPulltoRefresh = PublishSubject<Void>()
   let didCellSelected = PublishSubject<Post>()
   
-  // MART: <- UI
+  // MART: Output
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>

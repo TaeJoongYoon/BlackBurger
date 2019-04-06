@@ -9,32 +9,38 @@
 import RxCocoa
 import RxSwift
 
-protocol RecentViewModelType: ViewModelType {
-  
-  // Event
+protocol RecentViewModelInputsType {
   var viewWillAppear: PublishSubject<Void> { get }
   var didPulltoRefresh: PublishSubject<Void> { get }
   var didCellSelected: PublishSubject<Post> { get }
   var isReachedBottom: PublishSubject<Bool> { get }
-  
-  // UI
+}
+
+protocol RecentViewModelOutputsType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
   var loadMore: Driver<[Post]> { get }
   var showPost: Driver<Post> { get }
-  
 }
 
-struct RecentViewModel: RecentViewModelType {
+protocol RecentViewModelType: ViewModelType {
+  var inputs: RecentViewModelInputsType { get }
+  var outputs: RecentViewModelOutputsType { get }
+}
+
+final class RecentViewModel: RecentViewModelType, RecentViewModelInputsType, RecentViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: RecentViewModelInputsType { return self }
+  var outputs: RecentViewModelOutputsType { return self }
+  
+  // MARK: Input
   
   let viewWillAppear = PublishSubject<Void>()
   let didPulltoRefresh = PublishSubject<Void>()
   let didCellSelected = PublishSubject<Post>()
   let isReachedBottom = PublishSubject<Bool>()
   
-  // MART: <- UI
+  // MART: Output
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>
@@ -62,7 +68,6 @@ struct RecentViewModel: RecentViewModelType {
             return .never()
           })
       }
-      .debug()
       .asDriver(onErrorJustReturn: [])
     
     loadMore = isReachedBottom

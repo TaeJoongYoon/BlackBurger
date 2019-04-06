@@ -9,31 +9,31 @@
 import RxCocoa
 import RxSwift
 
-protocol SuggestedViewModelType: ViewModelType {
-  
-  // Event
+protocol SuggestedViewModelInputsType {
   var didTappedAddButton: PublishSubject<Void> { get }
-  var swipePage: PublishSubject<Int> { get }
-  var selectedSegmentIndex: PublishSubject<Int> { get }
-  
-  // UI
-  var add: Driver<Void> { get }
-  var showView: Driver<Int> { get }
-  
 }
 
-struct SuggestedViewModel: SuggestedViewModelType {
+protocol SuggestedViewModelOutputstype {
+  var add: Driver<Void> { get }
+}
+
+protocol SuggestedViewModelType: ViewModelType {
+  var inputs: SuggestedViewModelInputsType { get }
+  var outputs: SuggestedViewModelOutputstype { get }
+}
+
+final class SuggestedViewModel: SuggestedViewModelType, SuggestedViewModelInputsType, SuggestedViewModelOutputstype {
+  
+  var inputs: SuggestedViewModelInputsType { return self }
+  var outputs: SuggestedViewModelOutputstype { return self}
   
   // MARK: -> Event
   
   let didTappedAddButton = PublishSubject<Void>()
-  let swipePage =  PublishSubject<Int>()
-  let selectedSegmentIndex = PublishSubject<Int>()
   
   // MARK: <- UI
   
   let add: Driver<Void>
-  let showView: Driver<Int>
   
   // MARK: - Initialize
   
@@ -42,11 +42,6 @@ struct SuggestedViewModel: SuggestedViewModelType {
     add = didTappedAddButton
       .asDriver(onErrorJustReturn: ())
     
-    // Paging
-    showView = Observable<Int>
-      .merge([swipePage, selectedSegmentIndex])
-      .map { $0 }
-      .asDriver(onErrorJustReturn: 0)
     
   }
   

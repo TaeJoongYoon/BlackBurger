@@ -39,6 +39,7 @@ target 'Burgers' do
   # Misc.
   pod 'ReusableKit'
   pod 'Then'
+  pod 'Swinject'
 
   target 'BurgersTests' do
     inherit! :search_paths

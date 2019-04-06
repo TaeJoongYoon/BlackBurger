@@ -13,7 +13,7 @@ import SnapKit
 import Then
 import XLPagerTabStrip
 
-final class PopularViewController: BaseViewController, ViewType {
+final class PopularViewController: BaseViewController {
   
   // MARK: Constants
   
@@ -39,7 +39,7 @@ final class PopularViewController: BaseViewController, ViewType {
     $0.backgroundColor = .white
     $0.contentInsetAdjustmentBehavior = .never
     $0.refreshControl = UIRefreshControl()
-    $0.refreshControl?.tintColor = .mainColor
+    $0.refreshControl?.tintColor = .tintColor
     $0.rowHeight = Metric.rowHeight
     $0.separatorInset = UIEdgeInsets.zero
     $0.register(Reusable.burgerPostCell)
@@ -85,26 +85,25 @@ final class PopularViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewWillAppear
-      .take(1)
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
     self.tableView.refreshControl?.rx.controlEvent(.valueChanged)
-      .bind(to: viewModel.didPulltoRefresh)
+      .bind(to: viewModel.inputs.didPulltoRefresh)
       .disposed(by: self.disposeBag)
     
     self.tableView.rx.modelSelected(Post.self)
-      .bind(to: viewModel.didCellSelected)
+      .bind(to: viewModel.inputs.didCellSelected)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -116,23 +115,25 @@ final class PopularViewController: BaseViewController, ViewType {
                                       url: element.imageURLs[0],
                                       restaurant: element.restaurant,
                                       address: element.address,
-                                      likes: element.likes)
+                                      likes: element.likes,
+                                      rating: element.rating
+                                      )
                                     
       }.disposed(by: self.disposeBag)
     
-    viewModel.posts
+    viewModel.outputs.posts
       .drive(onNext: { [weak self] in
         self?.setTableView($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.showPost
+    viewModel.outputs.showPost
       .drive(onNext: { [weak self] in
         self?.postDetail($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isNetworking
+    viewModel.outputs.isNetworking
       .drive(onNext: { [weak self] isNetworking in
         self?.showNetworkingAnimation(isNetworking)
       }).disposed(by: self.disposeBag)
@@ -153,9 +154,7 @@ final class PopularViewController: BaseViewController, ViewType {
   }
   
   private func postDetail(_ post: Post) {
-    let viewModel = PostDetailViewModel()
-    let viewController = PostDetailViewController.create(with: viewModel)
-    viewController.post = post
+    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
     viewController.hidesBottomBarWhenPushed = true
     
     self.navigationController?.pushViewController(viewController, animated: true)

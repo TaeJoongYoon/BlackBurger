@@ -38,6 +38,7 @@
 		6F4988612247CA3E00222E18 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4988602247CA3E00222E18 /* ModelType.swift */; };
 		6F4988632247CCA400222E18 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4988622247CCA400222E18 /* Meta.swift */; };
 		6F4988652247D0DD00222E18 /* NaverAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4988642247D0DD00222E18 /* NaverAPIService.swift */; };
+		6F4B7096225845AB00EE0C67 /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4B7095225845AB00EE0C67 /* PrivateKey.swift */; };
 		6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03C2223DB250030AAD4 /* AppDelegate.swift */; };
 		6F79A03F2223DB250030AAD4 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */; };
 		6F79A0442223DB260030AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F79A0432223DB260030AAD4 /* Assets.xcassets */; };
@@ -130,6 +131,7 @@
 		6F4988602247CA3E00222E18 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		6F4988622247CCA400222E18 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
 		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Model/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
+		6F4B7095225845AB00EE0C67 /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		6F79A0392223DB250030AAD4 /* Burgers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Burgers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F79A03C2223DB250030AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		6F072D1D224FAA0C00B007DA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6F4B70942258459500EE0C67 /* PrivateKey */,
 				6F79A0622223DD5D0030AAD4 /* Utility */,
 				6F48FC192234037700A9AA33 /* Types */,
 				6F48FC102233DFB700A9AA33 /* Logging */,
@@ -306,6 +309,14 @@
 				6F4988592247A89400222E18 /* RestaurantViewModel.swift */,
 			);
 			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		6F4B70942258459500EE0C67 /* PrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				6F4B7095225845AB00EE0C67 /* PrivateKey.swift */,
+			);
+			path = PrivateKey;
 			sourceTree = "<group>";
 		};
 		6F79A0302223DB250030AAD4 = {
@@ -671,6 +682,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/TLPhotoPicker/TLPhotoPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Then/Then.framework",
 				"${BUILT_PRODUCTS_DIR}/Toaster/Toaster.framework",
@@ -701,6 +713,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TLPhotoPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Then.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toaster.framework",
@@ -813,6 +826,7 @@
 				6FD7D2E9222A37AF005BBFEC /* BurgerPostCell.swift in Sources */,
 				6F48FC142233E03800A9AA33 /* Logger.swift in Sources */,
 				6F941C02222400CD009E326F /* UserViewModel.swift in Sources */,
+				6F4B7096225845AB00EE0C67 /* PrivateKey.swift in Sources */,
 				6FD7D2EB222A39F2005BBFEC /* UIColor+BaseColor.swift in Sources */,
 				6F8DCCF22230149A00C5B90E /* SplashViewModel.swift in Sources */,
 				6FD7D2E0222A3327005BBFEC /* RecentViewController.swift in Sources */,

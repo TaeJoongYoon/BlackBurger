@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import Toaster
 
-final class SplashViewController: BaseViewController, ViewType {
+final class SplashViewController: BaseViewController {
   
   // MARK: Constant
   
@@ -59,32 +59,25 @@ final class SplashViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewDidAppear
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
-    viewModel.versionCheck
-      .drive(onNext: { [weak self] in
-        if $0 {
-          Observable.just(())
-            .delay(Constant.duration, scheduler: MainScheduler.instance)
-            .bind(to: self!.viewModel.checkIfAuthenticated)
-            .disposed(by: self!.disposeBag)
-        } else {
-          UIApplication.shared.open(URL(string: $1)!, options: [:], completionHandler: nil)
-        }
+    viewModel.outputs.versionCheck
+      .drive(onNext: { [weak self]  in
+        self?.versionCheck($0, $1, $2)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.isAuthenticated
+    viewModel.outputs.isAuthenticated
       .drive(onNext: { [weak self] in
         $0 ? self?.presentMainScreen() : self?.presentLoginScreen()
       })
@@ -94,9 +87,63 @@ final class SplashViewController: BaseViewController, ViewType {
   
   // MARK: Action Handler
   
+  private func versionCheck(_ force: Bool, _ option: Bool, _ string: String) {
+    let url = URL(string: string)!
+    if force {
+      let alert = UIAlertController(
+        title: "Update".localized,
+        message: "forceUpdate".localized,
+        preferredStyle: .alert
+      )
+      
+      alert.addAction(UIAlertAction(
+        title: "Update".localized,
+        style: .default
+      ) { _ in
+        if UIApplication.shared.canOpenURL(url) {
+          if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+          } else {
+            UIApplication.shared.openURL(url)
+          }
+        }
+      })
+      self.navigationController?.present(alert, animated: true, completion: nil)
+    } else {
+      if option {
+        let alert = UIAlertController(
+          title: "Update".localized,
+          message: "optionalUpdate".localized,
+          preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+          title: "Update".localized,
+          style: .default
+        ) { _ in
+          if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+              UIApplication.shared.open(url)
+            } else {
+              UIApplication.shared.openURL(url)
+            }
+          }
+        })
+        
+        alert.addAction(UIAlertAction(
+          title: "Later".localized,
+          style: .default,
+          handler: nil)
+        )
+        self.navigationController?.present(alert, animated: true, completion: nil)
+      } else {
+        self.viewModel.inputs.checkIfAuthenticated()
+      }
+    }
+  }
+  
   private func presentLoginScreen() {
-    let loginViewModel = LoginViewModel()
-    let loginViewController = LoginViewController.create(with: loginViewModel)
+    let loginViewController = appDelegate.container.resolve(LoginViewController.self)!
     let navigationController = UINavigationController(rootViewController: loginViewController)
     navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     navigationController.navigationBar.clipsToBounds = true
@@ -110,7 +157,7 @@ final class SplashViewController: BaseViewController, ViewType {
   }
   
   private func presentMainScreen() {
-    let mainTabView = MainTabViewController()
+    let mainTabView = appDelegate.container.resolve(MainTabViewController.self)!
     
     UIApplication.shared.keyWindow?
       .setRootViewController(mainTabView,

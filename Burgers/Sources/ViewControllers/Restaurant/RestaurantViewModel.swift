@@ -9,27 +9,33 @@
 import RxCocoa
 import RxSwift
 
-protocol RestaurantViewModelType: ViewModelType {
-  
-  // Event
+protocol RestaurantViewModelInputsType {
   var viewWillAppear: PublishSubject<String> { get }
   var didCellSelected: PublishSubject<Post> { get }
-  
-  // UI
+}
+
+protocol RestaurantViewModelOutputsType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
   var showPost: Driver<Post> { get }
-  
 }
 
-struct RestaurantViewModel: RestaurantViewModelType {
+protocol RestaurantViewModelType: ViewModelType {
+  var inputs: RestaurantViewModelInputsType { get }
+  var outputs: RestaurantViewModelOutputsType { get }
+}
+
+final class RestaurantViewModel: RestaurantViewModelType, RestaurantViewModelInputsType, RestaurantViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: RestaurantViewModelInputsType { return self }
+  var outputs: RestaurantViewModelOutputsType { return self }
+  
+  // MARK: Input
   
   let viewWillAppear = PublishSubject<String>()
   let didCellSelected = PublishSubject<Post>()
   
-  // MART: <- UI
+  // MART: Output
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>

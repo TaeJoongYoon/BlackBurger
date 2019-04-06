@@ -9,20 +9,26 @@
 import RxCocoa
 import RxSwift
 
-protocol MapViewModelType: ViewModelType {
-
-  //Event
-  var viewDidLoad: PublishSubject<Void> { get }
-  
-  // UI
-  var restaurants: Driver<[Place]> { get }
-  
+protocol MapViewModelInputsType {
+  var viewWillAppear: PublishSubject<Void> { get }
 }
 
-struct MapViewModel: MapViewModelType {
+protocol MapViewModelOutputsType {
+  var restaurants: Driver<[Place]> { get }
+}
+
+protocol MapViewModelType: ViewModelType {
+  var inputs: MapViewModelInputsType { get }
+  var outputs: MapViewModelOutputsType { get }
+}
+
+final class MapViewModel: MapViewModelType, MapViewModelInputsType, MapViewModelOutputsType {
+  
+  var inputs: MapViewModelInputsType { return self }
+  var outputs: MapViewModelOutputsType { return self }
   
   // MARK: -> Event
-  let viewDidLoad = PublishSubject<Void>()
+  let viewWillAppear = PublishSubject<Void>()
   
   // MARK: <- UI
   let restaurants: Driver<[Place]>
@@ -31,7 +37,7 @@ struct MapViewModel: MapViewModelType {
   
   init() {
     
-    restaurants = viewDidLoad
+    restaurants = viewWillAppear
       .flatMapLatest {
         return DatabaseService.shared.fetchRestaurants()
       }

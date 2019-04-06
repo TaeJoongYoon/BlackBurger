@@ -27,6 +27,8 @@ protocol DatabaseServiceType {
   func fetchPosts(isMyPosts: Bool) -> Single<[Post]>
   func post(_ id: String) -> Single<Post>
   func like(id: String, liked: Bool) -> Single<Int>
+  func edit(id: String, newContent:String) -> Single<Bool>
+  func delete(id: String) -> Single<Bool>
   func removeAll(from author: String)
 }
 

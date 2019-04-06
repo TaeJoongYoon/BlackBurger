@@ -18,6 +18,10 @@ class BaseViewController: UIViewController {
     return type(of: self).description().components(separatedBy: ".").last ?? ""
   }()
   
+  var appDelegate: AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
+  }
+  
   var automaticallyAdjustsLeftBarButtonItem = true
   
   /// There is a bug when trying to go back to previous view controller in a navigation controller
@@ -44,7 +48,6 @@ class BaseViewController: UIViewController {
   
   // MARK: Rx
   var disposeBag = DisposeBag()
-  
   
   // MARK: View Lifecycle
   override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +92,8 @@ class BaseViewController: UIViewController {
   
   override func viewDidLoad() {
     self.view.setNeedsUpdateConstraints()
+    self.eventBinding()
+    self.uiBinding()
   }
   
   override func updateViewConstraints() {
@@ -103,6 +108,15 @@ class BaseViewController: UIViewController {
     // Override point
   }
   
+  // MARK: Data Binding
+  
+  func eventBinding() {
+    // Override point
+  }
+  
+  func uiBinding() {
+    // Override point
+  }
   
   // MARK: Adjusting Navigation Item
   func adjustLeftBarButtonItem() {

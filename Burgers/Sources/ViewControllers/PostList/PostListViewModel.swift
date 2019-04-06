@@ -9,27 +9,33 @@
 import RxCocoa
 import RxSwift
 
-protocol PostListViewModelType: ViewModelType {
-  
-  // Event
+protocol PostListViewModelInputsType {
   var viewWillAppear: PublishSubject<Bool> { get }
   var didCellSelected: PublishSubject<Post> { get }
-  
-  // UI
+}
+
+protocol PostListViewModelOutputsType {
   var isNetworking: Driver<Bool> { get }
   var posts: Driver<[Post]> { get }
   var showPost: Driver<Post> { get }
-  
 }
 
-struct PostListViewModel: PostListViewModelType {
+protocol PostListViewModelType: ViewModelType {
+  var inputs: PostListViewModelInputsType { get }
+  var outputs: PostListViewModelOutputsType { get }
+}
+
+final class PostListViewModel: PostListViewModelType, PostListViewModelInputsType, PostListViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: PostListViewModelInputsType { return self }
+  var outputs: PostListViewModelOutputsType { return self }
+  
+  // MARK: Input
   
   let viewWillAppear = PublishSubject<Bool>()
   let didCellSelected = PublishSubject<Post>()
   
-  // MARK: <- UI
+  // MARK: Output
   
   let isNetworking: Driver<Bool>
   let posts: Driver<[Post]>

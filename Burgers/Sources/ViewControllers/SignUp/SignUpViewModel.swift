@@ -10,31 +10,37 @@ import FirebaseAuth
 import RxCocoa
 import RxSwift
 
-protocol SignUpViewModelType: ViewModelType {
-  
-  // Event
+protocol SignUpViewModelInputsType {
   var email: BehaviorRelay<String> { get }
   var password: BehaviorRelay<String> { get }
   var tappedDoneButton: PublishSubject<Void> { get }
   var tappedSignUpButton: PublishSubject<Void> { get }
-  var info: PublishSubject<(String, String)> { get }
-  
-  // UI
-  var isSignedUpEnabled: Driver<Bool> { get }
-  var isSignedUp: Driver<Bool> { get }
-  
 }
 
-struct SignUpViewModel: SignUpViewModelType {
+protocol SignUpViewModelOutputsType {
+  var isSignedUpEnabled: Driver<Bool> { get }
+  var isSignedUp: Driver<Bool> { get }
+}
+
+protocol SignUpViewModelType: ViewModelType {
+  var inputs: SignUpViewModelInputsType { get }
+  var outpus: SignUpViewModelOutputsType { get }
+}
+
+final class SignUpViewModel: SignUpViewModelType, SignUpViewModelInputsType, SignUpViewModelOutputsType {
   
-  // MARK: -> Event
+  var inputs: SignUpViewModelInputsType { return self }
+  var outpus: SignUpViewModelOutputsType { return self }
+  
+  // MARK: Input
+  
   let email = BehaviorRelay<String>(value: "")
   let password = BehaviorRelay<String>(value: "")
   let tappedDoneButton = PublishSubject<Void>()
   let tappedSignUpButton = PublishSubject<Void>()
-  var info = PublishSubject<(String, String)>()
   
-  // MARK: <- UI
+  // MARK: Output
+  
   let isSignedUpEnabled: Driver<Bool>
   let isSignedUp: Driver<Bool>
   

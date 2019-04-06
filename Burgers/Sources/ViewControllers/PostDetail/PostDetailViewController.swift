@@ -12,17 +12,14 @@ import ReusableKit
 import RxCocoa
 import RxGesture
 import RxSwift
+import Toaster
 
-final class PostDetailViewController: BaseViewController, ViewType {
+final class PostDetailViewController: BaseViewController {
   
   // MARK: Constants
   
   struct Reusable {
     static let detailCell = ReusableCell<DetailCell>()
-  }
-  
-  struct Constant {
-    
   }
   
   struct Metric {
@@ -41,10 +38,10 @@ final class PostDetailViewController: BaseViewController, ViewType {
   
   // MARK: UI
   
-  let moreButton = UIBarButtonItem().then {
-    let button = UIButton(type: .custom)
-    button.setImage(UIImage(named: "more.png"), for: .normal)
-    $0.customView = button
+  let moreButton = UIBarButtonItem.init(image: UIImage(named: "more.png"), style: .plain, target: self, action: nil)
+  
+  let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil).then {
+    $0.tintColor = .tintColor
   }
   
   let imageCollectionView = UICollectionView(
@@ -157,17 +154,19 @@ final class PostDetailViewController: BaseViewController, ViewType {
   
   // MARK: - -> Rx Event Binding
   
-  func setupEventBinding() {
+  override func eventBinding() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
         (self?.post.id)!
       }
-      .bind(to: viewModel.viewWillAppear)
+      .bind(to: viewModel.inputs.viewWillAppear)
       .disposed(by: self.disposeBag)
     
+    viewModel.inputs.id.accept(self.post.id)
+    
     self.imageCollectionView.rx.currentPage
-      .bind(to: viewModel.willDisplayCell)
+      .bind(to: viewModel.inputs.willDisplayCell)
       .disposed(by: self.disposeBag)
     
     Observable.merge([
@@ -179,34 +178,47 @@ final class PostDetailViewController: BaseViewController, ViewType {
       self.likeImageView.rx.tapGesture()
         .when(.recognized)
         .asObservable()])
-        .map { [weak self] _ in
-          ((self?.post.id)!, (self?.isLiked.value)!)
-        }
-        .bind(to: viewModel.requestLike)
-        .disposed(by: self.disposeBag)
+      .map { [weak self] _ in
+        ((self?.post.id)!, (self?.isLiked.value)!)
+      }
+      .bind(to: viewModel.inputs.requestLike)
+      .disposed(by: self.disposeBag)
     
+    self.contentTextView.rx.text
+      .orEmpty
+      .distinctUntilChanged()
+      .bind(to: viewModel.inputs.text)
+      .disposed(by: self.disposeBag)
+    
+    self.moreButton.rx.tap
+      .bind(to: viewModel.inputs.moreButtonDidTapped)
+      .disposed(by: self.disposeBag)
+    
+    self.doneButton.rx.tap
+      .bind(to: viewModel.inputs.doneButtonDidTapped)
+      .disposed(by: self.disposeBag)
   }
   
   // MARK: - <- Rx UI Binding
   
-  func setupUIBinding() {
+  override func uiBinding() {
     
     self.imageCollectionView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
     
-    viewModel.setView
+    viewModel.outputs.setView
       .drive(onNext: { [weak self] in
         self?.setView($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.currentPage
+    viewModel.outputs.currentPage
       .drive(onNext: { [weak self] in
         self?.setPageControl($0)
       })
       .disposed(by: self.disposeBag)
     
-    viewModel.liked
+    viewModel.outputs.liked
       .drive(onNext: { [weak self] in
         self?.likesCountLabel.text = String($0)
         var toggle = (self?.isLiked.value)!
@@ -225,6 +237,24 @@ final class PostDetailViewController: BaseViewController, ViewType {
       })
       .disposed(by: self.disposeBag)
     
+    viewModel.outputs.actionSheet
+      .drive(onNext: { [weak self] in
+        self?.actionSheet()
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.outputs.edit
+      .drive(onNext: { [weak self] in
+        self?.edit($0)
+      })
+      .disposed(by: self.disposeBag)
+    
+    viewModel.outputs.deleted
+      .drive(onNext: { [weak self] in
+        self?.deleted($0)
+      })
+      .disposed(by: self.disposeBag)
+    
   }
   
   // MARK: Action Handler
@@ -237,6 +267,7 @@ final class PostDetailViewController: BaseViewController, ViewType {
     self.post = post
     
     self.imageCollectionView.dataSource = nil
+    
     Observable.just(post)
       .map { $0.imageURLs }
       .bind(to: self.imageCollectionView.rx.items(
@@ -261,6 +292,89 @@ final class PostDetailViewController: BaseViewController, ViewType {
     self.pageControl.updateCurrentPageDisplay()
   }
   
+  private func actionSheet() {
+    let alertController = UIAlertController(
+      title: nil,
+      message: nil,
+      preferredStyle: .actionSheet
+    )
+    
+    let saveImagesButton = UIAlertAction(
+      title: "Save Images".localized,
+      style: .default
+    ) { _ in
+      for i in 0..<self.imageCollectionView.numberOfItems(inSection: 0) {
+        let cell = self.imageCollectionView.cellForItem(at: [0, i]) as! DetailCell
+        guard let image = cell.detailImageView.image else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+      }
+      Toast(text: "Saved Images!".localized, duration: Delay.long).show()
+    }
+    
+    let sendButton = UIAlertAction(
+      title: "Edit".localized,
+      style: .default
+    ) { _ in
+      self.contentTextView.snp.remakeConstraints { make in
+        make.top.equalTo(self.view.safeArea.top).offset(Metric.offset)
+        make.left.right.equalTo(self.view).inset(Metric.offset)
+        make.bottom.equalTo(self.view.safeArea.bottom)
+      }
+      self.view.subviews.forEach { $0.isHidden = true }
+      self.contentTextView.isHidden = false
+      self.contentTextView.isEditable = true
+      self.contentTextView.becomeFirstResponder()
+      self.navigationItem.rightBarButtonItem = self.doneButton
+    }
+    
+    let deleteButton = UIAlertAction(
+      title: "Delete".localized,
+      style: .destructive
+    ) { _ in
+      self.viewModel.inputs.requestDelete(id: self.post.id)
+    }
+    
+    let cancelButton = UIAlertAction(
+      title: "Cancel".localized,
+      style: .cancel,
+      handler: nil
+    )
+    
+    alertController.addAction(saveImagesButton)
+    if post.author == Auth.auth().currentUser?.email {
+      alertController.addAction(sendButton)
+      alertController.addAction(deleteButton)
+    }
+    alertController.addAction(cancelButton)
+    
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  private func edit(_ isEdited: Bool) {
+    if isEdited {
+      self.view.subviews.forEach { $0.isHidden = false }
+      self.contentTextView.snp.remakeConstraints { make in
+        make.top.equalTo(self.likeImageView.snp.bottom).offset(Metric.offset/2)
+        make.left.right.equalTo(self.view).inset(Metric.offset)
+        make.bottom.equalTo(self.view.safeArea.bottom)
+      }
+      self.contentTextView.isEditable = false
+      self.navigationItem.rightBarButtonItem = self.moreButton
+    } else {
+      Toast(text: "Failure Edit!".localized, duration: Delay.long).show()
+    }
+  }
+  
+  private func deleted(_ isDeleted: Bool) {
+    if isDeleted {
+      self.navigationController?.popViewController(animated: true) {
+        Toast(text: "Success Delete!".localized, duration: Delay.long).show()
+      }
+    } else {
+      Toast(text: "Failure Delete!".localized, duration: Delay.long).show()
+    }
+  }
+
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

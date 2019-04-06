@@ -30,6 +30,8 @@
 "All Photos" = "모든 사진";
 "Done" = "완료";
 "Cancel" = "취소";
+"Edit" = "수정하기";
+"Delete" = "삭제하기";
 "Type a restaurant name" = "가게이름을 검색해주세요";
 "Describe the taste" = "맛을 표현해주세요";
 "Success Posting!" = "게시글이 등록되었습니다!";
@@ -45,6 +47,8 @@
 "Terms of service" = "이용약관";
 "Privacy Policy" = "개인정보처리방침";
 "Account Remove" = "계정 탈퇴하기";
+"Contact the BURGERS" = "BURGERS에 의견 보내기";
+"Write a Review" = "앱 리뷰하기";
 "See you again :)" = "다음에 또 만나요 :)";
 "No Posts" = "게시된 글이 없습니다";
 "You don't have any posts" = "아직 작성한 글이 없습니다";
@@ -53,3 +57,8 @@
 "Success Changing" = "비밀번호가 바뀌었습니다";
 "Failure Changing" = "비밀번호변경에 실패했습니다";
 "Server Error" = "서버오류입니다. 다시 시도해주세요";
+"Success Delete!" = "게시글이 삭제되었습니다!";
+"Failure Delete!" = "게시글 삭제에 실패했습니다!";
+"Failure Edit!" = "게시글 수정에 실패했습니다!";
+"Save Images" = "사진들 저장하기";
+"Saved Images!" = "사진들이 저장되었습니다!";

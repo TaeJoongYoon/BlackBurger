@@ -9,10 +9,12 @@
 import UIKit
 
 final class MainTabViewController: UITabBarController {
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     UIApplication.shared.keyWindow?.rootViewController = self
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // Hide Tabbar Line
     self.tabBar.shadowImage = UIImage()
@@ -20,14 +22,9 @@ final class MainTabViewController: UITabBarController {
     self.tabBar.clipsToBounds = true
     self.tabBar.tintColor = .mainColor
     
-    let suggestedViewModel = SuggestedViewModel()
-    let suggestedView = SuggestedViewController.create(with: suggestedViewModel)
-    
-    let mapViewModel = MapViewModel()
-    let mapView = MapViewController.create(with: mapViewModel)
-    
-    let userViewModel = UserViewModel()
-    let userView = UserViewController.create(with: userViewModel)
+    let suggestedView = appDelegate.container.resolve(SuggestedViewController.self)!
+    let mapView = appDelegate.container.resolve(MapViewController.self)!
+    let userView = appDelegate.container.resolve(UserViewController.self)!
     
     self.viewControllers = [suggestedView, mapView, userView]
       .map {

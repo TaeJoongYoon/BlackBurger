@@ -30,6 +30,8 @@
 "All Photos" = "All Photos";
 "Done" = "Done";
 "Cancel" = "Cancel";
+"Edit" = "Edit";
+"Delete" = "Delete";
 "Type a restaurant name" = "Type a restaurant name";
 "Describe the taste" = "Describe the taste";
 "Success Posting!" = "Success Posting!";
@@ -45,6 +47,8 @@
 "Terms of service" = "Terms of service";
 "Privacy Policy" = "Privacy Policy";
 "Account Remove" = "Account Remove";
+"Contact the BURGERS" = "Contact the BURGERS";
+"Write a Review" = "Write a Review";
 "See you again :)" = "See you again :)";
 "No Posts" = "No Posts";
 "You don't have any posts" = "You don't have any posts";
@@ -53,3 +57,8 @@
 "Success Changing" = "Success Changing";
 "Failure Changing" = "Failure Changing";
 "Server Error" = "Server Error";
+"Success Delete!" = "Success Delete!";
+"Failure Delete!" = "Failure Delete!";
+"Failure Edit!" = "Failure Edit!";
+"Save Images" = "Save Images";
+"Saved Images!" = "Saved Images!";

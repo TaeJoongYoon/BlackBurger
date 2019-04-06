@@ -11,5 +11,4 @@ import Foundation
 enum NetworkResult<C: Codable> {
   case success(C)
   case error(NetworkError)
-  case none
 }
