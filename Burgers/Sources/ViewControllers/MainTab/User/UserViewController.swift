@@ -31,7 +31,7 @@ final class UserViewController: BaseViewController {
   // MARK: UI
   
   let idLabel = UILabel(frame: .zero).then {
-    $0.text = (Auth.auth().currentUser?.email)!
+    $0.text = Auth.auth().currentUser!.displayName ?? Auth.auth().currentUser!.email
     $0.font = UIFont.boldSystemFont(ofSize: Metric.idFontSize)
   }
   

@@ -47,14 +47,14 @@ class DatabaseService: DatabaseServiceType {
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssSSSZZZZZ"
     
     for i in 0..<images.count {
-      imageStrings.append("\((Auth.auth().currentUser?.email)!)-\(dateFormatter.string(from: Date()))-\(i).png")
+      imageStrings.append("\((Auth.auth().currentUser?.uid)!)-\(dateFormatter.string(from: Date()))-\(i).png")
     }
     
     return Single<Bool>.create { single in
       
       let post = Post(
-        id: "\((Auth.auth().currentUser?.email)!)-\(dateFormatter.string(from: Date()))",
-        author: (Auth.auth().currentUser?.email)!,
+        id: "\((Auth.auth().currentUser?.uid)!)-\(dateFormatter.string(from: Date()))",
+        author: (Auth.auth().currentUser?.uid)!,
         content: content,
         rating: rating,
         likes: 0,
@@ -216,10 +216,10 @@ class DatabaseService: DatabaseServiceType {
     
     if isMyPosts {
       query = self.db.collection("posts")
-        .whereField("author", isEqualTo: (Auth.auth().currentUser?.email)!)
+        .whereField("author", isEqualTo: (Auth.auth().currentUser?.uid)!)
     } else {
       query = self.db.collection("posts")
-        .whereField("likeUser", arrayContains: (Auth.auth().currentUser?.email)!)
+        .whereField("likeUser", arrayContains: (Auth.auth().currentUser?.uid)!)
     }
     
     return Single<[Post]>.create { single in
@@ -257,7 +257,7 @@ class DatabaseService: DatabaseServiceType {
   func like(id: String, liked: Bool) -> Single<Int> {
     return Single<Int>.create { single in
       let postReference = self.db.collection("posts").document(id)
-      let me = (Auth.auth().currentUser?.email)!
+      let me = (Auth.auth().currentUser?.uid)!
       self.db.runTransaction({ (transaction, errorPointer) -> Any? in
         let postDocument: DocumentSnapshot
         do {

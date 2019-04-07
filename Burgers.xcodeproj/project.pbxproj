@@ -132,7 +132,7 @@
 		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Service/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
 		6F4B7095225845AB00EE0C67 /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Burgers.entitlements; sourceTree = "<group>"; };
-		6F79A0392223DB250030AAD4 /* Burgers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Burgers.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F79A0392223DB250030AAD4 /* BlackBurger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBurger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F79A03C2223DB250030AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		6F79A0432223DB260030AAD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -330,7 +330,7 @@
 		6F79A03A2223DB250030AAD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6F79A0392223DB250030AAD4 /* Burgers.app */,
+				6F79A0392223DB250030AAD4 /* BlackBurger.app */,
 				6F79A04D2223DB260030AAD4 /* BurgersTests.xctest */,
 			);
 			name = Products;
@@ -531,9 +531,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6F79A0382223DB250030AAD4 /* Burgers */ = {
+		6F79A0382223DB250030AAD4 /* BlackBurger */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6F79A0562223DB260030AAD4 /* Build configuration list for PBXNativeTarget "Burgers" */;
+			buildConfigurationList = 6F79A0562223DB260030AAD4 /* Build configuration list for PBXNativeTarget "BlackBurger" */;
 			buildPhases = (
 				728075B0442766CC51823760 /* [CP] Check Pods Manifest.lock */,
 				6F79A0352223DB250030AAD4 /* Sources */,
@@ -546,9 +546,9 @@
 			);
 			dependencies = (
 			);
-			name = Burgers;
+			name = BlackBurger;
 			productName = Burgers;
-			productReference = 6F79A0392223DB250030AAD4 /* Burgers.app */;
+			productReference = 6F79A0392223DB250030AAD4 /* BlackBurger.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6F79A04C2223DB260030AAD4 /* BurgersTests */ = {
@@ -611,7 +611,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6F79A0382223DB250030AAD4 /* Burgers */,
+				6F79A0382223DB250030AAD4 /* BlackBurger */,
 				6F79A04C2223DB260030AAD4 /* BurgersTests */,
 			);
 		};
@@ -849,7 +849,7 @@
 /* Begin PBXTargetDependency section */
 		6F79A04F2223DB260030AAD4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6F79A0382223DB250030AAD4 /* Burgers */;
+			target = 6F79A0382223DB250030AAD4 /* BlackBurger */;
 			targetProxy = 6F79A04E2223DB260030AAD4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1119,7 +1119,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6F79A0562223DB260030AAD4 /* Build configuration list for PBXNativeTarget "Burgers" */ = {
+		6F79A0562223DB260030AAD4 /* Build configuration list for PBXNativeTarget "BlackBurger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F79A0572223DB260030AAD4 /* Debug */,

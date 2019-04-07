@@ -102,7 +102,7 @@ class AuthService: AuthServiceType {
           log.error(error)
           single(.success(false))
         } else {
-          DatabaseService.shared.removeAll(from: (Auth.auth().currentUser?.email)!)
+          DatabaseService.shared.removeAll(from: (Auth.auth().currentUser?.uid)!)
           
           result?.user.delete { error in
             if let error = error {

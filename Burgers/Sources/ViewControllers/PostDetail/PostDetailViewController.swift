@@ -281,7 +281,7 @@ final class PostDetailViewController: BaseViewController {
     self.pageControl.numberOfPages = self.post.imageURLs.count
     
     self.ratingView.rating = self.post.rating
-    self.isLiked.accept(self.post!.likeUser.contains((Auth.auth().currentUser?.email)!))
+    self.isLiked.accept(self.post!.likeUser.contains((Auth.auth().currentUser?.uid)!))
     
     self.likesCountLabel.text = String(self.post.likes)
     self.contentTextView.text = self.post.content
@@ -341,7 +341,7 @@ final class PostDetailViewController: BaseViewController {
     )
     
     alertController.addAction(saveImagesButton)
-    if post.author == Auth.auth().currentUser?.email {
+    if post.author == Auth.auth().currentUser?.uid {
       alertController.addAction(sendButton)
       alertController.addAction(deleteButton)
     }
