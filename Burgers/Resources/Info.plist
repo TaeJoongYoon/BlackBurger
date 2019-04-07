@@ -7,16 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>BlackBurger</string>
 	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>MKDirectionsRequest</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.maps.directionsrequest</string>
-			</array>
-		</dict>
-	</array>
+	<array/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -39,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -69,15 +60,10 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>MKDirectionsApplicationSupportedModes</key>
-	<array>
-		<string>MKDirectionsModeBus</string>
-		<string>MKDirectionsModeCar</string>
-		<string>MKDirectionsModePedestrian</string>
-		<string>MKDirectionsModeSubway</string>
-	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Burgers needs your camera to write a post.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Burgers needs your location to write posts and find places</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Burgers needs your location to write posts and find places</string>
 	<key>NSPhotoLibraryUsageDescription</key>

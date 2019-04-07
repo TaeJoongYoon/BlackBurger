@@ -60,7 +60,6 @@
 		6F941C06222400EB009E326F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F941C05222400EB009E326F /* MapViewController.swift */; };
 		6FC360D322352526005CFE3A /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC360D222352526005CFE3A /* DatabaseService.swift */; };
 		6FC360D72235287D005CFE3A /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC360D62235287D005CFE3A /* RemoteConfigManager.swift */; };
-		6FC48F37222EBA44007E0B3A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FC48F36222EBA44007E0B3A /* MapKit.framework */; };
 		6FD2C7B3224E46EC00942C0B /* SimplePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD2C7B2224E46EC00942C0B /* SimplePostCell.swift */; };
 		6FD2C7B5224E529800942C0B /* CALayer+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD2C7B4224E529700942C0B /* CALayer+Border.swift */; };
 		6FD2C7B9224E77D600942C0B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD2C7B8224E77D600942C0B /* NetworkError.swift */; };
@@ -130,8 +129,9 @@
 		6F49885E2247CA1800222E18 /* PlaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceResult.swift; sourceTree = "<group>"; };
 		6F4988602247CA3E00222E18 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		6F4988622247CCA400222E18 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
-		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Model/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
+		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Service/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
 		6F4B7095225845AB00EE0C67 /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
+		6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Burgers.entitlements; sourceTree = "<group>"; };
 		6F79A0392223DB250030AAD4 /* Burgers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Burgers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F79A03C2223DB250030AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F79A03E2223DB250030AAD4 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +159,6 @@
 		6F941C05222400EB009E326F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6FC360D222352526005CFE3A /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		6FC360D62235287D005CFE3A /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
-		6FC48F36222EBA44007E0B3A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		6FD2C7B2224E46EC00942C0B /* SimplePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePostCell.swift; sourceTree = "<group>"; };
 		6FD2C7B4224E529700942C0B /* CALayer+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Border.swift"; sourceTree = "<group>"; };
 		6FD2C7B8224E77D600942C0B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FC48F37222EBA44007E0B3A /* MapKit.framework in Frameworks */,
 				A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,7 +215,6 @@
 		19C393064188463A788BBD0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6FC48F36222EBA44007E0B3A /* MapKit.framework */,
 				51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */,
 				B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */,
 			);
@@ -342,6 +339,7 @@
 		6F79A03B2223DB250030AAD4 /* Burgers */ = {
 			isa = PBXGroup;
 			children = (
+				6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */,
 				6F072D1D224FAA0C00B007DA /* Sources */,
 				6F79A05C2223DB480030AAD4 /* Resources */,
 				6F79A03C2223DB250030AAD4 /* AppDelegate.swift */,
@@ -586,6 +584,9 @@
 						CreatedOnToolsVersion = 10.0;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -1018,8 +1019,9 @@
 			baseConfigurationReference = 6D286A01AC7F45F622D37F92 /* Pods-Burgers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Burgers/Burgers.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 775V28HZUA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Resources/Info.plist";
@@ -1033,6 +1035,7 @@
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -1041,6 +1044,7 @@
 			baseConfigurationReference = 1FE6FA2F289EEA03AF359992 /* Pods-Burgers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Burgers/Burgers.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 775V28HZUA;
 				ENABLE_BITCODE = NO;
@@ -1055,6 +1059,7 @@
 				SWIFT_REFLECTION_METADATA_LEVEL = all;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};
