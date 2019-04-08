@@ -33,7 +33,7 @@ class NaverAPIService: NaverAPIServiceType {
   func fetchPlaces(query: String, coordinate: String) -> Single<NetworkResult<[Place]>> {
     let url = "https://naveropenapi.apigw.ntruss.com/map-place/v1/search"
     param["query"] = query
-    param["coordinate"] = "126.8400960,37.5692690"
+    param["coordinate"] = coordinate
     
     return Single.create { [weak self] single in
       let request = Alamofire.request(

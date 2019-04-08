@@ -16,6 +16,7 @@
 "Don't you have an account?" = "Don't you have an account?";
 "or" = "or";
 "Log in" = "Log in";
+"Logout" = "Logout";
 "The account is invalid, please check it" = "The account is invalid, please check it";
 "password (more than 8)" = "password (more than 8)";
 "Please type password more than 8" =  "Please type password more than 8";
@@ -62,3 +63,9 @@
 "Failure Edit!" = "Failure Edit!";
 "Save Images" = "Save Images";
 "Saved Images!" = "Saved Images!";
+"Photos and Camera Not Available" = "Photos and Camera Not Available";
+"Please allow this access in \n Settings > BlackBurger > Photos" = "Please allow this access \n in Settings > BlackBurger > Photos";
+"Current Location Not Available" = "Current Location Not Available";
+"Please allow this access in \n Settings > BlackBurger > Location" = "Please allow this access \n in Settings > BlackBurger > Location";
+"Settings" = "Settings";
+"Share" = "Share";

@@ -12,6 +12,7 @@ import NMapsMap
 import RxCocoa
 import RxSwift
 import Then
+import Toaster
 
 final class MapViewController: BaseViewController {
   
@@ -52,11 +53,15 @@ final class MapViewController: BaseViewController {
     
     locationManager = CLLocationManager()
     locationManager?.requestWhenInUseAuthorization()
+    locationManager.requestAlwaysAuthorization()
+    locationManager.delegate = self
     
-    if CLLocationManager.locationServicesEnabled() {
-      locationManager.delegate = self
-      locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-      locationManager.startUpdatingLocation()
+    switch CLLocationManager.authorizationStatus() {
+    case .authorizedAlways, .authorizedWhenInUse:
+      locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+      locationManager.requestLocation()
+    default:
+      break
     }
   }
   
@@ -137,6 +142,8 @@ extension MapViewController: CLLocationManagerDelegate {
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                           longitude: location.coordinate.longitude)
       
+      log.verbose(center)
+      
       self.mapView.mapView.locationOverlay.location = NMGLatLng(lat: center.latitude,
                                                                 lng: center.longitude)
       
@@ -144,8 +151,10 @@ extension MapViewController: CLLocationManagerDelegate {
                                                                 lng: center.longitude))
       self.cameraPosition.animation = .easeIn
       self.mapView.mapView.moveCamera(cameraPosition)
-      
-      self.locationManager.stopUpdatingLocation()
     }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    Toast(text: error.localizedDescription, duration: Delay.long).show()
   }
 }

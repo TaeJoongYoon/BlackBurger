@@ -30,7 +30,7 @@ final class SuggestedViewController: BaseViewController {
   
   // MARK: UI
   
-  let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil).then {
+  let addButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: nil).then {
     $0.tintColor = .tintColor
   }
   
@@ -114,6 +114,25 @@ final class SuggestedViewController: BaseViewController {
     self.present(viewController, animated: true, completion: nil)
   }
   
+  private func photosNotPermission() {
+    let alertController = UIAlertController(
+      title: "Photos and Camera Not Available".localized,
+      message: "Please allow this access in \n Settings > BlackBurger > Photos".localized,
+      preferredStyle: .alert
+    )
+    
+    let settingsAction = UIAlertAction(title: "Settings".localized, style: .default) { _ in
+      guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+      UIApplication.shared.open(settingsURL, completionHandler: nil)
+    }
+    let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil)
+    
+    alertController.addAction(cancelAction)
+    alertController.addAction(settingsAction)
+    
+    present(alertController, animated: true, completion: nil)
+  }
+  
 }
 
 
@@ -144,10 +163,10 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
   }
   
   func handleNoAlbumPermissions(picker: TLPhotosPickerViewController) {
-    Toast(text: "Album permission denied, Please allow it".localized, duration: Delay.short).show()
+    photosNotPermission()
   }
   
   func handleNoCameraPermissions(picker: TLPhotosPickerViewController) {
-    Toast(text: "Camera permission denied, Please allow it".localized, duration: Delay.short).show()
+    photosNotPermission()
   }
 }

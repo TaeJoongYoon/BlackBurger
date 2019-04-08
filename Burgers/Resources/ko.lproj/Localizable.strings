@@ -6,7 +6,7 @@
   Copyright © 2019 Tae joong Yoon. All rights reserved.
 */
 
-"BLACK BURGER" = "BLACK BURGER";
+"BLACK BURGER" = "블랙버거";
 "Update" = "업데이트";
 "forceUpdate" = "필수 업데이트가 있습니다. 업데이트하시겠습니까?";
 "optionalUpdate" = "최신 업데이트가 있습니다. 업데이트하시겠습니까?";
@@ -17,6 +17,7 @@
 "Don't you have an account?" = "아직 회원이 아니신가요?";
 "or" = "혹은";
 "Log in" = "로그인하기";
+"Logout" = "로그아웃하기";
 "The account is invalid, please check it" = "계정정보가 올바르지 않습니다";
 "password (more than 8)" = "비밀번호를 입력해주세요 (8자 이상)";
 "Sign Up" = "회원가입하기";
@@ -47,7 +48,7 @@
 "Terms of service" = "이용약관";
 "Privacy Policy" = "개인정보처리방침";
 "Account Remove" = "계정 탈퇴하기";
-"Contact the BLACK BURGER" = "BLACK BURGER에 의견 보내기";
+"Contact the BLACK BURGER" = "블랙버거에 의견 보내기";
 "Write a Review" = "앱 리뷰하기";
 "See you again :)" = "다음에 또 만나요 :)";
 "No Posts" = "게시된 글이 없습니다";
@@ -62,3 +63,9 @@
 "Failure Edit!" = "게시글 수정에 실패했습니다!";
 "Save Images" = "사진들 저장하기";
 "Saved Images!" = "사진들이 저장되었습니다!";
+"Photos and Camera Not Available" = "사진앨범 및 카메라 접근권한 없음";
+"Please allow this access in \n Settings > BlackBurger > Photos" = "아래 경로에서 권한을 변경해주세요 \n 설정 > 블랙버거 > 사진";
+"Current Location Not Available" = "현재위치 접근권한 없음";
+"Please allow this access in \n Settings > BlackBurger > Location" = "아래 경로에서 권한을 변경해주세요 \n 설정 > 블랙버거 > 위치";
+"Settings" = "설정";
+"Share" = "공유하기";

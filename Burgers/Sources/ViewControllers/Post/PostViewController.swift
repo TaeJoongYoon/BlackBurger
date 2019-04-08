@@ -42,9 +42,13 @@ final class PostViewController: BaseViewController {
   
   // MARK: UI
   
-  let writeButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: nil).then {
+  let writeButton = UIBarButtonItem(title: "Share".localized, style: .plain, target: self, action: nil).then {
     $0.isEnabled = false
     $0.tintColor = .disabledColor
+    $0.setTitleTextAttributes(
+      [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)],
+      for: .normal
+    )
   }
   
   let searchBar = UISearchBar(frame: .zero).then {
@@ -108,14 +112,9 @@ final class PostViewController: BaseViewController {
     self.view.addSubview(indicatorView)
     self.view.addSubview(indicator)
     
+    locationManager.delegate = self
     locationManager.requestWhenInUseAuthorization()
-    
-    if CLLocationManager.locationServicesEnabled() {
-      locationManager.delegate = self
-      locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-      locationManager.startUpdatingLocation()
-    }
-    
+    locationManager.requestAlwaysAuthorization()
   }
   
   // MARK: Setup Constraints
@@ -294,10 +293,37 @@ final class PostViewController: BaseViewController {
 // MARK: UISearchBarDelegate
 
 extension PostViewController: UISearchBarDelegate {
+  
   func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-    self.tableView.isHidden.toggle()
-    self.rating.isHidden.toggle()
-    self.textView.isHidden.toggle()
+    
+    switch CLLocationManager.authorizationStatus() {
+    case .authorizedAlways, .authorizedWhenInUse:
+      locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+      locationManager.requestLocation()
+      
+      self.tableView.isHidden.toggle()
+      self.rating.isHidden.toggle()
+      self.textView.isHidden.toggle()
+      
+    default:
+      let alertController = UIAlertController(
+        title: "Current Location Not Available".localized,
+        message: "Please allow this access in \n Settings > BlackBurger > Location".localized,
+        preferredStyle: .alert
+      )
+      
+      let settingsAction = UIAlertAction(title: "Settings".localized, style: .default) { _ in
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(settingsURL, completionHandler: nil)
+      }
+      let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil)
+      
+      alertController.addAction(cancelAction)
+      alertController.addAction(settingsAction)
+      
+      present(alertController, animated: true, completion: nil)
+    }
+    
     return true
   }
   
@@ -311,6 +337,7 @@ extension PostViewController: UISearchBarDelegate {
 // MARK: UITextViewDelegate
 
 extension PostViewController: UITextViewDelegate {
+  
   func textViewDidBeginEditing(_ textView: UITextView) {
     if textView.textColor == .lightGray {
       textView.text = ""
@@ -333,9 +360,11 @@ extension PostViewController: CLLocationManagerDelegate {
     if let location = locations.last{
       let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                           longitude: location.coordinate.longitude)
-      
       self.viewModel.inputs.coordinate(coordinate: "\(center.longitude),\(center.latitude)")
-      self.locationManager.stopUpdatingLocation()
     }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    Toast(text: error.localizedDescription, duration: Delay.long).show()
   }
 }

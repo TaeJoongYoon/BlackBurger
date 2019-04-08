@@ -7,6 +7,8 @@
 */
 
 CFBundleDisplayName = "BlackBurger";
+NSLocationAlwaysAndWhenInUseUsageDescription = "BlackBurger needs your location to write a post and find places.";
 NSLocationWhenInUseUsageDescription = "BlackBurger needs your location to write a post and find places.";
+NSLocationAlwaysUsageDescription = "BlackBurger needs your location to write a post and find places.";
 NSPhotoLibraryUsageDescription = "BlackBurger needs your photos library to write a post.";
 NSCameraUsageDescription = "BlackBurger needs your camera to write a post.";

@@ -62,14 +62,14 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>BlackBurger needs your camera to write a post.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>BlackBurger needs your location to write posts and find places</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>BlackBurger needs your location to write posts and find places</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>BlackBurger needs your location to write posts and find places</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>BlackBurger needs your photos library to write a post.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>BlackBurger needs your location to write a post and find places.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>BlackBurger needs your location to write a post and find places.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>BlackBurger needs your location to write a post and find places.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
