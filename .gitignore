@@ -104,5 +104,6 @@ fastlane/test_output
 
 # private
 /Burgers/Sources/PrivateKey/PrivateKey.swift
+/Burgers/Resources/GoogleService-Info.plist
 
  # End of https://www.gitignore.io/api/swift,xcode,macos,cocoapods
