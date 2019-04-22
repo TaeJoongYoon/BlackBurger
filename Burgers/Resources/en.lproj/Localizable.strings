@@ -8,8 +8,9 @@
 
 "BLACK BURGER" = "BLACK BURGER";
 "Update" = "Update";
-"forceUpdate" = "There are required updates. Do you want to update?";
-"optionalUpdate" = "You have the latest updates. Do you want to update?";
+"forceUpdate" = "There are required updates. \n Update app to new version to continue";
+"optionalUpdate" = "You have the latest updates. \n Do you want to update?";
+"Later" = "Later";
 "OK" = "OK";
 "email" = "email";
 "password" = "password";

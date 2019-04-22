@@ -42,6 +42,7 @@ final class SuggestedViewController: BaseViewController {
     super.init()
     self.tabBarItem.image = UIImage(named: "hamburger-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "hamburger-selected.png")
+    self.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
   }
   
   override func viewDidLoad() {

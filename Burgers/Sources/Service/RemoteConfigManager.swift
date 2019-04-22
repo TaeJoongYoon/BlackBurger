@@ -82,15 +82,13 @@ class RemoteConfigManager: NSObject {
       return ComparisonResult.orderedAscending
     }
     
-    versionA.split(separator: ".").count
-    
-//    let subA = Int(Array(versionA.split(separator: "."))[2])!
-//    let subB = Int(Array(versionB.split(separator: "."))[2])!
-//    if subA > subB {
-//      return ComparisonResult.orderedDescending
-//    } else if subB > subA {
-//      return ComparisonResult.orderedAscending
-//    }
+    let subA = Int(Array(versionA.split(separator: "."))[2])!
+    let subB = Int(Array(versionB.split(separator: "."))[2])!
+    if subA > subB {
+      return ComparisonResult.orderedDescending
+    } else if subB > subA {
+      return ComparisonResult.orderedAscending
+    }
     
     return ComparisonResult.orderedSame
   }
