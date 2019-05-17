@@ -157,28 +157,4 @@ final class SplashViewController: BaseViewController {
       }
     }
   }
-  
-//  private func presentLoginScreen() {
-//    let loginViewController = appDelegate.container.resolve(LoginViewController.self)!
-//    let navigationController = UINavigationController(rootViewController: loginViewController)
-//    navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//    navigationController.navigationBar.clipsToBounds = true
-//    navigationController.navigationBar.tintColor = .tintColor
-//
-//    UIApplication.shared.keyWindow?
-//      .setRootViewController(navigationController,
-//                             options: UIWindow.TransitionOptions.init(
-//                              direction: .toTop,
-//                              style: .easeInOut))
-//  }
-//
-//  private func presentMainScreen() {
-//    let mainTabView = appDelegate.container.resolve(MainTabViewController.self)!
-//
-//    UIApplication.shared.keyWindow?
-//      .setRootViewController(mainTabView,
-//                             options: UIWindow.TransitionOptions.init(
-//                              direction: .toTop,
-//                              style: .easeInOut))
-//  }
 }

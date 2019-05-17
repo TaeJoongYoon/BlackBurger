@@ -67,7 +67,7 @@ class RemoteConfigManager: NSObject {
   private func compareVersion(versionA: String, versionB: String!) -> ComparisonResult {
     let majorA = Int(Array(versionA.split(separator: "."))[0])!
     let majorB = Int(Array(versionB.split(separator: "."))[0])!
-    
+   
     if majorA > majorB {
       return ComparisonResult.orderedDescending
     } else if majorB > majorA {

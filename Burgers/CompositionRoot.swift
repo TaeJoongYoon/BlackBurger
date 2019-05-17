@@ -138,7 +138,8 @@ final class CompositionRoot {
       presentLoginScreen: presentLoginScreen,
       presentMainScreen: presentMainScreen
     )
-    window.rootViewController = splashViewController
+    let navigationController = UINavigationController(rootViewController: splashViewController)
+    window.rootViewController = navigationController
 
     return AppDependency(
       window: window,
