@@ -61,9 +61,10 @@ final class CompositionRoot {
       },
         presentMainScreen: presentMainScreen
       )
+      let navigationController = UINavigationController(rootViewController: loginViewController)
       
       window.setRootViewController(
-        loginViewController,
+        navigationController,
         options: UIWindow.TransitionOptions(
           direction: .toTop,
           style: .easeInOut
