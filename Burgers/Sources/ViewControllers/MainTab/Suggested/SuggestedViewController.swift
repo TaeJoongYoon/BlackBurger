@@ -19,14 +19,16 @@ final class SuggestedViewController: BaseViewController {
   
   // MARK: Constants
   
-  private struct Metric {
+  fileprivate struct Metric {
     static let segmentedHeight = 45
     static let segmentedBorderWidth = CGFloat(5.0)
   }
   
   // MARK: Properties
   
-  var viewModel: SuggestedViewModelType!
+  fileprivate let viewModel: SuggestedViewModelType
+  fileprivate let contentTabView: ContentTabViewController
+  fileprivate let presentPostScreen: ([PHAsset]) -> PostViewController
   
   // MARK: UI
   
@@ -34,16 +36,27 @@ final class SuggestedViewController: BaseViewController {
     $0.tintColor = .tintColor
   }
   
-  let contentTabView = ContentTabViewController()
+  // MARK: Initalize
   
-  // MARK: Setup UI
-  
-  override init() {
+  init(
+    viewModel: SuggestedViewModelType,
+    contentTabView: ContentTabViewController,
+    presentPostScreen: @escaping ([PHAsset]) -> PostViewController
+    ) {
+    self.viewModel = viewModel
+    self.contentTabView = contentTabView
+    self.presentPostScreen = presentPostScreen
     super.init()
     self.tabBarItem.image = UIImage(named: "hamburger-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "hamburger-selected.png")
     self.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
   }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  // MARK: Setup UI
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -76,7 +89,7 @@ final class SuggestedViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.addButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
@@ -87,7 +100,7 @@ final class SuggestedViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     viewModel.outputs.add
       .drive(onNext: { [weak self] in
@@ -143,7 +156,7 @@ extension SuggestedViewController: TLPhotosPickerViewControllerDelegate {
      // if you want to used phasset.
     
     if withPHAssets.count > 0 {
-      let viewController = appDelegate.container.resolve(PostViewController.self, argument: withPHAssets)!
+      let viewController = self.presentPostScreen(withPHAssets)
       viewController.hidesBottomBarWhenPushed = true
       self.navigationController?.pushViewController(viewController, animated: true)
     } else {

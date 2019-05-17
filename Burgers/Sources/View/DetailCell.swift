@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import UIKit
 
-class DetailCell: UICollectionViewCell {
+class DetailCell: BaseCollectionViewCell {
   
   // MARK: - Properties
   
@@ -34,12 +34,15 @@ class DetailCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  // MARK: Setup UI
+  
   private func setupUI() {
     self.contentView.backgroundColor = .white
     
     contentView.addSubview(self.detailImageView)
   }
   
+  // MARK: Setup Constraints
   
   private func setupConstraints() {
     

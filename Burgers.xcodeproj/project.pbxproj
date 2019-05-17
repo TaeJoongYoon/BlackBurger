@@ -77,6 +77,9 @@
 		6FE3CBCF223396C200F45C23 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBCE223396C200F45C23 /* SignUpViewController.swift */; };
 		6FE3CBD1223396D700F45C23 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */; };
 		6FE3CBD32233A0D800F45C23 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3CBD22233A0D800F45C23 /* String+Validation.swift */; };
+		6FE40C97228E9445005A50EF /* CompositionRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE40C96228E9445005A50EF /* CompositionRoot.swift */; };
+		6FE40C9D228E9530005A50EF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE40C9C228E9530005A50EF /* BaseTableViewCell.swift */; };
+		6FE40C9F228E953C005A50EF /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE40C9E228E953C005A50EF /* BaseCollectionViewCell.swift */; };
 		6FE9E440223145E100D961ED /* Window+SetRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9E43F223145E100D961ED /* Window+SetRootView.swift */; };
 		A588D48A7E1FF54415C5B408 /* Pods_Burgers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DAED2A31C310005D4942B9 /* Pods_Burgers.framework */; };
 /* End PBXBuildFile section */
@@ -129,7 +132,7 @@
 		6F49885E2247CA1800222E18 /* PlaceResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceResult.swift; sourceTree = "<group>"; };
 		6F4988602247CA3E00222E18 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		6F4988622247CCA400222E18 /* Meta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
-		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Service/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
+		6F4988642247D0DD00222E18 /* NaverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NaverAPIService.swift; path = Burgers/Sources/Services/NaverAPIService.swift; sourceTree = SOURCE_ROOT; };
 		6F4B7095225845AB00EE0C67 /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Burgers.entitlements; sourceTree = "<group>"; };
 		6F79A0392223DB250030AAD4 /* BlackBurger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBurger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +179,9 @@
 		6FE3CBCE223396C200F45C23 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		6FE3CBD22233A0D800F45C23 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
+		6FE40C96228E9445005A50EF /* CompositionRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionRoot.swift; sourceTree = "<group>"; };
+		6FE40C9C228E9530005A50EF /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		6FE40C9E228E953C005A50EF /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		6FE9E43F223145E100D961ED /* Window+SetRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Window+SetRootView.swift"; sourceTree = "<group>"; };
 		B97FA64806FF1836F0BE63D7 /* Pods_BurgersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurgersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC87D158B838582532254CA /* Pods-BurgersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurgersTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurgersTests/Pods-BurgersTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -242,11 +248,14 @@
 			isa = PBXGroup;
 			children = (
 				6F4B70942258459500EE0C67 /* PrivateKey */,
-				6F79A0622223DD5D0030AAD4 /* Utility */,
-				6F48FC192234037700A9AA33 /* Types */,
 				6F48FC102233DFB700A9AA33 /* Logging */,
-				6F79A05F2223DD0E0030AAD4 /* Model */,
-				6FD7D2F0222A72F5005BBFEC /* Service */,
+				6F79A05F2223DD0E0030AAD4 /* Models */,
+				6FE40C98228E946B005A50EF /* Networking */,
+				6FE40C99228E9476005A50EF /* Rx */,
+				6FE40C9A228E9480005A50EF /* Sections */,
+				6FD7D2F0222A72F5005BBFEC /* Services */,
+				6F48FC192234037700A9AA33 /* Types */,
+				6F79A0622223DD5D0030AAD4 /* Utils */,
 				6F79A0612223DD1C0030AAD4 /* ViewControllers */,
 				6F198FAB222ABD33007435B5 /* View */,
 			);
@@ -256,6 +265,8 @@
 		6F198FAB222ABD33007435B5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6FE40C9E228E953C005A50EF /* BaseCollectionViewCell.swift */,
+				6FE40C9C228E9530005A50EF /* BaseTableViewCell.swift */,
 				6FD7D2E8222A37AF005BBFEC /* BurgerPostCell.swift */,
 				6FD2C7B2224E46EC00942C0B /* SimplePostCell.swift */,
 				6F28274F2250ED690090C661 /* DetailCell.swift */,
@@ -339,10 +350,11 @@
 		6F79A03B2223DB250030AAD4 /* Burgers */ = {
 			isa = PBXGroup;
 			children = (
-				6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */,
+				6FE40C95228E93BC005A50EF /* Supporting Files */,
 				6F072D1D224FAA0C00B007DA /* Sources */,
 				6F79A05C2223DB480030AAD4 /* Resources */,
 				6F79A03C2223DB250030AAD4 /* AppDelegate.swift */,
+				6FE40C96228E9445005A50EF /* CompositionRoot.swift */,
 			);
 			path = Burgers;
 			sourceTree = "<group>";
@@ -362,8 +374,6 @@
 				6F072D17224F9C3900B007DA /* Burgers+Privacy.html */,
 				6F072D16224F9C3900B007DA /* Burgers+Terms.html */,
 				6F48FC212234176D00A9AA33 /* Localizable.strings */,
-				6F0D74D0223D172900A9F1FD /* Info.plist */,
-				6F48FC152233E2E200A9AA33 /* GoogleService-Info.plist */,
 				6F79A0432223DB260030AAD4 /* Assets.xcassets */,
 				6F79A0452223DB260030AAD4 /* LaunchScreen.storyboard */,
 				6F48FC26223417DF00A9AA33 /* Main.storyboard */,
@@ -372,7 +382,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		6F79A05F2223DD0E0030AAD4 /* Model */ = {
+		6F79A05F2223DD0E0030AAD4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				6FD7D2EE222A55DF005BBFEC /* Post.swift */,
@@ -381,7 +391,7 @@
 				6F4988602247CA3E00222E18 /* ModelType.swift */,
 				6F4988622247CCA400222E18 /* Meta.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		6F79A0612223DD1C0030AAD4 /* ViewControllers */ = {
@@ -401,7 +411,7 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		6F79A0622223DD5D0030AAD4 /* Utility */ = {
+		6F79A0622223DD5D0030AAD4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				6F79A06B2223E6D30030AAD4 /* UIView+SafeArea.swift */,
@@ -416,7 +426,7 @@
 				6FD2C7B4224E529700942C0B /* CALayer+Border.swift */,
 				6F1C6B6C224A7950008ACDE7 /* UINavigationController+Completion.swift */,
 			);
-			path = Utility;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		6F79A0632223DD8B0030AAD4 /* Base */ = {
@@ -495,7 +505,7 @@
 			path = Popular;
 			sourceTree = "<group>";
 		};
-		6FD7D2F0222A72F5005BBFEC /* Service */ = {
+		6FD7D2F0222A72F5005BBFEC /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				6FC360D62235287D005CFE3A /* RemoteConfigManager.swift */,
@@ -505,7 +515,7 @@
 				6F4988642247D0DD00222E18 /* NaverAPIService.swift */,
 				6F2A81762253B0A3005DDB4B /* Credential.swift */,
 			);
-			path = Service;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		6FE3CBCD223396B200F45C23 /* SignUp */ = {
@@ -515,6 +525,37 @@
 				6FE3CBD0223396D700F45C23 /* SignUpViewModel.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		6FE40C95228E93BC005A50EF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6F7598E52258BE9E00B6A1C8 /* Burgers.entitlements */,
+				6F48FC152233E2E200A9AA33 /* GoogleService-Info.plist */,
+				6F0D74D0223D172900A9F1FD /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6FE40C98228E946B005A50EF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		6FE40C99228E9476005A50EF /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		6FE40C9A228E9480005A50EF /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sections;
 			sourceTree = "<group>";
 		};
 		6FEB8B35222562E10064166E /* MainTab */ = {
@@ -776,6 +817,7 @@
 				6F4988582247A88A00222E18 /* PostDetailViewModel.swift in Sources */,
 				6F4988562247A87F00222E18 /* PostViewModel.swift in Sources */,
 				6F8DCCF6223014B200C5B90E /* LoginViewController.swift in Sources */,
+				6FE40C9D228E9530005A50EF /* BaseTableViewCell.swift in Sources */,
 				6FD2C7BB224E788500942C0B /* NetworkResult.swift in Sources */,
 				6FD7D2E5222A3347005BBFEC /* PopularViewModel.swift in Sources */,
 				6F8DCCF4223014A500C5B90E /* LoginViewModel.swift in Sources */,
@@ -796,6 +838,7 @@
 				6F4988502247A86200222E18 /* PostViewController.swift in Sources */,
 				6F2A81772253B0A3005DDB4B /* Credential.swift in Sources */,
 				6F941C00222400B3009E326F /* UserViewController.swift in Sources */,
+				6FE40C9F228E953C005A50EF /* BaseCollectionViewCell.swift in Sources */,
 				6F49885D2247CA0100222E18 /* Place.swift in Sources */,
 				6F4988632247CCA400222E18 /* Meta.swift in Sources */,
 				6FD7D2F4222A7321005BBFEC /* ServiceType.swift in Sources */,
@@ -820,6 +863,7 @@
 				6F79A03D2223DB250030AAD4 /* AppDelegate.swift in Sources */,
 				6F28275222512D070090C661 /* Reactive+UIScrollView.swift in Sources */,
 				6FD2C7B3224E46EC00942C0B /* SimplePostCell.swift in Sources */,
+				6FE40C97228E9445005A50EF /* CompositionRoot.swift in Sources */,
 				6F79A06A2223E14E0030AAD4 /* ViewType.swift in Sources */,
 				6F8C8F172223FB91005B76F9 /* SuggestedViewModel.swift in Sources */,
 				6FD2C7B9224E77D600942C0B /* NetworkError.swift in Sources */,
@@ -1019,12 +1063,12 @@
 			baseConfigurationReference = 6D286A01AC7F45F622D37F92 /* Pods-Burgers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Burgers/Burgers.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Burgers/Supporting Files/Burgers.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 775V28HZUA;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1044,11 +1088,11 @@
 			baseConfigurationReference = 1FE6FA2F289EEA03AF359992 /* Pods-Burgers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Burgers/Burgers.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Burgers/Supporting Files/Burgers.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 775V28HZUA;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Resources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Burgers/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

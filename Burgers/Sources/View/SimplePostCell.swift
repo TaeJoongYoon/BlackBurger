@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import UIKit
 
-class SimplePostCell: UITableViewCell {
+class SimplePostCell: BaseTableViewCell {
   
   // MARK: - UI Metrics
   
@@ -60,6 +60,7 @@ class SimplePostCell: UITableViewCell {
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
     setupUI()
     setupConstraints()
   }
@@ -78,6 +79,8 @@ class SimplePostCell: UITableViewCell {
     layer.shadowOffset = CGSize(width:5, height: 5)
   }
   
+  // MARK: Setup UI
+  
   private func setupUI() {
     self.contentView.backgroundColor = .white
     self.rating.settings.starSize = Double(UIScreen.main.bounds.size.width / 20)
@@ -92,6 +95,7 @@ class SimplePostCell: UITableViewCell {
     contentView.addSubview(self.containerView)
   }
   
+  // MARK: Setup Constraints
   
   private func setupConstraints() {
     

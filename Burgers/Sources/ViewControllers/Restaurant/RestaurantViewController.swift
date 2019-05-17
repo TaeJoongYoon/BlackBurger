@@ -16,11 +16,11 @@ final class RestaurantViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Reusable {
+  fileprivate struct Reusable {
     static let burgerPostCell = ReusableCell<SimplePostCell>()
   }
   
-  struct Metric {
+  fileprivate struct Metric {
     static let rowHeight = CGFloat(130)
     static let nameFontSize = CGFloat(20)
     static let addressFontSize = CGFloat(14)
@@ -31,9 +31,10 @@ final class RestaurantViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: RestaurantViewModelType!
-  var posts = BehaviorRelay<[Post]>(value: [])
-  var restaurant: [AnyHashable: Any]!
+  fileprivate let viewModel: RestaurantViewModelType
+  fileprivate let presentPostDetailScreen: (Post) -> PostDetailViewController
+  fileprivate let restaurant: [AnyHashable: Any]
+  fileprivate let posts = BehaviorRelay<[Post]>(value: [])
       //////////////////////////////////////////
       //  "name": name                        //
       //  "address": jibunAddress             //
@@ -54,12 +55,17 @@ final class RestaurantViewController: BaseViewController {
   let addressLabel = UILabel(frame: .zero).then {
     $0.font = $0.font.withSize(Metric.addressFontSize)
     $0.textColor = .disabledColor
+    $0.lineBreakMode = .byTruncatingTail
   }
   
   let phoneLabel = UILabel(frame: .zero).then {
     $0.font = $0.font.withSize(14)
     $0.textColor = .disabledColor
     $0.isUserInteractionEnabled = true
+    $0.attributedText = NSAttributedString(
+      string: "Text",
+      attributes:[.underlineStyle: NSUnderlineStyle.single.rawValue]
+    )
   }
   
   let tableView = UITableView(frame: .zero, style: .plain).then {
@@ -78,6 +84,23 @@ final class RestaurantViewController: BaseViewController {
   let emptyLabel = UILabel(frame: .zero).then {
     $0.text = "This restaurant doesn't have any posts".localized
     $0.isHidden = true
+  }
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: RestaurantViewModelType,
+    presentPostDetailScreen: @escaping (Post) -> PostDetailViewController,
+    restaurant: [AnyHashable: Any]
+    ) {
+    self.viewModel = viewModel
+    self.presentPostDetailScreen = presentPostDetailScreen
+    self.restaurant = restaurant
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: Setup UI
@@ -132,6 +155,7 @@ final class RestaurantViewController: BaseViewController {
     self.addressLabel.snp.makeConstraints { make in
       make.top.equalTo(self.nameLabel.snp.bottom).offset(Metric.offset)
       make.left.equalTo(self.contentView).offset(Metric.offset)
+      make.right.equalTo(self.contentView).offset(-Metric.offset)
     }
     
     self.phoneLabel.snp.makeConstraints { make in
@@ -157,7 +181,7 @@ final class RestaurantViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
@@ -175,7 +199,7 @@ final class RestaurantViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -235,7 +259,7 @@ final class RestaurantViewController: BaseViewController {
   }
   
   private func postDetail(_ post: Post) {
-    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
+    let viewController = self.presentPostDetailScreen(post)
     viewController.hidesBottomBarWhenPushed = true
     
     self.navigationController?.pushViewController(viewController, animated: true)

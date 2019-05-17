@@ -18,11 +18,11 @@ final class RecentViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Reusable {
+  fileprivate struct Reusable {
     static let burgerPostCell = ReusableCell<BurgerPostCell>()
   }
   
-  private struct Metric {
+  fileprivate struct Metric {
     static let baseMargin = CGFloat(20)
     static let tableViewFrame = UIScreen.main.bounds
     static let rowHeight = CGFloat(220)
@@ -30,9 +30,10 @@ final class RecentViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: RecentViewModelType!
-  var itemInfo = IndicatorInfo(title: "RECENT".localized)
-  var posts = BehaviorRelay<[Post]>(value: [])
+  fileprivate let viewModel: RecentViewModelType
+  fileprivate let presentPostDetailScreen: (Post) -> PostDetailViewController
+  fileprivate let itemInfo = IndicatorInfo(title: "RECENT".localized)
+  fileprivate let posts = BehaviorRelay<[Post]>(value: [])
   
   // MARK: UI
   
@@ -53,6 +54,21 @@ final class RecentViewController: BaseViewController {
   let emptyLabel = UILabel(frame: .zero).then {
     $0.text = "No Posts".localized
     $0.isHidden = true
+  }
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: RecentViewModelType,
+    presentPostDetailScreen: @escaping (Post) -> PostDetailViewController
+    ) {
+    self.viewModel = viewModel
+    self.presentPostDetailScreen = presentPostDetailScreen
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: Setup UI
@@ -86,7 +102,7 @@ final class RecentViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.rx.viewWillAppear
       .bind(to: viewModel.inputs.viewWillAppear)
@@ -114,7 +130,7 @@ final class RecentViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -171,7 +187,7 @@ final class RecentViewController: BaseViewController {
   }
   
   private func postDetail(_ post: Post) {
-    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
+    let viewController = self.presentPostDetailScreen(post)
     viewController.hidesBottomBarWhenPushed = true
     
     self.navigationController?.pushViewController(viewController, animated: true)

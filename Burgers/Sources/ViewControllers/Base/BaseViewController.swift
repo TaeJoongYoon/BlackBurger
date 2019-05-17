@@ -18,10 +18,6 @@ class BaseViewController: UIViewController {
     return type(of: self).description().components(separatedBy: ".").last ?? ""
   }()
   
-  var appDelegate: AppDelegate {
-    return UIApplication.shared.delegate as! AppDelegate
-  }
-  
   var automaticallyAdjustsLeftBarButtonItem = true
   
   /// There is a bug when trying to go back to previous view controller in a navigation controller
@@ -34,6 +30,8 @@ class BaseViewController: UIViewController {
   // MARK: Initializing
   init() {
     super.init(nibName: nil, bundle: nil)
+    self.bindingEvent()
+    self.bindingUI()
     log.verbose("INIT: \(self.className)")
   }
   
@@ -92,8 +90,6 @@ class BaseViewController: UIViewController {
   
   override func viewDidLoad() {
     self.view.setNeedsUpdateConstraints()
-    self.eventBinding()
-    self.uiBinding()
   }
   
   override func updateViewConstraints() {
@@ -110,11 +106,11 @@ class BaseViewController: UIViewController {
   
   // MARK: Data Binding
   
-  func eventBinding() {
+  func bindingEvent() {
     // Override point
   }
   
-  func uiBinding() {
+  func bindingUI() {
     // Override point
   }
   

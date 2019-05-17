@@ -21,11 +21,11 @@ final class PostViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Reusable {
+  fileprivate struct Reusable {
     static let TitleCell = ReusableCell<UITableViewCell>()
   }
   
-  struct Metric {
+  fileprivate struct Metric {
     static let borderWidth = Double(2)
     static let offset = 20
     static let indicatorAlpha = CGFloat(0.5)
@@ -34,11 +34,11 @@ final class PostViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: PostViewModelType!
-  let locationManager = CLLocationManager()
-  let places = BehaviorRelay<[Place]>(value: [])
-  var restaurant: Place!
-  var photos: [PHAsset]!
+  fileprivate let viewModel: PostViewModelType
+  fileprivate let locationManager: CLLocationManager
+  fileprivate let places = BehaviorRelay<[Place]>(value: [])
+  fileprivate var restaurant: Place!
+  fileprivate let photos: [PHAsset]
   
   // MARK: UI
   
@@ -95,6 +95,22 @@ final class PostViewController: BaseViewController {
     $0.backgroundColor = .black
     $0.alpha = Metric.indicatorAlpha
     $0.isHidden = true
+  }
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: PostViewModelType,
+    photos: [PHAsset]
+    ) {
+    self.viewModel = viewModel
+    self.locationManager = CLLocationManager()
+    self.photos = photos
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: Setup UI
@@ -155,7 +171,7 @@ final class PostViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     viewModel.inputs.photos(assets: self.photos)
     
@@ -187,7 +203,7 @@ final class PostViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.textView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -334,7 +350,7 @@ extension PostViewController: UISearchBarDelegate {
   }
 }
 
-// MARK: UITextViewDelegate
+// MARK: -UITextViewDelegate
 
 extension PostViewController: UITextViewDelegate {
   
@@ -353,7 +369,7 @@ extension PostViewController: UITextViewDelegate {
   }
 }
 
-// MARK: CLLocationManagerDelegate
+// MARK: -CLLocationManagerDelegate
 
 extension PostViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

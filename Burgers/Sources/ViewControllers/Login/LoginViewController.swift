@@ -16,7 +16,7 @@ final class LoginViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Metric {
+  fileprivate struct Metric {
     static let logoFontSize = CGFloat(30)
     static let orFontSize = CGFloat(20)
     static let buttonRadius = CGFloat(5)
@@ -30,7 +30,9 @@ final class LoginViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: LoginViewModelType!
+  fileprivate let viewModel: LoginViewModelType
+  fileprivate let presentSignUpScreen: () -> SignUpViewController
+  fileprivate let presentMainScreen: () -> Void
   
   // MARK: UI
   
@@ -83,6 +85,23 @@ final class LoginViewController: BaseViewController {
   }
   
   let fbloginButton = FBSDKLoginButton()
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: LoginViewModelType,
+    presentSignUpScreen: @escaping () -> SignUpViewController,
+    presentMainScreen: @escaping () -> Void
+    ) {
+    self.viewModel = viewModel
+    self.presentSignUpScreen = presentSignUpScreen
+    self.presentMainScreen = presentMainScreen
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: Setup UI
   
@@ -159,7 +178,7 @@ final class LoginViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.emailTextField.rx.text
       .orEmpty
@@ -191,7 +210,7 @@ final class LoginViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.emailTextField.rx.controlEvent(.editingDidEndOnExit)
       .subscribe(onNext: { [weak self] in
@@ -237,7 +256,7 @@ final class LoginViewController: BaseViewController {
   }
   
   private func pushSignup() {
-    let signUpViewController = appDelegate.container.resolve(SignUpViewController.self)!
+    let signUpViewController = self.presentSignUpScreen()
     self.navigationController?.pushViewController(signUpViewController, animated: true)
   }
   
@@ -252,15 +271,15 @@ final class LoginViewController: BaseViewController {
     }
   }
   
-  private func presentMainScreen() {
-    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
-    
-    UIApplication.shared.keyWindow?
-      .setRootViewController(mainViewController,
-                             options: UIWindow.TransitionOptions.init(
-                              direction: .toBottom,
-                              style: .easeInOut))
-  }
+//  private func presentMainScreen() {
+//    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
+//
+//    UIApplication.shared.keyWindow?
+//      .setRootViewController(mainViewController,
+//                             options: UIWindow.TransitionOptions.init(
+//                              direction: .toBottom,
+//                              style: .easeInOut))
+//  }
   
   private func showAlert() {
     let alert = UIAlertController(title: "BLACK BURGER".localized,
@@ -274,6 +293,7 @@ final class LoginViewController: BaseViewController {
   
 }
 
+// MARK: -FBSDKLoginButtonDelegate
 
 extension LoginViewController: FBSDKLoginButtonDelegate {
   func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {

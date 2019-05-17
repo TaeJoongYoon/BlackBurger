@@ -13,7 +13,7 @@ final class SignUpViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Metric {
+  fileprivate struct Metric {
     static let buttonRadius = CGFloat(5)
     static let height = 40
     static let textfieldOffset = 30
@@ -22,7 +22,8 @@ final class SignUpViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: SignUpViewModelType!
+  fileprivate let viewModel: SignUpViewModelType
+  fileprivate let presentMainScreen: () -> Void
   
   // MARK: UI
   
@@ -55,6 +56,21 @@ final class SignUpViewController: BaseViewController {
     $0.layer.cornerRadius = Metric.buttonRadius
     $0.clipsToBounds = true
     $0.isEnabled = false
+  }
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: SignUpViewModelType,
+    presentMainScreen: @escaping () -> Void
+    ) {
+    self.viewModel = viewModel
+    self.presentMainScreen = presentMainScreen
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: Setup UI
@@ -100,7 +116,7 @@ final class SignUpViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.emailTextField.rx.text
       .orEmpty
@@ -129,7 +145,7 @@ final class SignUpViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.emailTextField.rx.controlEvent(.editingDidEndOnExit)
       .subscribe(onNext: { [weak self] in
@@ -179,15 +195,15 @@ final class SignUpViewController: BaseViewController {
     }
   }
   
-  private func presentMainScreen() {
-    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
-    
-    UIApplication.shared.keyWindow?
-      .setRootViewController(mainViewController,
-                             options: UIWindow.TransitionOptions.init(
-                              direction: .toBottom,
-                              style: .easeInOut))
-  }
+//  private func presentMainScreen() {
+//    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
+//    
+//    UIApplication.shared.keyWindow?
+//      .setRootViewController(mainViewController,
+//                             options: UIWindow.TransitionOptions.init(
+//                              direction: .toBottom,
+//                              style: .easeInOut))
+//  }
   
   private func showAlert() {
     let alert = UIAlertController(

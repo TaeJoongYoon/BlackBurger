@@ -13,8 +13,21 @@ import SnapKit
 
 final class TermsViewController: BaseViewController, WKUIDelegate {
   
-  var webView: WKWebView!
-  var isTerms = true
+  fileprivate var webView: WKWebView!
+  fileprivate let isTerms: Bool
+  
+  // MARK: Initalize
+  
+  init(
+    isTerms: Bool
+    ) {
+    self.isTerms = isTerms
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,7 +41,7 @@ final class TermsViewController: BaseViewController, WKUIDelegate {
     
     let string = isTerms ? "Burgers+Terms" : "Burgers+Privacy"
     guard let path = Bundle.main.path(forResource: string, ofType: "html") else {
-      print("path is nil")
+      log.error("path is nil")
       return
     }
     

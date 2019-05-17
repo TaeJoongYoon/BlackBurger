@@ -18,11 +18,11 @@ final class PostListViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Reusable {
+  fileprivate struct Reusable {
     static let burgerPostCell = ReusableCell<BurgerPostCell>()
   }
   
-  private struct Metric {
+  fileprivate struct Metric {
     static let baseMargin = CGFloat(20)
     static let tableViewFrame = UIScreen.main.bounds
     static let rowHeight = CGFloat(220)
@@ -30,9 +30,10 @@ final class PostListViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: PostListViewModelType!
-  var posts = BehaviorRelay<[Post]>(value: [])
-  var isMyList = true
+  fileprivate let viewModel: PostListViewModelType
+  fileprivate let presentPostDetailScreen: (Post) -> PostDetailViewController
+  fileprivate let isMyList: Bool
+  fileprivate let posts = BehaviorRelay<[Post]>(value: [])
   
   // MARK: UI
   
@@ -51,6 +52,23 @@ final class PostListViewController: BaseViewController {
   
   let emptyLabel = UILabel(frame: .zero).then {
     $0.isHidden = true
+  }
+  
+  // MARK: Initalize
+  
+  init(
+    viewModel: PostListViewModelType,
+    presentPostDetailScreen: @escaping (Post) -> PostDetailViewController,
+    isMyList: Bool
+    ) {
+    self.viewModel = viewModel
+    self.presentPostDetailScreen = presentPostDetailScreen
+    self.isMyList = isMyList
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   // MARK: Setup UI
@@ -90,7 +108,7 @@ final class PostListViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
@@ -107,7 +125,7 @@ final class PostListViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.tableView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
@@ -169,7 +187,7 @@ final class PostListViewController: BaseViewController {
   }
   
   private func postDetail(_ post: Post) {
-    let viewController = appDelegate.container.resolve(PostDetailViewController.self, argument: post)!
+    let viewController = self.presentPostDetailScreen(post)
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   

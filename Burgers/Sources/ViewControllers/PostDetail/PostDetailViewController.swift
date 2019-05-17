@@ -18,11 +18,11 @@ final class PostDetailViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Reusable {
+  fileprivate struct Reusable {
     static let detailCell = ReusableCell<DetailCell>()
   }
   
-  struct Metric {
+  fileprivate struct Metric {
     static let borderWidth = Double(2)
     static let collectionWidth = UIScreen.main.bounds.width
     static let collectionHeight = UIScreen.main.bounds.width / 1.5
@@ -32,13 +32,18 @@ final class PostDetailViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: PostDetailViewModelType!
-  var post: Post!
-  var isLiked = BehaviorRelay<Bool>(value: false)
+  fileprivate let viewModel: PostDetailViewModelType
+  fileprivate var post: Post
+  fileprivate let isLiked = BehaviorRelay<Bool>(value: false)
   
   // MARK: UI
   
-  let moreButton = UIBarButtonItem.init(image: UIImage(named: "more.png"), style: .plain, target: self, action: nil)
+  let moreButton = UIBarButtonItem(
+    image: UIImage(named: "more.png"),
+    style: .plain,
+    target: self,
+    action: nil
+  )
   
   let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: nil).then {
     $0.tintColor = .tintColor
@@ -113,6 +118,21 @@ final class PostDetailViewController: BaseViewController {
     self.view.addSubview(self.contentTextView)
   }
   
+  // MARK: Initalize
+  
+  init(
+    viewModel: PostDetailViewModelType,
+    post: Post
+    ) {
+    self.viewModel = viewModel
+    self.post = post
+    super.init()
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   // MARK: Setup Constraints
   
   override func setupConstraints() {
@@ -154,7 +174,7 @@ final class PostDetailViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.rx.viewWillAppear
       .map { [weak self] in
@@ -201,14 +221,14 @@ final class PostDetailViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     self.imageCollectionView.rx.setDelegate(self)
       .disposed(by: self.disposeBag)
     
     viewModel.outputs.setView
-      .drive(onNext: { [weak self] in
-        self?.setView($0)
+      .drive(onNext: { [weak self] post in
+        self?.setView(post)
       })
       .disposed(by: self.disposeBag)
     
@@ -264,9 +284,8 @@ final class PostDetailViewController: BaseViewController {
   }
   
   private func setView(_ post: Post) {
-    self.post = post
-    
     self.imageCollectionView.dataSource = nil
+    self.post = post
     
     Observable.just(post)
       .map { $0.imageURLs }
@@ -281,7 +300,7 @@ final class PostDetailViewController: BaseViewController {
     self.pageControl.numberOfPages = self.post.imageURLs.count
     
     self.ratingView.rating = self.post.rating
-    self.isLiked.accept(self.post!.likeUser.contains((Auth.auth().currentUser?.uid)!))
+    self.isLiked.accept(self.post.likeUser.contains((Auth.auth().currentUser?.uid)!))
     
     self.likesCountLabel.text = String(self.post.likes)
     self.contentTextView.text = self.post.content
@@ -303,12 +322,25 @@ final class PostDetailViewController: BaseViewController {
       title: "Save Images".localized,
       style: .default
     ) { _ in
-      for i in 0..<self.imageCollectionView.numberOfItems(inSection: 0) {
-        let cell = self.imageCollectionView.cellForItem(at: [0, i]) as! DetailCell
-        guard let image = cell.detailImageView.image else { return }
-        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+      let downloadGroup = DispatchGroup()
+      let _ = DispatchQueue.global(qos: .userInitiated)
+      DispatchQueue.concurrentPerform(iterations: self.post.imageURLs.count) { index in
+        let string = self.post.imageURLs[index]
+        let url = URL(string: string)!
+        downloadGroup.enter()
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
+          guard let data = data else { return }
+          let image = UIImage(data: data)!
+          DispatchQueue.main.async {
+            UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+            downloadGroup.leave()
+          }
+        }
+        dataTask.resume()
       }
-      Toast(text: "Saved Images!".localized, duration: Delay.long).show()
+      downloadGroup.notify(queue: DispatchQueue.main) {
+        Toast(text: "Saved Images!".localized, duration: Delay.long).show()
+      }
     }
     
     let sendButton = UIAlertAction(
@@ -378,6 +410,7 @@ final class PostDetailViewController: BaseViewController {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension PostDetailViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView,

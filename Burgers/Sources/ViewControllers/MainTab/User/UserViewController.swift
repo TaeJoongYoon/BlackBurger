@@ -16,7 +16,7 @@ final class UserViewController: BaseViewController {
   
   // MARK: Constants
   
-  struct Metric {
+  fileprivate struct Metric {
     static let idFontSize = CGFloat(22)
     static let itemFontSize = CGFloat(16)
     static let buttonTitleInset = CGFloat(20)
@@ -26,12 +26,15 @@ final class UserViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: UserViewModelType!
+  fileprivate let viewModel: UserViewModelType
+  fileprivate let presentPostListScreen: (Bool) -> PostListViewController
+  fileprivate let presentTermsScreen: (Bool) -> TermsViewController
+  fileprivate let presentLoginScreen: () -> Void
   
   // MARK: UI
   
   let idLabel = UILabel(frame: .zero).then {
-    $0.text = Auth.auth().currentUser!.displayName ?? Auth.auth().currentUser!.email
+    $0.text = Auth.auth().currentUser?.displayName ?? ( Auth.auth().currentUser?.email ?? "No Member")
     $0.font = UIFont.boldSystemFont(ofSize: Metric.idFontSize)
   }
   
@@ -125,14 +128,29 @@ final class UserViewController: BaseViewController {
     $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: Metric.itemFontSize)
   }
   
-  // MARK: Setup UI
+  // MARK: Initalize
   
-  override init() {
+  init(
+    viewModel: UserViewModelType,
+    presentPostListScreen: @escaping (Bool) -> PostListViewController,
+    presentTermsScreen: @escaping (Bool) -> TermsViewController,
+    presentLoginScreen: @escaping () -> Void
+    ) {
+    self.viewModel = viewModel
+    self.presentPostListScreen = presentPostListScreen
+    self.presentTermsScreen = presentTermsScreen
+    self.presentLoginScreen = presentLoginScreen
     super.init()
     self.tabBarItem.image = UIImage(named: "user-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "user-selected.png")
     self.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
   }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  // MARK: Setup UI
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -225,7 +243,7 @@ final class UserViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding() {
+  override func bindingEvent() {
     
     self.myPostButton.rx.tap
       .debounce(0.3, scheduler: MainScheduler.instance)
@@ -276,7 +294,7 @@ final class UserViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     viewModel.outputs.post
       .drive(onNext: { [weak self] in
@@ -361,17 +379,15 @@ final class UserViewController: BaseViewController {
   // MARK: Action Handler
   
   private func posts() {
-    let viewController = appDelegate.container.resolve(PostListViewController.self)!
+    let viewController = self.presentPostListScreen(true)
     viewController.hidesBottomBarWhenPushed = true
-    viewController.isMyList = true
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   private func likes() {
-    let viewController = appDelegate.container.resolve(PostListViewController.self)!
+    let viewController = self.presentPostListScreen(false)
     viewController.hidesBottomBarWhenPushed = true
-    viewController.isMyList = false
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
@@ -411,33 +427,20 @@ final class UserViewController: BaseViewController {
   }
   
   private func terms() {
-    let viewController = appDelegate.container.resolve(TermsViewController.self)!
-    viewController.isTerms = true
+    let viewController = self.presentTermsScreen(true)
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   private func privacy() {
-    let viewController = appDelegate.container.resolve(TermsViewController.self)!
-    viewController.isTerms = false
+    let viewController = self.presentTermsScreen(false)
     
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   private func logout() {
-    let loginViewController = appDelegate.container.resolve(LoginViewController.self)!
-    let navigationController = UINavigationController(rootViewController: loginViewController)
-    navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    navigationController.navigationBar.clipsToBounds = true
-    navigationController.navigationBar.tintColor = .tintColor
-    
     Toast(text: "See you again :)".localized, duration: Delay.long).show()
-    
-    UIApplication.shared.keyWindow?
-      .setRootViewController(navigationController,
-                             options: UIWindow.TransitionOptions.init(
-                              direction: .toTop,
-                              style: .easeInOut))
+    self.presentLoginScreen()
   }
   
   private func accountRemove() {

@@ -15,16 +15,19 @@ class ContentTabViewController: ButtonBarPagerTabStripViewController {
     return type(of: self).description().components(separatedBy: ".").last ?? ""
   }()
   
-  var appDelegate = UIApplication.shared.delegate as! AppDelegate
+  let contentViewControllers: [UIViewController]
   
   // MARK: Initializing
-  init() {
+  init(
+    contentViewControllers: [UIViewController]
+    ) {
+    self.contentViewControllers = contentViewControllers
     super.init(nibName: nil, bundle: nil)
     log.verbose("INIT: \(self.className)")
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
-    self.init()
+    fatalError("init(coder:) has not been implemented")
   }
   
   deinit {
@@ -49,11 +52,7 @@ class ContentTabViewController: ButtonBarPagerTabStripViewController {
   // MARK: TabViewControllers
   
   override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-    
-    let recentView = appDelegate.container.resolve(RecentViewController.self)!
-    let popularView = appDelegate.container.resolve(PopularViewController.self)!
-    
-    return [recentView, popularView]
+    return self.contentViewControllers
   }
   
 }

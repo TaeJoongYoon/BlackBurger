@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol SplashViewModelInputsType {
-  var viewWillAppear: PublishSubject<Void> { get }
+  var viewDidAppear: PublishSubject<Void> { get }
   func checkIfAuthenticated()
 }
 
@@ -32,7 +32,7 @@ final class SplashViewModel: SplashViewModelType, SplashViewModelInputsType, Spl
   
   // MARK: Input
   
-  let viewWillAppear = PublishSubject<Void>()
+  let viewDidAppear = PublishSubject<Void>()
   
   private let _checkIfAuthenticated = ReplaySubject<Void>.create(bufferSize: 1)
   func checkIfAuthenticated() {
@@ -48,7 +48,7 @@ final class SplashViewModel: SplashViewModelType, SplashViewModelInputsType, Spl
   
   init() {
     
-    versionCheck = viewWillAppear
+    versionCheck = viewDidAppear
       .flatMapLatest {
         return Single<(Bool, Bool, String)>.create { single in
           // Version Check

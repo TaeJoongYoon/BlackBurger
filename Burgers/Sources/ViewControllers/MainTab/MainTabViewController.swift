@@ -10,31 +10,22 @@ import UIKit
 
 final class MainTabViewController: UITabBarController {
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    UIApplication.shared.keyWindow?.rootViewController = self
-    
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-    // Hide Tabbar Line
-    self.tabBar.shadowImage = UIImage()
-    self.tabBar.backgroundImage = UIImage()
-    self.tabBar.clipsToBounds = true
-    self.tabBar.tintColor = .mainColor
-    
-    let suggestedView = appDelegate.container.resolve(SuggestedViewController.self)!
-    let mapView = appDelegate.container.resolve(MapViewController.self)!
-    let userView = appDelegate.container.resolve(UserViewController.self)!
-    
+  // MARK: Initialize
+  
+  init(
+    suggestedView: SuggestedViewController,
+    mapView: MapViewController,
+    userView: UserViewController
+    ) {
+    super.init(nibName: nil, bundle: nil)
     self.viewControllers = [suggestedView, mapView, userView]
       .map {
         let nav = UINavigationController(rootViewController: $0)
-        nav.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        nav.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.mainColor]
-        nav.navigationBar.clipsToBounds = true
-        nav.navigationBar.tintColor = .tintColor
-        
         return nav
     }
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }

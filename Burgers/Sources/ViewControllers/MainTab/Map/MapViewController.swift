@@ -18,7 +18,10 @@ final class MapViewController: BaseViewController {
   
   // MARK: Properties
   
-  var viewModel: MapViewModelType!
+  fileprivate let viewModel: MapViewModelType
+  fileprivate let presentRestaurantScreen: ([AnyHashable: Any]) -> RestaurantViewController
+  fileprivate var cameraPosition = NMFCameraUpdate()
+  fileprivate var locationManager: CLLocationManager!
   
   // MARK: UI
 
@@ -29,18 +32,25 @@ final class MapViewController: BaseViewController {
     $0.mapView.locationOverlay.hidden = false
   }
   
-  var cameraPosition = NMFCameraUpdate()
+  // MARK: Initalize
   
-  var locationManager: CLLocationManager!
-  
-  // MARK: Setup UI
-  
-  override init() {
+  init(
+    viewModel: MapViewModelType,
+    presentRestaurantScreen: @escaping ([AnyHashable: Any]) -> RestaurantViewController
+    ) {
+    self.viewModel = viewModel
+    self.presentRestaurantScreen = presentRestaurantScreen
     super.init()
     self.tabBarItem.image = UIImage(named: "pin-unselected.png")
     self.tabBarItem.selectedImage = UIImage(named: "pin-selected.png")
     self.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
   }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  // MARK: Setup UI
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -80,7 +90,7 @@ final class MapViewController: BaseViewController {
   
   // MARK: - -> Rx Event Binding
   
-  override func eventBinding(){
+  override func bindingEvent(){
     
     self.rx.viewWillAppear
       .bind(to: viewModel.inputs.viewWillAppear)
@@ -90,7 +100,7 @@ final class MapViewController: BaseViewController {
   
   // MARK: - <- Rx UI Binding
   
-  override func uiBinding() {
+  override func bindingUI() {
     
     viewModel.outputs.restaurants
       .drive(onNext: { [weak self] in
@@ -124,7 +134,7 @@ final class MapViewController: BaseViewController {
       ]
       
       marker.touchHandler = { overlay -> Bool in
-        let viewController = self.appDelegate.container.resolve(RestaurantViewController.self, argument: overlay.userInfo)!
+        let viewController = self.presentRestaurantScreen(overlay.userInfo)
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(viewController, animated: true)
         
