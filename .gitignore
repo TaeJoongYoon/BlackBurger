@@ -106,5 +106,6 @@ fastlane/test_output
 /Burgers/Sources/PrivateKey/PrivateKey.swift
 /Burgers/Supporting Files/GoogleService-Info.plist
 /Burgers/Supporting Files/Burgers.entitlements
+/Fabric.framework
 
  # End of https://www.gitignore.io/api/swift,xcode,macos,cocoapods

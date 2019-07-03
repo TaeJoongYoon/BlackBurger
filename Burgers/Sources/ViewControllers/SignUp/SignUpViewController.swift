@@ -195,16 +195,6 @@ final class SignUpViewController: BaseViewController {
     }
   }
   
-//  private func presentMainScreen() {
-//    let mainViewController = appDelegate.container.resolve(MainTabViewController.self)!
-//    
-//    UIApplication.shared.keyWindow?
-//      .setRootViewController(mainViewController,
-//                             options: UIWindow.TransitionOptions.init(
-//                              direction: .toBottom,
-//                              style: .easeInOut))
-//  }
-  
   private func showAlert() {
     let alert = UIAlertController(
       title: "BLACK BURGER".localized,
